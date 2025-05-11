@@ -11,26 +11,28 @@ import SwiftData
 @Model
 final class DogWalkEntry: Identifiable {
     @Attribute(.unique) var dogWalkID: UUID
-    var timestamp: Date
+    var entryDate: Date
     var durationInMinutes: Int
-    var humanInteractionCount: Int
-    var humanInteractionRating: InteractionRating
-    var dogInteractionCount: Int
-    var dogInteractionRating: InteractionRating
+    var humainInteraction: InteractionEntity?
+    var dogInteraction: InteractionEntity?
     
-    init(timestamp: Date = .now,
+    init(entryDate: Date = .now,
          durationInMinutes: Int,
-         humanInteractionCount: Int = 0,
-         humanInteractionRating: InteractionRating = .none,
-         dogInteractionCount: Int = 0,
-         dogInteractionRating: InteractionRating = .none
+         humainInteraction: InteractionEntity?,
+         dogInteraction: InteractionEntity?
     ) {
         dogWalkID = UUID()
-        self.timestamp = timestamp
+        self.entryDate = entryDate
         self.durationInMinutes = durationInMinutes
-        self.humanInteractionCount = humanInteractionCount
-        self.humanInteractionRating = humanInteractionRating
-        self.dogInteractionCount = dogInteractionCount
-        self.dogInteractionRating = dogInteractionRating
+        self.humainInteraction = humainInteraction
+        self.dogInteraction = dogInteraction
     }
 }
+
+extension DogWalkEntry {
+    var entity: DogWalkEntryEntity {
+        let entity = DogWalkEntryEntity(self)
+        return entity
+    }
+}
+
