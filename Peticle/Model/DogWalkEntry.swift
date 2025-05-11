@@ -10,20 +10,22 @@ import SwiftData
 
 @Model
 final class DogWalkEntry: Identifiable {
+    @Attribute(.unique) var dogWalkID: UUID
     var timestamp: Date
     var durationInMinutes: Int
     var humanInteractionCount: Int
-    var humanInteractionRating: Int
+    var humanInteractionRating: InteractionRating
     var dogInteractionCount: Int
-    var dogInteractionRating: Int
+    var dogInteractionRating: InteractionRating
     
-    init(timestamp: Date = Date(),
+    init(timestamp: Date = .now,
          durationInMinutes: Int,
-         humanInteractionCount: Int,
-         humanInteractionRating: Int,
-         dogInteractionCount: Int,
-         dogInteractionRating: Int
+         humanInteractionCount: Int = 0,
+         humanInteractionRating: InteractionRating = .none,
+         dogInteractionCount: Int = 0,
+         dogInteractionRating: InteractionRating = .none
     ) {
+        dogWalkID = UUID()
         self.timestamp = timestamp
         self.durationInMinutes = durationInMinutes
         self.humanInteractionCount = humanInteractionCount
