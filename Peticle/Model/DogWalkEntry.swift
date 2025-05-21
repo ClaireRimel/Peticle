@@ -13,13 +13,13 @@ final class DogWalkEntry: Identifiable {
     @Attribute(.unique) var dogWalkID: UUID
     var entryDate: Date
     var durationInMinutes: Int
-    var humainInteraction: InteractionEntity?
-    var dogInteraction: InteractionEntity?
+    var humainInteraction: InteractionEntity
+    var dogInteraction: InteractionEntity
     
     init(entryDate: Date = .now,
          durationInMinutes: Int,
-         humainInteraction: InteractionEntity?,
-         dogInteraction: InteractionEntity?
+         humainInteraction: InteractionEntity = InteractionEntity(interactionCount: 0, interactionRating: .none) ,
+         dogInteraction: InteractionEntity = InteractionEntity(interactionCount: 0, interactionRating: .none)
     ) {
         dogWalkID = UUID()
         self.entryDate = entryDate

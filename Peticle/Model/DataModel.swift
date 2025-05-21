@@ -24,7 +24,7 @@ actor DataModel {
 }
 
 class DataModelHelper {
-    static func newEntry(durationInMinutes: Int, humainInteraction: InteractionEntity? = nil, dogInteraction: InteractionEntity? = nil) throws -> DogWalkEntry {
+    static func newEntry(durationInMinutes: Int, humainInteraction: InteractionEntity, dogInteraction: InteractionEntity) throws -> DogWalkEntry {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let entry = DogWalkEntry(durationInMinutes: durationInMinutes,
                                      humainInteraction: humainInteraction,
@@ -48,5 +48,32 @@ class DataModelHelper {
         descriptor.fetchLimit = limit
         let entries = try modelContext.fetch(descriptor)
         return entries
+    }
+    
+    @MainActor
+    // Set to MainActor, because it is used with OpenIntent
+    static func lastDogEntry() async throws -> DogWalkEntry? {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        var descriptor = FetchDescriptor<DogWalkEntry>(sortBy: [SortDescriptor(\.entryDate, order: .reverse)])
+        descriptor.fetchLimit = 1
+        let entries = try modelContext.fetch(descriptor).first
+        
+        return entries
+    }
+    
+    static func walksTodayCount() async throws -> Int {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfTomorrow = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
+
+        let predicate = #Predicate<DogWalkEntry> {
+            $0.entryDate >= startOfToday && $0.entryDate < startOfTomorrow
+        }
+
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: predicate)
+
+        let entries = try modelContext.fetch(descriptor)
+        return entries.count
     }
 }

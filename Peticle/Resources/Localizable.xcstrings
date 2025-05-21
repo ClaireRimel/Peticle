@@ -1,6 +1,108 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld" : {
+
+    },
+    "%lld min" : {
+
+    },
+    "1 hour" : {
+
+    },
+    "30 minutes" : {
+
+    },
+    "40 minutes" : {
+
+    },
+    "50 minutes" : {
+
+    },
+    "Add" : {
+      "comment" : "Button title when done creating a new dog walk entry"
+    },
+    "Add Activity" : {
+
+    },
+    "Add Detail Last Dog Walk Entry" : {
+
+    },
+    "Add Detail to last Dog Walk Entry" : {
+
+    },
+    "Add New Dog Walk Entry" : {
+
+    },
+    "Add New Dog Walk Entry with a duration" : {
+
+    },
+    "AppIntentsDogWalk" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Done" : {
+      "comment" : "Button title when done editing dog walk entry"
+    },
+    "Duration" : {
+
+    },
+    "Durée" : {
+
+    },
+    "Edit dog walk Entry" : {
+      "comment" : "Navigation title when editing a dog walk entry"
+    },
+    "Goal in min" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "How many dog did interact with?" : {
+
+    },
+    "How many humain did interact with?" : {
+
+    },
+    "How many walk have you done today?" : {
+
+    },
+    "How was dog interration this time?" : {
+
+    },
+    "How was humain interration this time?" : {
+
+    },
+    "Keep track of your walk with your dog\nAdd a new entry to get started." : {
+
+    },
+    "min" : {
+
+    },
+    "New Dog Walk Entry" : {
+      "comment" : "Navigation title when creating a new dog walk entry"
+    },
+    "Opens the app and starts register a new dog walk" : {
+
+    },
+    "Opens the app and udpdate the last dog walk" : {
+
+    },
+    "Pause dog walk activity" : {
+
+    },
+    "Pause walk" : {
+
+    },
+    "Pause your activty" : {
+
+    },
+    "Quick Activity registation" : {
+
+    },
     "Rate the interaction" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -17,6 +119,48 @@
           }
         }
       }
+    },
+    "Resume dog walk activity" : {
+
+    },
+    "Resume walk" : {
+
+    },
+    "Resume your activty" : {
+
+    },
+    "Return the number of walks done today" : {
+
+    },
+    "Set your goal and a notification will pop up when it time to go back" : {
+
+    },
+    "Start an activity" : {
+
+    },
+    "Start dog walk activity" : {
+
+    },
+    "Start walkinging" : {
+
+    },
+    "Stop dog walk activity" : {
+
+    },
+    "Stop the activity and save it" : {
+
+    },
+    "Stop walk" : {
+
+    },
+    "The activity of %lld minutes was added successfully." : {
+
+    },
+    "The amount of minuts tha you want log" : {
+
+    },
+    "time in minutes" : {
+
     }
   },
   "version" : "1.0"

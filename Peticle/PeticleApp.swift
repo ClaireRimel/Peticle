@@ -6,27 +6,26 @@
 //
 
 import SwiftUI
-import SwiftData
+import AppIntents
 
 @main
 struct PeticleApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    let modelContainer = DataModel.shared.modelContainer
+    let navigationManager: NavigationManager
+    
+    init() {
+        let navigationManager = NavigationManager()
+        /// Registration and initialization of an app intent's
+        AppDependencyManager.shared.add(dependency: navigationManager)
+    
+        self.navigationManager = navigationManager
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DogWalkListView()
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(modelContainer)
+        .environment(navigationManager)
     }
 }

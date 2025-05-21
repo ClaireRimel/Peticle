@@ -6,8 +6,15 @@
 //
 
 import Foundation
+import SwiftData
 
-struct InteractionEntity {
-    let interactionCount: Int
-    let interactionRating: InteractionRating
+@Model
+final class InteractionEntity {
+    var interactionCount: Int
+    var interactionRating: InteractionRating
+    
+    init(interactionCount: Int, interactionRating: InteractionRating) {
+        self.interactionCount = interactionCount
+        self.interactionRating = interactionRating
+    }
 }

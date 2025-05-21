@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import CoreLocation
 import CoreSpotlight
 
 @AssistantEntity(schema: .journal.entry)
@@ -22,6 +23,11 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable {
     
     let id: UUID
     var title: String?
+    var message: AttributedString?
+    // Obligatoire to conform to journal
+    var mediaItems: [IntentFile]
+    var location: CLPlacemark?
+
     var entryDate: Date?
     var humainInteraction: InteractionEntity?
     var dogInteraction: InteractionEntity?
@@ -32,6 +38,8 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable {
         entryDate = entry.entryDate
         humainInteraction = entry.humainInteraction
         dogInteraction = entry.dogInteraction
+        message = ""
+        mediaItems = []
     }
 }
 
@@ -60,3 +68,40 @@ struct DogWalkQuery: EntityQuery {
         return entries.map(\.entity)
     }
 }
+
+struct OpenNewDogWalkIIntent: AppIntent {
+    static var title: LocalizedStringResource =  "Add New Dog Walk Entry"
+    static var description = IntentDescription("Opens the app and starts register a new dog walk")
+
+    @Dependency
+    private var navigationManager: NavigationManager
+    
+    static var openAppWhenRun: Bool = true
+    
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        navigationManager.composeNewDogWalkEntry()
+        return .result()
+    }
+}
+
+
+struct OpenLastEntryIIntent: AppIntent {
+    static var title: LocalizedStringResource =  "Add Detail to last Dog Walk Entry"
+    static var description = IntentDescription("Opens the app and udpdate the last dog walk")
+
+    @Dependency
+    private var navigationManager: NavigationManager
+    
+    static var openAppWhenRun: Bool = true
+    
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        try await navigationManager.openLastDogWalkEntry()
+        return .result()
+    }
+}
+
+
+
+

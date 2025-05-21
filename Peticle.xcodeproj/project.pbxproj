@@ -6,14 +6,95 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7E5DF8702DD0B8400080618C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5DF86F2DD0B8400080618C /* WidgetKit.framework */; };
+		7E5DF8722DD0B8400080618C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5DF8712DD0B8400080618C /* SwiftUI.framework */; };
+		7E5DF8832DD0B8420080618C /* peticleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7E5DF8932DD0BFDC0080618C /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8922DD0BFDC0080618C /* BitCollections */; };
+		7E5DF8952DD0BFDC0080618C /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8942DD0BFDC0080618C /* Collections */; };
+		7E5DF8972DD0BFDC0080618C /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8962DD0BFDC0080618C /* DequeModule */; };
+		7E5DF8992DD0BFDC0080618C /* HashTreeCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8982DD0BFDC0080618C /* HashTreeCollections */; };
+		7E5DF89B2DD0BFDC0080618C /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF89A2DD0BFDC0080618C /* HeapModule */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7E5DF8812DD0B8420080618C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E4733D72DD09573006CDCA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E5DF86C2DD0B8400080618C;
+			remoteInfo = peticleWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7E5DF8882DD0B8420080618C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7E5DF8832DD0B8420080618C /* peticleWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7E4733DF2DD09573006CDCA1 /* Peticle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peticle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = peticleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E5DF86F2DD0B8400080618C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		7E5DF8712DD0B8400080618C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7E5DF8842DD0B8420080618C /* Exceptions for "PeticleWidget" folder in "peticleWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
+		};
+		7E6BD0BB2DDDD225001A08E1 /* Exceptions for "Peticle" folder in "peticleWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Intents/DogWalkEntryEntity.swift,
+				Intents/DogWalkIntents.swift,
+				Manager/NavigationManager.swift,
+				Model/DataModel.swift,
+				Model/DogWalkEntry.swift,
+				Model/Enum/InteractionRating.swift,
+				Model/InteractionEntity.swift,
+			);
+			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
+		};
+		7EBA402F2DDDF9040007F8B9 /* Exceptions for "Peticle" folder in "Peticle" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7E4733DE2DD09573006CDCA1 /* Peticle */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7E4733E12DD09573006CDCA1 /* Peticle */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7EBA402F2DDDF9040007F8B9 /* Exceptions for "Peticle" folder in "Peticle" target */,
+				7E6BD0BB2DDDD225001A08E1 /* Exceptions for "Peticle" folder in "peticleWidgetExtension" target */,
+			);
 			path = Peticle;
+			sourceTree = "<group>";
+		};
+		7E5DF8732DD0B8400080618C /* PeticleWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7E5DF8842DD0B8420080618C /* Exceptions for "PeticleWidget" folder in "peticleWidgetExtension" target */,
+			);
+			path = PeticleWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +104,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E5DF8952DD0BFDC0080618C /* Collections in Frameworks */,
+				7E5DF89B2DD0BFDC0080618C /* HeapModule in Frameworks */,
+				7E5DF8932DD0BFDC0080618C /* BitCollections in Frameworks */,
+				7E5DF8992DD0BFDC0080618C /* HashTreeCollections in Frameworks */,
+				7E5DF8972DD0BFDC0080618C /* DequeModule in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E5DF86A2DD0B8400080618C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E5DF8722DD0B8400080618C /* SwiftUI.framework in Frameworks */,
+				7E5DF8702DD0B8400080618C /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				7E4733E12DD09573006CDCA1 /* Peticle */,
+				7E5DF8732DD0B8400080618C /* PeticleWidget */,
+				7E5DF86E2DD0B8400080618C /* Frameworks */,
 				7E4733E02DD09573006CDCA1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +138,18 @@
 			isa = PBXGroup;
 			children = (
 				7E4733DF2DD09573006CDCA1 /* Peticle.app */,
+				7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7E5DF86E2DD0B8400080618C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7E5DF86F2DD0B8400080618C /* WidgetKit.framework */,
+				7E5DF8712DD0B8400080618C /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,20 +162,49 @@
 				7E4733DB2DD09573006CDCA1 /* Sources */,
 				7E4733DC2DD09573006CDCA1 /* Frameworks */,
 				7E4733DD2DD09573006CDCA1 /* Resources */,
+				7E5DF8882DD0B8420080618C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7E5DF8822DD0B8420080618C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				7E4733E12DD09573006CDCA1 /* Peticle */,
 			);
 			name = Peticle;
 			packageProductDependencies = (
+				7E5DF8922DD0BFDC0080618C /* BitCollections */,
+				7E5DF8942DD0BFDC0080618C /* Collections */,
+				7E5DF8962DD0BFDC0080618C /* DequeModule */,
+				7E5DF8982DD0BFDC0080618C /* HashTreeCollections */,
+				7E5DF89A2DD0BFDC0080618C /* HeapModule */,
 			);
 			productName = Peticle;
 			productReference = 7E4733DF2DD09573006CDCA1 /* Peticle.app */;
 			productType = "com.apple.product-type.application";
+		};
+		7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E5DF8852DD0B8420080618C /* Build configuration list for PBXNativeTarget "peticleWidgetExtension" */;
+			buildPhases = (
+				7E5DF8692DD0B8400080618C /* Sources */,
+				7E5DF86A2DD0B8400080618C /* Frameworks */,
+				7E5DF86B2DD0B8400080618C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7E5DF8732DD0B8400080618C /* PeticleWidget */,
+			);
+			name = peticleWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = peticleWidgetExtension;
+			productReference = 7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -83,6 +219,9 @@
 					7E4733DE2DD09573006CDCA1 = {
 						CreatedOnToolsVersion = 16.3;
 					};
+					7E5DF86C2DD0B8400080618C = {
+						CreatedOnToolsVersion = 16.3;
+					};
 				};
 			};
 			buildConfigurationList = 7E4733DA2DD09573006CDCA1 /* Build configuration list for PBXProject "Peticle" */;
@@ -95,18 +234,29 @@
 			);
 			mainGroup = 7E4733D62DD09573006CDCA1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7E4733E02DD09573006CDCA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				7E4733DE2DD09573006CDCA1 /* Peticle */,
+				7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7E4733DD2DD09573006CDCA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E5DF86B2DD0B8400080618C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -123,7 +273,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E5DF8692DD0B8400080618C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7E5DF8822DD0B8420080618C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
+			targetProxy = 7E5DF8812DD0B8420080618C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7E4733EB2DD09575006CDCA1 /* Debug */ = {
@@ -328,6 +493,73 @@
 			};
 			name = Release;
 		};
+		7E5DF8862DD0B8420080618C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BDMB887655;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = peticleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PeticleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yo.Peticle.peticleWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,4";
+			};
+			name = Debug;
+		};
+		7E5DF8872DD0B8420080618C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BDMB887655;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = peticleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PeticleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Yo.Peticle.peticleWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,4";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -349,7 +581,55 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		7E5DF8852DD0B8420080618C /* Build configuration list for PBXNativeTarget "peticleWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E5DF8862DD0B8420080618C /* Debug */,
+				7E5DF8872DD0B8420080618C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7E5DF8922DD0BFDC0080618C /* BitCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = BitCollections;
+		};
+		7E5DF8942DD0BFDC0080618C /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		7E5DF8962DD0BFDC0080618C /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		7E5DF8982DD0BFDC0080618C /* HashTreeCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HashTreeCollections;
+		};
+		7E5DF89A2DD0BFDC0080618C /* HeapModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E5DF8912DD0BF690080618C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HeapModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7E4733D72DD09573006CDCA1 /* Project object */;
 }
