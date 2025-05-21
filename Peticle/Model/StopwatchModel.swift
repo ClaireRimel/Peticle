@@ -13,7 +13,7 @@ class StopwatchViewModel: ObservableObject {
     
     @Published var timeElapsed: Int = 0
     @Published var isRunning = false
-    private var goalInSecound: Int = 0
+    private var goalInSeconds: Int = 0
     private var midGoalInSecound: Int = 0
     private var timer: Timer?
     private var startDate: Date?
@@ -35,8 +35,8 @@ class StopwatchViewModel: ObservableObject {
     func start(with goalInMinute: Int) {
         guard !isRunning else { return }
         
-        goalInSecound = goalInMinute * 60
-        midGoalInSecound = goalInSecound/2
+        goalInSeconds = goalInMinute * 60
+        midGoalInSecound = goalInSeconds/2
         isRunning = true
         
         scheduleNotificationMidTime()
@@ -77,8 +77,8 @@ class StopwatchViewModel: ObservableObject {
     private func scheduleNotificationMidTime() {
         let content = UNMutableNotificationContent()
         content.title = "Time to go back"
-        content.body = "You've reached your stopwatch goal of \(goalInSecound/60) minutes."
-        content.sound = .default
+        content.body = "You've reached your stopwatch goal of \(goalInSeconds/60) minutes"
+        content.sound = .defaultRingtone
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(midGoalInSecound - timeElapsed), repeats: false)
         let request = UNNotificationRequest(identifier: "goalReach", content: content, trigger: trigger)
@@ -87,7 +87,5 @@ class StopwatchViewModel: ObservableObject {
 
     private func removeScheduledNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["goalReach"])
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["stopwatchGoal"])
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["stopwatchError"])
     }
 }

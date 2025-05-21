@@ -24,30 +24,19 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: StartDogWalkIntent(),
             phrases: [
                 "Start a walk in \(.applicationName)",
-                "Start an activity \(.applicationName)"
+                "Start an activity in \(.applicationName)"
             ],
             shortTitle: "Start an activity",
             systemImageName: "timer"
         )
 
         AppShortcut(
-            intent: PauseDogWalkIntent(),
+            intent: LatestActivityIntent(),
             phrases: [
-                "Pause a walk in \(.applicationName)",
-                "Pause the activity \(.applicationName)"
+                "Show me the last activity in \(.applicationName)",
             ],
-            shortTitle: "Pause walk",
-            systemImageName: "pause.fill"
-        )
-
-        AppShortcut(
-            intent: ResumeDogWalkIntent(),
-            phrases: [
-                "Resume a walk in \(.applicationName)",
-                "Resume the activity \(.applicationName)"
-            ],
-            shortTitle: "Resume walk",
-            systemImageName: "play.fill"
+            shortTitle: "Show the last activity",
+            systemImageName: "eye"
         )
         
         AppShortcut(
@@ -72,6 +61,6 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
     }
     
     static var shortcutTileColor: ShortcutTileColor {
-        .grayGreen // Optional: Set a tile color
+        .grayGreen
      }
 }

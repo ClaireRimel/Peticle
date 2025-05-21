@@ -7,46 +7,60 @@
 
 
 import AppIntents
+import SwiftUI
 
 struct StartDogWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Start dog walk activity"
-    static var description = IntentDescription("Set your goal and a notification will pop up when it time to go back")
+    static var title: LocalizedStringResource = "Start a dog walk activity"
+    static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
     
-    @Parameter(title: "Goal in min" )
+    @Parameter(title: "Goal in minute")
     var goaltime: Int
     
-    func perform() async throws -> some IntentResult {
+    func perform() -> some IntentResult {
         StopwatchViewModel.shared.start(with: goaltime)
-        return .result()
-    }
-}
-
-struct PauseDogWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Pause dog walk activity"
-    static var description = IntentDescription("Pause your activty")
         
-    func perform() async throws -> some IntentResult {
-        StopwatchViewModel.shared.pause()
         return .result()
     }
 }
 
-struct ResumeDogWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Resume dog walk activity"
-    static var description = IntentDescription("Resume your activty")
-
-    func perform() async throws -> some IntentResult {
-        StopwatchViewModel.shared.resume()
-        return .result()
+struct LatestActivityIntent: AppIntent {
+    static var title: LocalizedStringResource = "Get the last activity"
+    static var description = IntentDescription("Return the last activity")
+    
+    @MainActor
+    func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> & ShowsSnippetView {
+        
+        let dialog = IntentDialog("Here is your last walk data")
+        let lastEntry = try await DataModelHelper.lastDogEntry()
+        
+        return .result(value: lastEntry?.entity ?? DogWalkEntryEntity.init(DogWalkEntry.init(durationInMinutes: 0)), dialog: dialog) {
+            
+            VStack(alignment: .center) {
+                Text(lastEntry?.entryDate.formatted(date: .numeric, time: .omitted) ?? "ooo")
+                    .font(.system(size: 64))
+                    .padding(10)
+                
+                lastEntry?.dogInteraction.interactionRating.getFusionnedWeatherIcone(with: lastEntry?.humainInteraction.interactionRating ?? InteractionRating.average)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 33, height: 33)
+                    .symbolRenderingMode(.multicolor)
+                    .padding(10)
+            }
+            .background(.green,
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
     }
 }
+
 
 struct StopDogWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Stop dog walk activity"
+    static var title: LocalizedStringResource = "Stop the dog walk activity"
     static var description = IntentDescription("Stop the activity and save it")
         
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog {
         try StopwatchViewModel.shared.stop()
-        return .result()
+        
+        return .result(dialog: "Your activity was registered")
     }
 }

@@ -70,8 +70,8 @@ struct DogWalkQuery: EntityQuery {
 }
 
 struct OpenNewDogWalkIIntent: AppIntent {
-    static var title: LocalizedStringResource =  "Add New Dog Walk Entry"
-    static var description = IntentDescription("Opens the app and starts register a new dog walk")
+    static var title: LocalizedStringResource = "Log a New Dog Walk"
+    static var description = IntentDescription("Opens the app and starts registering a new dog walk")
 
     @Dependency
     private var navigationManager: NavigationManager
@@ -87,8 +87,8 @@ struct OpenNewDogWalkIIntent: AppIntent {
 
 
 struct OpenLastEntryIIntent: AppIntent {
-    static var title: LocalizedStringResource =  "Add Detail to last Dog Walk Entry"
-    static var description = IntentDescription("Opens the app and udpdate the last dog walk")
+    static var title: LocalizedStringResource = "Add Details to the Last Dog Walk Entry"
+    static var description = IntentDescription("Opens the app and updates the last dog walk")
 
     @Dependency
     private var navigationManager: NavigationManager

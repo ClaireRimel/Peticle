@@ -9,19 +9,21 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct peticleWidgetAttributes: ActivityAttributes {
+public struct PeticleWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
-        var emoji: String
+        public var emoji: String
     }
 
-    // Fixed non-changing properties about your activity go here!
-    var name: String
+    public var name: String
+
+    public init(name: String) {
+        self.name = name
+    }
 }
 
-struct peticleWidgetLiveActivity: Widget {
+struct PeticleWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: peticleWidgetAttributes.self) { context in
+        ActivityConfiguration(for: PeticleWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
                 Text("Hello \(context.state.emoji)")
@@ -56,25 +58,19 @@ struct peticleWidgetLiveActivity: Widget {
     }
 }
 
-extension peticleWidgetAttributes {
-    fileprivate static var preview: peticleWidgetAttributes {
-        peticleWidgetAttributes(name: "World")
+extension PeticleWidgetAttributes {
+    fileprivate static var preview: PeticleWidgetAttributes {
+        PeticleWidgetAttributes(name: "World")
     }
 }
 
-extension peticleWidgetAttributes.ContentState {
-    fileprivate static var smiley: peticleWidgetAttributes.ContentState {
-        peticleWidgetAttributes.ContentState(emoji: "😀")
-     }
+public extension PeticleWidgetAttributes.ContentState {
+    static var smiley: PeticleWidgetAttributes.ContentState {
+            .init(emoji: "😀")
+        }
      
-     fileprivate static var starEyes: peticleWidgetAttributes.ContentState {
-         peticleWidgetAttributes.ContentState(emoji: "🤩")
+      static var starEyes: PeticleWidgetAttributes.ContentState {
+         PeticleWidgetAttributes.ContentState(emoji: "🤩")
      }
 }
 
-#Preview("Notification", as: .content, using: peticleWidgetAttributes.preview) {
-   peticleWidgetLiveActivity()
-} contentStates: {
-    peticleWidgetAttributes.ContentState.smiley
-    peticleWidgetAttributes.ContentState.starEyes
-}

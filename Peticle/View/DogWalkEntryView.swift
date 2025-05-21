@@ -55,28 +55,28 @@ struct DogWalkEntryView: View {
         NavigationStack {
             Form {
                 Section {
-                    Picker("How many humain did interact with?", selection: $nbrHumainInteraction) {
+                    Picker("How many humans did you interact with?", selection: $nbrHumainInteraction) {
                         ForEach(0...10, id: \.self) { number in
                             Text("\(number)")
                         }
                     }
                     .pickerStyle(.menu)
                     
-                    Picker("How was humain interration this time?", selection: $humainInteractionRating) {
+                    Picker("How will you rate the human interaction?", selection: $humainInteractionRating) {
                         ForEach(InteractionRating.allCases) { rate in
                             Text(rate.localizedName())
                         }
                     }
                     .pickerStyle(.menu)
                     
-                    Picker("How many dog did interact with?", selection: $nbrDogInteraction) {
+                    Picker("How many dogs did you interact with?", selection: $nbrDogInteraction) {
                         ForEach(0...10, id: \.self) { number in
                             Text("\(number)")
                         }
                     }
                     .pickerStyle(.menu)
 
-                    Picker("How was dog interration this time?", selection: $dogInteractionRating) {
+                    Picker("How will you rate the dog interaction?", selection: $dogInteractionRating) {
                         ForEach(InteractionRating.allCases) { rate in
                             Text(rate.localizedName())
                         }

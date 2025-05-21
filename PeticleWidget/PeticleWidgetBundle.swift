@@ -14,6 +14,6 @@ struct peticleWidgetBundle: WidgetBundle {
         peticleWidget()
         StartWalkControl()
         AddDetailsControl()
-        peticleWidgetLiveActivity()
+        PeticleWidgetLiveActivity()
     }
 }

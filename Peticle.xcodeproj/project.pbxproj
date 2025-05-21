@@ -65,6 +65,7 @@
 				Manager/NavigationManager.swift,
 				Model/DataModel.swift,
 				Model/DogWalkEntry.swift,
+				Model/Enum/DurationPreset.swift,
 				Model/Enum/InteractionRating.swift,
 				Model/InteractionEntity.swift,
 			);

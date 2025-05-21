@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 import CoreSpotlight
 import Collections
+import AppIntents
 
 struct DogWalkListView: View {
     @Environment(NavigationManager.self) private var navigation
@@ -18,16 +19,7 @@ struct DogWalkListView: View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        navigation.composeNewDogWalkEntry()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-            .navigationTitle("AppIntentsDogWalk")
+            .navigationTitle("DogWalks Chronicle")
             
             .sheet(item: $navigation.dogWalkEntry,
                    onDismiss: {
@@ -59,6 +51,9 @@ struct FilteredDogWalkListView: View {
     @Query(sort: \DogWalkEntry.entryDate, order: .reverse)
     private var dogWalkEntries: [DogWalkEntry]
     private var isInSearchMode = false
+    
+    /// A binding to a user preference indicating whether they hide the Siri tip.
+    @AppStorage("displaySiriTip") private var displaySiriTip: Bool = true
 
     @Environment(\.dismissSearch) private var dismissSearch
 
@@ -107,9 +102,17 @@ struct FilteredDogWalkListView: View {
                 }
                 else {
                     ContentUnavailableView {
-                        Label("Start walkinging", systemImage: "figure.walk.circle.fill")
+                        Label("Start walking", systemImage: "figure.walk.circle.fill")
+                    
                     } description: {
-                        Text("Keep track of your walk with your dog\nAdd a new entry to get started.")
+                        Text("Keep track of your walks with your dog \nAdd a new entry to get started")
+                        
+                        /**
+                         `SiriTipView` pairs with an intent the system uses as an App Shortcut. It provides a small view with the phrase from the
+                         App Shortcut so that people learn they can view their favorite trails quickly by speaking the phrase to Siri with no
+                         additional setup. The `isVisible` parameter is optional, but recommended to enable people to hide the view.
+                         */
+                        SiriTipView(intent: StartDogWalkIntent(), isVisible: $displaySiriTip)
                     }
                 }
             }

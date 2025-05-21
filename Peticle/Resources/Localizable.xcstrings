@@ -22,25 +22,22 @@
     "Add" : {
       "comment" : "Button title when done creating a new dog walk entry"
     },
+    "Add a New Dog Walk Entry with a Duration" : {
+
+    },
     "Add Activity" : {
 
     },
-    "Add Detail Last Dog Walk Entry" : {
-
-    },
-    "Add Detail to last Dog Walk Entry" : {
+    "Add Details to the Last Dog Walk Entry" : {
 
     },
     "Add New Dog Walk Entry" : {
 
     },
-    "Add New Dog Walk Entry with a duration" : {
-
-    },
-    "AppIntentsDogWalk" : {
-
-    },
     "Cancel" : {
+
+    },
+    "DogWalks Chronicle" : {
 
     },
     "Done" : {
@@ -49,34 +46,37 @@
     "Duration" : {
 
     },
-    "Durée" : {
-
-    },
     "Edit dog walk Entry" : {
       "comment" : "Navigation title when editing a dog walk entry"
     },
-    "Goal in min" : {
+    "Get the last activity" : {
 
     },
-    "Hello, World!" : {
+    "Goal in minute" : {
 
     },
-    "How many dog did interact with?" : {
+    "Here is your last walk data" : {
 
     },
-    "How many humain did interact with?" : {
+    "How many dogs did you interact with?" : {
 
     },
-    "How many walk have you done today?" : {
+    "How many humans did you interact with?" : {
 
     },
-    "How was dog interration this time?" : {
+    "How many walks have you done today?" : {
 
     },
-    "How was humain interration this time?" : {
+    "How will you rate the dog interaction?" : {
 
     },
-    "Keep track of your walk with your dog\nAdd a new entry to get started." : {
+    "How will you rate the human interaction?" : {
+
+    },
+    "Keep track of your walks with your dog \nAdd a new entry to get started" : {
+
+    },
+    "Log a New Dog Walk" : {
 
     },
     "min" : {
@@ -85,22 +85,13 @@
     "New Dog Walk Entry" : {
       "comment" : "Navigation title when creating a new dog walk entry"
     },
-    "Opens the app and starts register a new dog walk" : {
+    "Opens the app and starts registering a new dog walk" : {
 
     },
-    "Opens the app and udpdate the last dog walk" : {
+    "Opens the app and updates the last dog walk" : {
 
     },
-    "Pause dog walk activity" : {
-
-    },
-    "Pause walk" : {
-
-    },
-    "Pause your activty" : {
-
-    },
-    "Quick Activity registation" : {
+    "Quick Activity Registration" : {
 
     },
     "Rate the interaction" : {
@@ -120,46 +111,46 @@
         }
       }
     },
-    "Resume dog walk activity" : {
+    "Return the last activity" : {
 
     },
-    "Resume walk" : {
+    "Return the number of walks completed today" : {
 
     },
-    "Resume your activty" : {
+    "Set your goal, and a notification will pop up when it's time to go back" : {
 
     },
-    "Return the number of walks done today" : {
+    "Show the last activity" : {
 
     },
-    "Set your goal and a notification will pop up when it time to go back" : {
+    "Start a dog walk activity" : {
 
     },
     "Start an activity" : {
 
     },
-    "Start dog walk activity" : {
-
-    },
-    "Start walkinging" : {
-
-    },
-    "Stop dog walk activity" : {
+    "Start walking" : {
 
     },
     "Stop the activity and save it" : {
 
     },
+    "Stop the dog walk activity" : {
+
+    },
     "Stop walk" : {
 
     },
-    "The activity of %lld minutes was added successfully." : {
+    "The activity of %lld minutes has been added successfully" : {
 
     },
-    "The amount of minuts tha you want log" : {
+    "The amount of minutes that you want to log" : {
 
     },
     "time in minutes" : {
+
+    },
+    "Your activity was registered" : {
 
     }
   },

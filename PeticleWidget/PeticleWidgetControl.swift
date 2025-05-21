@@ -31,7 +31,7 @@ struct AddDetailsControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: Self.kind) {
             ControlWidgetButton(action: AddDetailDogWalkIntent()) {
-                Label("Add Detail", systemImage: "plus")
+                Label("Add Detail", systemImage: "pencil")
                 
             }
         }
