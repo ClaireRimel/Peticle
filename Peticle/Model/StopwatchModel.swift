@@ -44,19 +44,6 @@ class StopwatchViewModel: ObservableObject {
         startDate = .now
     }
     
-    // sert à rien
-    func pause() {
-        timer?.invalidate()
-        isRunning = false
-    }
-    
-    // sert à rien
-    func resume() {
-        guard !isRunning else { return }
-
-        isRunning = false
-    }
-    
     private func reset() {
         pause()
         timeElapsed = 0
@@ -82,7 +69,7 @@ class StopwatchViewModel: ObservableObject {
     private func scheduleNotificationMidTime() {
         let content = UNMutableNotificationContent()
         content.title = "Time to go back"
-        content.body = "You've reached your stopwatch goal of \(goalInSeconds/60) minutes"
+        content.body = "You've reached your stopwatch goal of \((goalInSeconds/60)/2) minutes"
         content.sound = .defaultRingtone
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(midGoalInSecound - timeElapsed), repeats: false)

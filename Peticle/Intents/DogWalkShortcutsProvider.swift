@@ -42,7 +42,7 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: OpenLastEntryIntent(),
             phrases: [
-                "Edit the last Activity in \(.applicationName)",
+                "Edit the last walk activity in \(.applicationName)",
             ],
             shortTitle: "Edit last activity",
             systemImageName: "pencil.circle"
