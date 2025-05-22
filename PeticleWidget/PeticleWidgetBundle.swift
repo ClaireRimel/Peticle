@@ -12,7 +12,7 @@ import SwiftUI
 struct peticleWidgetBundle: WidgetBundle {
     var body: some Widget {
         peticleWidget()
-        StartWalkControl()
+        NewDogWalkControl()
         AddDetailsControl()
         PeticleWidgetLiveActivity()
     }

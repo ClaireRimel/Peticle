@@ -58,7 +58,7 @@ struct StopDogWalkIntent: AppIntent {
     static var title: LocalizedStringResource = "Stop the dog walk activity"
     static var description = IntentDescription("Stop the activity and save it")
         
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    func perform() async throws -> some ProvidesDialog {
         try StopwatchViewModel.shared.stop()
         
         return .result(dialog: "Your activity was registered")

@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import CoreSpotlight
 
 class StopwatchViewModel: ObservableObject {
     static let shared = StopwatchViewModel()
@@ -66,11 +67,15 @@ class StopwatchViewModel: ObservableObject {
         guard let startDate else { return }
         let minutesPassed = Calendar.current.dateComponents([.minute], from: startDate, to: .now).minute ?? 0
 
-        _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
+        let newEntry = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
                                          humainInteraction: InteractionEntity(interactionCount: 0,
                                                                               interactionRating: .none),
                                          dogInteraction: InteractionEntity(interactionCount: 0,
                                                                            interactionRating: .none))
+        Task {
+            try? await CSSearchableIndex.default().indexAppEntities([newEntry.entity])
+        }
+
         reset()
     }
     

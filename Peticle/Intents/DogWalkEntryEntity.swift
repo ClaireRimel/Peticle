@@ -10,7 +10,7 @@ import CoreLocation
 import CoreSpotlight
 
 @AssistantEntity(schema: .journal.entry)
-/// A SwiftData entity representing a logged dog walk, used in Journal integration and App Intents
+/// A SwiftData entity representing a logged dog walk, used in app integration and App Intents
 struct DogWalkEntryEntity: IndexedEntity, Identifiable {
     
     /// The default query used to fetch dog walk entries, for use with App Intents
@@ -68,40 +68,3 @@ struct DogWalkQuery: EntityQuery {
         return entries.map(\.entity)
     }
 }
-
-struct OpenNewDogWalkIIntent: AppIntent {
-    static var title: LocalizedStringResource = "Log a New Dog Walk"
-    static var description = IntentDescription("Opens the app and starts registering a new dog walk")
-
-    @Dependency
-    private var navigationManager: NavigationManager
-    
-    static var openAppWhenRun: Bool = true
-    
-    @MainActor
-    func perform() async throws -> some IntentResult {
-        navigationManager.composeNewDogWalkEntry()
-        return .result()
-    }
-}
-
-
-struct OpenLastEntryIIntent: AppIntent {
-    static var title: LocalizedStringResource = "Add Details to the Last Dog Walk Entry"
-    static var description = IntentDescription("Opens the app and updates the last dog walk")
-
-    @Dependency
-    private var navigationManager: NavigationManager
-    
-    static var openAppWhenRun: Bool = true
-    
-    @MainActor
-    func perform() async throws -> some IntentResult {
-        try await navigationManager.openLastDogWalkEntry()
-        return .result()
-    }
-}
-
-
-
-

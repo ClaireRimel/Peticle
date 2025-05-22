@@ -9,16 +9,14 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-struct StartWalkControl: ControlWidget {
+struct NewDogWalkControl: ControlWidget {
     static let kind: String = "com.Yo.Peticle.startWalk"
     
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: Self.kind){
             ControlWidgetButton(action: NewDogWalkIntent()) {
                 Label("Create Entry", systemImage: "square.and.arrow.down")
-                
             }
-               
         }
         .displayName("Compose")
         .description("A control that starts register a new walk activity")

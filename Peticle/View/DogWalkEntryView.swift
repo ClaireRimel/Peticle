@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreSpotlight
 
 struct DogWalkEntryView: View {
     enum DogWalkEntryViewMode: CaseIterable{
@@ -104,6 +105,9 @@ struct DogWalkEntryView: View {
                     Button(mode.buttonTitle()) {
                         save()
                         
+                        Task {
+                            try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
+                        }
                         
                         dismiss()
                     }

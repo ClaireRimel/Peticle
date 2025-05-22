@@ -62,6 +62,8 @@
 				Assets.xcassets,
 				Intents/DogWalkEntryEntity.swift,
 				Intents/DogWalkIntents.swift,
+				Intents/WidgetControlAppIntent/AddDetailDogWalkIntent.swift,
+				Intents/WidgetControlAppIntent/NewDogWalkIntent.swift,
 				Manager/NavigationManager.swift,
 				Model/DataModel.swift,
 				Model/DogWalkEntry.swift,

@@ -37,6 +37,15 @@
     "Cancel" : {
 
     },
+    "Create New Entry with details" : {
+
+    },
+    "Dog Interaction Count" : {
+
+    },
+    "Dog Interaction Rating" : {
+
+    },
     "DogWalks Chronicle" : {
 
     },
@@ -46,8 +55,14 @@
     "Duration" : {
 
     },
+    "Duration In Minutes" : {
+
+    },
     "Edit dog walk Entry" : {
       "comment" : "Navigation title when editing a dog walk entry"
+    },
+    "Edit last activity" : {
+
     },
     "Get the last activity" : {
 
@@ -71,6 +86,12 @@
 
     },
     "How will you rate the human interaction?" : {
+
+    },
+    "Humain Interaction Count" : {
+
+    },
+    "Humain Interaction Rating" : {
 
     },
     "Keep track of your walks with your dog \nAdd a new entry to get started" : {
