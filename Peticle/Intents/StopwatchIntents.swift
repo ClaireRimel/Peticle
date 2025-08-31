@@ -16,21 +16,27 @@ struct StartDogWalkIntent: AppIntent {
     @Parameter(title: "Goal in minute")
     var goaltime: Int
     
-    func perform() -> some IntentResult {
-        StopwatchViewModel.shared.start(with: goaltime)
+    func perform() async -> some IntentResult {
+        // Start the stopwatch
+        await StopwatchViewModel.shared.start(with: goaltime)
         
         return .result()
     }
 }
 
 struct StopDogWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Stop the dog walk activity"
-    static var description = IntentDescription("Stop the activity and save it")
-
+    static var title: LocalizedStringResource = "Stop the current dog walk activity"
+    static var description = IntentDescription("Stop the current walk and save the progress")
+    
     func perform() async -> some ProvidesDialog {
-        StopwatchViewModel.shared.stop()
-        
-        return .result(dialog: "Your activity was registered")
+        // Save and Stop the activity
+        do {
+            try await StopwatchViewModel.shared.saveEntryAndStopActivity()
+            return .result(dialog: "Your activity was registered")
+
+        } catch {
+            return .result(dialog: "Something bad happened: \(error.localizedDescription)")
+        }
     }
 }
 

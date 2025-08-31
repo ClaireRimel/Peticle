@@ -129,6 +129,9 @@
     "Show the last activity" : {
 
     },
+    "Something bad happened: %@" : {
+
+    },
     "Start a dog walk activity" : {
 
     },
@@ -138,10 +141,10 @@
     "Start walking" : {
 
     },
-    "Stop the activity and save it" : {
+    "Stop the current dog walk activity" : {
 
     },
-    "Stop the dog walk activity" : {
+    "Stop the current walk and save the progress" : {
 
     },
     "Stop walk" : {

@@ -9,6 +9,7 @@ import Foundation
 import UserNotifications
 import CoreSpotlight
 
+@MainActor
 class StopwatchViewModel: ObservableObject {
     static let shared = StopwatchViewModel()
     
@@ -18,7 +19,7 @@ class StopwatchViewModel: ObservableObject {
     private var midGoalInSeconds: Int = 0
     private var timer: Timer?
     private var startDate: Date?
-
+    
     init() {
         requestNotificationPermission()
     }
@@ -30,7 +31,7 @@ class StopwatchViewModel: ObservableObject {
     
     // MARK: - Notification Permission
     private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { [weak self] granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
             DispatchQueue.main.async {
                 if let error = error {
                     print("⚠️ Notification auth error: \(error)")
@@ -53,6 +54,8 @@ class StopwatchViewModel: ObservableObject {
         isRunning = true
         
         scheduleNotificationMidTime()
+        scheduleCompletionNotification()
+        
         startDate = .now
         
         startTimer()
@@ -60,7 +63,9 @@ class StopwatchViewModel: ObservableObject {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateTimer()
+            Task { @MainActor in
+                self?.updateTimer()
+            }
         }
     }
     
@@ -86,14 +91,21 @@ class StopwatchViewModel: ObservableObject {
         isRunning = false
         timer?.invalidate()
         timer = nil
-        
-        // Schedule completion notification
-        scheduleCompletionNotification()
-        
+    
         // Reset after a short delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.reset()
         }
+    }
+    
+    func saveEntryAndStopActivity() throws {
+        guard let startDate else { return }
+        let minutesPassed = Calendar.current.dateComponents([.minute], from: startDate, to: .now).minute ?? 0
+        
+        _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
+                                         humainInteraction: InteractionEntity(interactionRating: .none),
+                                         dogInteraction: InteractionEntity(interactionRating: .none))
+        stop()
     }
     
     func pause() {
@@ -133,7 +145,7 @@ class StopwatchViewModel: ObservableObject {
         content.body = "Congratulations! You've reached your walking goal."
         content.sound = .default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(goalInSeconds), repeats: false)
         let request = UNNotificationRequest(identifier: "goalCompletion", content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
@@ -143,7 +155,8 @@ class StopwatchViewModel: ObservableObject {
         }
     }
     
-    private func removeScheduledNotification() {
+    // This method needs to be non-actor-isolated since it's called from deinit
+    nonisolated private func removeScheduledNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["midGoal", "goalCompletion"])
     }
     
