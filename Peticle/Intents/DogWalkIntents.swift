@@ -47,14 +47,12 @@ struct AddActivityIntent: AppIntent {
     
     @Parameter(title: "Duration", description: "The amount of minutes that you want to log")
     var duration: DurationPreset
-    
+        
     func perform() async throws -> some ProvidesDialog {
         let minutes = duration.minutes
         let newEntry = try DataModelHelper.newEntry(durationInMinutes: minutes,
-                                         humainInteraction: InteractionEntity(interactionCount: 0,
-                                                                              interactionRating: .none),
-                                         dogInteraction: InteractionEntity(interactionCount: 0,
-                                                                           interactionRating: .none))
+                                         humainInteraction: InteractionEntity(interactionRating: .none),
+                                         dogInteraction: InteractionEntity(interactionRating: .none))
         try? await CSSearchableIndex.default().indexAppEntities([newEntry.entity])
 
         return .result(dialog: "The activity of \(minutes) minutes has been added successfully")

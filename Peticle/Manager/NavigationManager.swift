@@ -36,4 +36,8 @@ final class NavigationManager {
         }
         modifyEntry = latestEntry
     }
+
+    func navigateToRoot() {
+        dogWalkNavigationPath.removeLast(dogWalkNavigationPath.count)
+    }
 }

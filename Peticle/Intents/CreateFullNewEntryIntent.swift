@@ -16,13 +16,9 @@ struct CreateFullNewEntryIntent: AppIntent {
     @Parameter(title: "Duration In Minutes")
     var duration: Int?
     
-    @Parameter(title: "Humain Interaction Count")
-    var humainInteractionCount: Int?
     @Parameter(title: "Humain Interaction Rating")
     var humainInteractionRating: InteractionRating?
 
-    @Parameter(title: "Dog Interaction Count")
-    var dogInteractionCount: Int?
     @Parameter(title: "Dog Interaction Rating")
     var dogInteractionRating: InteractionRating?
 
@@ -31,10 +27,8 @@ struct CreateFullNewEntryIntent: AppIntent {
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity> {
         do {
             let entry = try DataModelHelper.newEntry(durationInMinutes: duration ?? 0,
-                                                     humainInteraction: InteractionEntity(interactionCount: humainInteractionCount ?? 0,
-                                                                                          interactionRating: humainInteractionRating ?? .none),
-                                                     dogInteraction: InteractionEntity(interactionCount: dogInteractionCount ?? 0,
-                                                                                       interactionRating: dogInteractionRating ?? .none))
+                                                     humainInteraction: InteractionEntity(interactionRating: humainInteractionRating ?? .none),
+                                                     dogInteraction: InteractionEntity(interactionRating: dogInteractionRating ?? .none))
             
             try? await CSSearchableIndex.default().indexAppEntities([entry.entity])
 

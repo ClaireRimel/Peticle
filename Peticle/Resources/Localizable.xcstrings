@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld" : {
-
-    },
     "%lld min" : {
 
     },
@@ -40,9 +37,6 @@
     "Create New Entry with details" : {
 
     },
-    "Dog Interaction Count" : {
-
-    },
     "Dog Interaction Rating" : {
 
     },
@@ -73,12 +67,6 @@
     "Here is your last walk data" : {
 
     },
-    "How many dogs did you interact with?" : {
-
-    },
-    "How many humans did you interact with?" : {
-
-    },
     "How many walks have you done today?" : {
 
     },
@@ -86,9 +74,6 @@
 
     },
     "How will you rate the human interaction?" : {
-
-    },
-    "Humain Interaction Count" : {
 
     },
     "Humain Interaction Rating" : {

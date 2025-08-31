@@ -18,12 +18,16 @@ final class DogWalkEntry: Identifiable {
     
     init(entryDate: Date = .now,
          durationInMinutes: Int,
-         humainInteraction: InteractionEntity = InteractionEntity(interactionCount: 0, interactionRating: .none) ,
-         dogInteraction: InteractionEntity = InteractionEntity(interactionCount: 0, interactionRating: .none)
+         humainInteraction: InteractionEntity = InteractionEntity(interactionRating: .none),
+         dogInteraction: InteractionEntity = InteractionEntity(interactionRating: .none)
     ) {
+        // Validate and sanitize inputs
+        let safeDuration = max(0, min(durationInMinutes, 1440)) // Max 24 hours
+        let safeDate = entryDate
+        
         dogWalkID = UUID()
-        self.entryDate = entryDate
-        self.durationInMinutes = durationInMinutes
+        self.entryDate = safeDate
+        self.durationInMinutes = safeDuration
         self.humainInteraction = humainInteraction
         self.dogInteraction = dogInteraction
     }

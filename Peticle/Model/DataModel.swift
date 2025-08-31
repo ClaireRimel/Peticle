@@ -77,3 +77,15 @@ class DataModelHelper {
         return entries.count
     }
 }
+
+// MARK: - Custom Errors
+enum DataModelError: LocalizedError {
+    case invalidDuration(Int)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidDuration(let duration):
+            return "Invalid duration: \(duration) minutes. Duration must be between 0 and 1440 minutes."
+        }
+    }
+}

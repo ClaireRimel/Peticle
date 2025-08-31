@@ -10,11 +10,20 @@ import SwiftData
 
 @Model
 final class InteractionEntity {
-    var interactionCount: Int
     var interactionRating: InteractionRating
     
-    init(interactionCount: Int, interactionRating: InteractionRating) {
-        self.interactionCount = interactionCount
+    init(interactionRating: InteractionRating) {
         self.interactionRating = interactionRating
+    }
+}
+
+extension InteractionEntity {
+    // MARK: - Validation Methods
+    var isValid: Bool {
+        return true // No validation needed for rating only
+    }
+    
+    var description: String {
+        return interactionRating.localizedName()
     }
 }

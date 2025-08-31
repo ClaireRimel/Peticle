@@ -33,9 +33,7 @@ struct DogWalkEntryView: View {
     @Environment(\.dismiss) var dismiss
     var mode: DogWalkEntryViewMode
     
-    @State private var nbrHumainInteraction: Int
     @State private var humainInteractionRating: InteractionRating
-    @State private var nbrDogInteraction: Int
     @State private var dogInteractionRating: InteractionRating
     @State private var durationInMinute: String
 
@@ -45,9 +43,7 @@ struct DogWalkEntryView: View {
     init(dogWalkEntry: DogWalkEntry, mode: DogWalkEntryViewMode = .create) {
         self.dogWalkEntry = dogWalkEntry
         self.mode = mode
-        nbrHumainInteraction = dogWalkEntry.humainInteraction.interactionCount
         humainInteractionRating = dogWalkEntry.humainInteraction.interactionRating
-        nbrDogInteraction = dogWalkEntry.dogInteraction.interactionCount
         dogInteractionRating = dogWalkEntry.dogInteraction.interactionRating
         durationInMinute = dogWalkEntry.durationInMinutes.description
     }
@@ -56,13 +52,6 @@ struct DogWalkEntryView: View {
         NavigationStack {
             Form {
                 Section {
-                    Picker("How many humans did you interact with?", selection: $nbrHumainInteraction) {
-                        ForEach(0...10, id: \.self) { number in
-                            Text("\(number)")
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    
                     Picker("How will you rate the human interaction?", selection: $humainInteractionRating) {
                         ForEach(InteractionRating.allCases) { rate in
                             Text(rate.localizedName())
@@ -70,13 +59,6 @@ struct DogWalkEntryView: View {
                     }
                     .pickerStyle(.menu)
                     
-                    Picker("How many dogs did you interact with?", selection: $nbrDogInteraction) {
-                        ForEach(0...10, id: \.self) { number in
-                            Text("\(number)")
-                        }
-                    }
-                    .pickerStyle(.menu)
-
                     Picker("How will you rate the dog interaction?", selection: $dogInteractionRating) {
                         ForEach(InteractionRating.allCases) { rate in
                             Text(rate.localizedName())
@@ -122,9 +104,7 @@ struct DogWalkEntryView: View {
     }
 
     private func save() {
-        dogWalkEntry.humainInteraction.interactionCount = nbrHumainInteraction
         dogWalkEntry.humainInteraction.interactionRating = humainInteractionRating
-        dogWalkEntry.dogInteraction.interactionCount = nbrDogInteraction
         dogWalkEntry.dogInteraction.interactionRating = dogInteractionRating
         
         dogWalkEntry.durationInMinutes = Int(durationInMinute) ?? 0

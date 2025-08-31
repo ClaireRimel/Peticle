@@ -33,13 +33,12 @@ struct DogWalkEntryCellView: View {
                 .symbolRenderingMode(.multicolor)
                 .foregroundColor(.gray)
                 .symbolEffect(.bounce)
-      
         }
     }
 }
 
 #Preview {
     DogWalkEntryCellView(dogWalkEntry:DogWalkEntry(durationInMinutes: 23,
-                                                   humainInteraction: InteractionEntity.init(interactionCount: 2, interactionRating: .good),
-                                                   dogInteraction:  InteractionEntity.init(interactionCount: 2, interactionRating: .good)))
+                                                   humainInteraction: InteractionEntity.init(interactionRating: .good),
+                                                   dogInteraction:  InteractionEntity.init(interactionRating: .good)))
 }
