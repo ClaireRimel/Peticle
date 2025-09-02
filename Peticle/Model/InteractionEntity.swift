@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class InteractionEntity {
+final class InteractionEntity: Sendable {
     var interactionRating: InteractionRating
     
     init(interactionRating: InteractionRating) {
