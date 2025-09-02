@@ -9,37 +9,33 @@ import AppIntents
 import CoreLocation
 import CoreSpotlight
 
-@AssistantEntity(schema: .journal.entry)
 /// A SwiftData entity representing a logged dog walk, used in app integration and App Intents
-struct DogWalkEntryEntity: IndexedEntity, Identifiable {
+struct DogWalkEntryEntity: IndexedEntity, Identifiable, AppEntity {
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "DogWalkEntry Entity")
     
     /// The default query used to fetch dog walk entries, for use with App Intents
     static let defaultQuery = DogWalkQuery()
     
     /// Provides a display name for this entry, shown in Shortcuts or Siri
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(stringLiteral: title ?? "No Title")
+        DisplayRepresentation(stringLiteral: "\(String(describing: entryDate?.formatted(date: .abbreviated, time: .shortened)))")
     }
     
     let id: UUID
-    var title: String?
-    var message: AttributedString?
-    // Obligatoire to conform to journal
-    var mediaItems: [IntentFile]
-    var location: CLPlacemark?
-
+    
+    @Property(indexingKey: \.addedDate)
     var entryDate: Date?
+    
+    @Property var durationInMinutes: Int
     var humainInteraction: InteractionEntity?
     var dogInteraction: InteractionEntity?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID
-        title = entry.entryDate.formatted(date: .abbreviated, time: .shortened)
         entryDate = entry.entryDate
+        durationInMinutes = entry.durationInMinutes
         humainInteraction = entry.humainInteraction
         dogInteraction = entry.dogInteraction
-        message = ""
-        mediaItems = []
     }
 }
 
@@ -47,13 +43,15 @@ extension DogWalkEntryEntity {
     /// A Spotlight compatible attribute set used for indexing this entry
     var attributeSet: CSSearchableItemAttributeSet {
         let attributeSet = defaultAttributeSet
-        attributeSet.title = title
+        attributeSet.title = String(describing: durationInMinutes)
     
         return attributeSet
     }
 }
 
+
 /// A query that supports App Intents like Siri and Shortcuts, used to fetch or suggest dog walk entries
+/// EntityQuery:  protocol for defining how to fetch entities, either by ID or suggestion.
 struct DogWalkQuery: EntityQuery {
     @MainActor
     /// Returns the list of dog walk entries matching the given identifiers
@@ -66,5 +64,14 @@ struct DogWalkQuery: EntityQuery {
     func suggestedEntities() async throws -> [DogWalkEntryEntity] {
         let entries = try await DataModelHelper.dogEntries(limit: 5)
         return entries.map(\.entity)
+    }
+}
+
+/// EnumerableEntityQuery:  A specialization that lets the system enumerate all entities
+/// useful when you want the full list (like showing all playlists, contacts, devices…).
+extension DogWalkQuery: EnumerableEntityQuery {
+    func allEntities() async throws -> [DogWalkEntryEntity] {
+        let walks = try await DataModelHelper.allDogEntries()
+        return walks.map(\.entity)
     }
 }

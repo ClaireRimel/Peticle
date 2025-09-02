@@ -19,6 +19,7 @@ actor DataModel {
         } catch {
             fatalError("Failed to create the model container: \(error)")
         }
+        
         return modelContainer
     }
 }
@@ -31,6 +32,7 @@ class DataModelHelper {
                                      dogInteraction: dogInteraction)
         modelContext.insert(entry)
         try modelContext.save()
+        
         return entry
     }
     
@@ -39,6 +41,7 @@ class DataModelHelper {
     static func dogWalkEntries(for identifiers: [UUID]) async throws -> [DogWalkEntry] {
         let modelContext = DataModel.shared.modelContainer.mainContext
         let entries = try modelContext.fetch(FetchDescriptor<DogWalkEntry>(predicate: #Predicate { identifiers.contains($0.dogWalkID) }))
+        
         return entries
     }
 
@@ -47,6 +50,7 @@ class DataModelHelper {
         var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
         descriptor.fetchLimit = limit
         let entries = try modelContext.fetch(descriptor)
+        
         return entries
     }
     
@@ -57,6 +61,14 @@ class DataModelHelper {
         var descriptor = FetchDescriptor<DogWalkEntry>(sortBy: [SortDescriptor(\.entryDate, order: .reverse)])
         descriptor.fetchLimit = 1
         let entries = try modelContext.fetch(descriptor).first
+        
+        return entries
+    }
+    
+    static func allDogEntries() async throws -> [DogWalkEntry] {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
+        let entries = try modelContext.fetch(descriptor)
         
         return entries
     }
