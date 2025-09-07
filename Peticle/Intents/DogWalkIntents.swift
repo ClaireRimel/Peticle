@@ -7,36 +7,54 @@
 
 import AppIntents
 import CoreSpotlight
+import SwiftUI
 
-struct OpenNewDogWalkIIntent: AppIntent {
+struct CreateNewDogWalkIIntent: AppIntent {
     static var title: LocalizedStringResource = "Log a New Dog Walk"
-    static var description = IntentDescription("Opens the app and starts registering a new dog walk")
+    static var description = IntentDescription("Register manually a new dog walk with interaction")
+    
+    @Parameter(title: "Dog Walk")
+    var target: DogWalkEntryEntity
 
-    @Dependency
-    private var navigationManager: NavigationManager
-    
-    // Use to wake up the app
-    static var openAppWhenRun: Bool = true
-    
     @MainActor
     func perform() async throws -> some IntentResult {
-        navigationManager.composeNewDogWalkEntry()
+       _ = try DataModelHelper.newEntry(durationInMinutes: target.durationInMinutes,
+                                     humainInteraction: target.humainInteraction ?? .none,
+                                     dogInteraction: target.dogInteraction ?? .none)
         return .result()
     }
 }
 
-struct OpenLastEntryIntent: AppIntent {
+struct OpenEntryIntent: OpenIntent {
+    init() {}
+    
+    init(target: DogWalkEntryEntity) {
+        self.target = target
+    }
+    
+    typealias Value = DogWalkEntryEntity
+    
     static var title: LocalizedStringResource = "Add Details to the Last Dog Walk Entry"
     static var description = IntentDescription("Opens the app and updates the last dog walk")
-
-    @Dependency
-    private var navigationManager: NavigationManager
     
-    static var openAppWhenRun: Bool = true
+    @Parameter(title: "Dog Walk")
+    var target: DogWalkEntryEntity
+    
+    // Wakes up the app and brings it to foreground (for iOS 17–25)
+    static let openAppWhenRun = true
+    
+    // Wakes up and foregrounds app (for iOS 17–25)
+    static let supportedModes: IntentModes = [.foreground(.immediate)]
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        try await navigationManager.openLastDogWalkEntry()
+        // Get NavigationManager from AppDependencyManager
+        guard let navigationManager: NavigationManager =
+                AppDependencyManager.shared.get() else {
+            throw IntentError.message("NavigationManager not available")
+        }
+        
+        try await navigationManager.openEditDogWalk(for: target.id)
         return .result()
     }
 }

@@ -12,7 +12,10 @@ struct NewDogWalkIntent: AppIntent {
     
     static var isDiscoverable = false
     
-    func perform() async throws -> some OpensIntent {
-        return .result(opensIntent: OpenNewDogWalkIIntent())
+    @Parameter(title: "Dog Walk")
+    var target: DogWalkEntryEntity
+
+    func perform() async throws -> some IntentResult {
+        return .result(opensIntent: CreateNewDogWalkIIntent(target: $target))
     }
 }

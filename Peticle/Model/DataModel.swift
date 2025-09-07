@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-actor DataModel {
+actor DataModel: Sendable {
     static let shared = DataModel()
     private init() {}
     
@@ -39,12 +39,19 @@ class DataModelHelper {
     @MainActor
     // Set to MainActor, because it is used with OpenIntent
     static func dogWalkEntries(for identifiers: [UUID]) async throws -> [DogWalkEntry] {
-        let modelContext = DataModel.shared.modelContainer.mainContext
-        let entries = try modelContext.fetch(FetchDescriptor<DogWalkEntry>(predicate: #Predicate { identifiers.contains($0.dogWalkID) }))
-        
-        return entries
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let allEntries = try modelContext.fetch(FetchDescriptor<DogWalkEntry>())
+      
+        return allEntries.filter { identifiers.contains($0.dogWalkID) }
     }
-
+    
+    static func dogWalkEntry(for identifier: UUID) async throws -> DogWalkEntry? {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let entry = try modelContext.fetch(FetchDescriptor<DogWalkEntry>(predicate: #Predicate { identifier == $0.dogWalkID })).first
+        
+        return entry
+    }
+    
     static func dogEntries(limit: Int) async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
@@ -52,6 +59,28 @@ class DataModelHelper {
         let entries = try modelContext.fetch(descriptor)
         
         return entries
+    }
+    
+    @MainActor
+    static func modify(entryWalk: DogWalkEntry) async throws  {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let dogWalkID = entryWalk.dogWalkID
+
+        var descriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.dogWalkID == dogWalkID }
+        )
+        descriptor.fetchLimit = 1
+        
+        guard let entry = try modelContext.fetch(descriptor).first else {
+            print("❌ No matching entry found for ID \(entryWalk.dogWalkID)")
+            return
+        }
+        
+        entry.humainInteraction = entryWalk.humainInteraction
+        entry.dogInteraction = entryWalk.dogInteraction
+        entry.durationInMinutes = entryWalk.durationInMinutes
+        
+        try modelContext.save()
     }
     
     @MainActor
@@ -65,9 +94,10 @@ class DataModelHelper {
         return entries
     }
     
+    @MainActor
     static func allDogEntries() async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
-        var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
+        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
         let entries = try modelContext.fetch(descriptor)
         
         return entries
@@ -88,16 +118,52 @@ class DataModelHelper {
         let entries = try modelContext.fetch(descriptor)
         return entries.count
     }
+    
+    static func walksOfToday() async throws -> [DogWalkEntry] {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfTomorrow = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
+
+        let predicate = #Predicate<DogWalkEntry> {
+            $0.entryDate >= startOfToday && $0.entryDate < startOfTomorrow
+        }
+
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: predicate)
+
+        let entries = try modelContext.fetch(descriptor)
+        return entries
+    }
+    
+    @MainActor
+    static func deleteWalk(for identifier: UUID) async throws {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+
+        var fetchDescriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.dogWalkID == identifier }
+        )
+        fetchDescriptor.fetchLimit = 1
+        
+        if let entry = try modelContext.fetch(fetchDescriptor).first {
+            modelContext.delete(entry)
+            try modelContext.save()
+        } else {
+            throw DataModelHelperError.NoEntryFound(identifier)
+        }
+    }
 }
 
 // MARK: - Custom Errors
-enum DataModelError: LocalizedError {
+enum DataModelHelperError: LocalizedError, Error {
     case invalidDuration(Int)
-    
+    case NoEntryFound(_ identifier: UUID)
+
     var errorDescription: String? {
         switch self {
         case .invalidDuration(let duration):
             return "Invalid duration: \(duration) minutes. Duration must be between 0 and 1440 minutes."
+        case .NoEntryFound(let identifier):
+            return "No entry found for the given identifier:\(identifier)"
         }
     }
 }

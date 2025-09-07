@@ -15,8 +15,9 @@ final class NavigationManager {
     var dogWalkEntry: DogWalkEntry?
     var modifyEntry: DogWalkEntry?
 
+    var shouldShowSecretView: Bool = false
+
     // MARK: Methods
-    @MainActor
     func openSearch(with criteria: String) {
         searchText = criteria
     }
@@ -28,15 +29,24 @@ final class NavigationManager {
     func clearDogWalkEntry() {
         dogWalkEntry = nil
         modifyEntry = nil
+        shouldShowSecretView = false
     }
     
-    func openLastDogWalkEntry() async throws {
+    func openEditDogWalk(for id: UUID) async throws {
+        modifyEntry = try await DataModelHelper.dogWalkEntry(for: id)
+    }
+    
+    func openLastDogWalk() async throws {
         guard let latestEntry = try await DataModelHelper.lastDogEntry() else {
             return
         }
         modifyEntry = latestEntry
     }
-
+    
+    func showSecretView() {
+        shouldShowSecretView = true
+    }
+    
     func navigateToRoot() {
         dogWalkNavigationPath.removeLast(dogWalkNavigationPath.count)
     }
