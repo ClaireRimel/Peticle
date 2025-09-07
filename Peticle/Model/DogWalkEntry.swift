@@ -33,8 +33,6 @@ final class DogWalkEntry: Identifiable, Sendable {
 
 extension DogWalkEntry {
     var entity: DogWalkEntryEntity {
-        let entity = DogWalkEntryEntity(self)
-        return entity
+        DogWalkEntryEntity(self)
     }
 }
-

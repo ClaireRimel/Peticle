@@ -13,6 +13,6 @@ struct AddDetailDogWalkIntent: AppIntent {
     static var isDiscoverable = false
     
     func perform() async throws -> some OpensIntent {
-        return .result(opensIntent: OpenLastEntryIntent())
+        return .result(opensIntent: OpenEntryIntent())
     }
 }

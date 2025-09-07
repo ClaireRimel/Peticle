@@ -41,24 +41,6 @@ struct OpenLastEntryIntent: AppIntent {
     }
 }
 
-struct AddActivityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Quick Activity Registration"
-    static var description = IntentDescription("Add a New Dog Walk Entry with a Duration")
-    
-    @Parameter(title: "Duration", description: "The amount of minutes that you want to log")
-    var duration: DurationPreset
-        
-    func perform() async throws -> some ProvidesDialog {
-        let minutes = duration.minutes
-        let newEntry = try DataModelHelper.newEntry(durationInMinutes: minutes,
-                                         humainInteraction: InteractionEntity(interactionRating: .none),
-                                         dogInteraction: InteractionEntity(interactionRating: .none))
-        try? await CSSearchableIndex.default().indexAppEntities([newEntry.entity])
-
-        return .result(dialog: "The activity of \(minutes) minutes has been added successfully")
-    }
-}
-
 struct WalksTodayCountIntent: AppIntent {
     static var title: LocalizedStringResource = "How many walks have you done today?"
     static var description = IntentDescription("Return the number of walks completed today")

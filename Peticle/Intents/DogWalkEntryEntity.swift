@@ -10,7 +10,8 @@ import CoreLocation
 import CoreSpotlight
 
 /// A SwiftData entity representing a logged dog walk, used in app integration and App Intents
-struct DogWalkEntryEntity: IndexedEntity, Identifiable, AppEntity {
+// IndexedEntity: iOS 18*
+struct DogWalkEntryEntity: IndexedEntity, Identifiable {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "DogWalkEntry Entity")
     
     /// The default query used to fetch dog walk entries, for use with App Intents
@@ -18,7 +19,7 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable, AppEntity {
     
     /// Provides a display name for this entry, shown in Shortcuts or Siri
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(stringLiteral: "\(String(describing: entryDate?.formatted(date: .abbreviated, time: .shortened)))")
+        DisplayRepresentation(stringLiteral: entryDate?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown Date")
     }
     
     let id: UUID
