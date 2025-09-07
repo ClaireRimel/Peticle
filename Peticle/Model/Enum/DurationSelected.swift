@@ -1,5 +1,5 @@
 //
-//  DurationPreset.swift
+//  DurationSelected.swift
 //  Peticle
 //
 //  Created by Claire on 21/05/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import AppIntents
 
-enum DurationPreset: String, AppEnum {
+enum DurationSelected: String, AppEnum {
     case thirty = "30"
     case forty = "40"
     case fifty = "50"

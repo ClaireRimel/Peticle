@@ -40,9 +40,9 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
         )
         
         AppShortcut(
-            intent: OpenEntryIntent(),
+            intent: OpenEditEntryIntent(),
             phrases: [
-                "Edit the last walk activity in \(.applicationName)",
+                "Edit walk in \(.applicationName)",
                 "Edit \(\.$target) in \(.applicationName)"
             ],
             shortTitle: "Edit last activity",
@@ -69,16 +69,16 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
             systemImageName: "trash.fill")
         
         AppShortcut(
-            intent: CheckEntryOfTheDay(),
+            intent: ManageLastWalkEntryIntent(),
             phrases: [
-                "Check walks of the Day in \(.applicationName)"
+                "Manage lastest walks in \(.applicationName)"
             ],
-            shortTitle: "Check walks",
+            shortTitle: "Manage last walks",
             systemImageName: "magnifyingglass")
 
         
         AppShortcut(
-            intent: AddActivityIntent(),
+            intent: AddWalkIntent(),
             phrases: [
                 "Add an activity in \(.applicationName)",
                 "Add an activity of \(\.$duration) in \(.applicationName)"
@@ -86,6 +86,8 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Add Activity",
             systemImageName: "figure.walk"
         )
+        
+        
     }
     
     static var shortcutTileColor: ShortcutTileColor {

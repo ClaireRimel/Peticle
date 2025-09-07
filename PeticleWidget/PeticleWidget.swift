@@ -30,10 +30,6 @@ struct Provider: AppIntentTimelineProvider {
 
         return Timeline(entries: entries, policy: .atEnd)
     }
-
-//    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -41,26 +37,21 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationAppIntent
 }
 
-struct peticleWidgetEntryView : View {
+struct PeticleWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
-        }
+        Text("Last Walk:")
+        Text(entry.date.formatted(date: .numeric, time: .omitted))
     }
-}
 
+}
 struct peticleWidget: Widget {
     let kind: String = "peticleWidget"
 
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-            peticleWidgetEntryView(entry: entry)
+            PeticleWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
     }

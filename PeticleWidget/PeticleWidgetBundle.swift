@@ -10,11 +10,9 @@ import SwiftUI
 
 @main
 struct peticleWidgetBundle: WidgetBundle {
-
     var body: some Widget {
         peticleWidget()
         OpenSecretViewControl()
         PeticleWidgetLiveActivity()
     }
-    
 }

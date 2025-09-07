@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct HidenView: View {
+struct HiddenView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        Text("You find me!")
+        Text("You found me!")
             .font(.title)
             .fontWeight(.semibold)
         

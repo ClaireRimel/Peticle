@@ -19,7 +19,7 @@ struct DogWalkListView: View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
-            .navigationTitle("Aflie's Chronicle")
+            .navigationTitle("Alfie's Chronicle")
             
             .sheet(item: $navigation.dogWalkEntry,
                    onDismiss: {
@@ -39,7 +39,7 @@ struct DogWalkListView: View {
             .sheet(isPresented: $navigation.shouldShowSecretView) {
                 navigation.clearDogWalkEntry()
             } content: {
-                HidenView()
+                HiddenView()
             }
 
         }

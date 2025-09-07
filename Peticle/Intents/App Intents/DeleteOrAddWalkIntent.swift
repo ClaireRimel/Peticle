@@ -1,0 +1,58 @@
+//
+//  DeleteOrAddWalkIntent.swift
+//  Peticle
+//
+//  Created by Claire on 06/09/2025.
+//
+
+import AppIntents
+import Foundation
+import CoreSpotlight
+
+struct AddWalkIntent: AppIntent {
+    static var title: LocalizedStringResource = "Log a Quick Dog Walk"
+    static var description = IntentDescription("Quickly register a new dog walk with a given duration.")
+    
+    @Parameter(
+        title: "Duration",
+        description: "The number of minutes you want to log"
+    )
+    var duration: DurationSelected
+    
+    func perform() async throws -> some ProvidesDialog {
+        let minutes = duration.minutes
+        _ = try DataModelHelper.newEntry(durationInMinutes: minutes,
+                                         humanInteraction: .none,
+                                         dogInteraction: .none)
+        
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+        
+        return .result(dialog: "Added a new walk of \(minutes) minute\(minutes == 1 ? "" : "s").")
+    }
+}
+
+struct DeleteWalkIntent: AppIntent {
+    static var title: LocalizedStringResource = "Delete Walk Entry"
+    static var description = IntentDescription("Remove a previously recorded dog walk.")
+    
+    @Parameter(title: "Walk Entry", description: "The walk entry to delete")
+    var walkEntity: DogWalkEntryEntity
+    
+    init() {}
+    
+    init(walkEntity: DogWalkEntryEntity) {
+        self.walkEntity = walkEntity
+    }
+    
+    // ShowsSnippetIntent: iOS 26.0
+    func perform() async throws -> some IntentResult & ShowsSnippetIntent {
+        try await DataModelHelper.deleteWalk(for: walkEntity.id)
+        
+        // SnippetIntent: iOS 26.0
+        // Update Shortcuts suggestions 
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+        
+        return .result()
+    }
+}
+

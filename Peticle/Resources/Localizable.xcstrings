@@ -1,7 +1,13 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@" : {
+
+    },
     "%lld min" : {
+
+    },
+    "%lld mins" : {
 
     },
     "1 hour" : {
@@ -19,37 +25,38 @@
     "Add" : {
       "comment" : "Button title when done creating a new dog walk entry"
     },
-    "Add a New Dog Walk Entry with a Duration" : {
-
-    },
     "Add Activity" : {
 
     },
-    "Add Details to the Last Dog Walk Entry" : {
-
+    "Added a new walk of %lld minute%@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Added a new walk of %1$lld minute%2$@."
+          }
+        }
+      }
     },
-    "Add New Dog Walk Entry" : {
-
-    },
-    "Aflie's Chronicle" : {
+    "Alfie's Chronicle" : {
 
     },
     "Cancel" : {
 
     },
-    "Check Entry Of The Day" : {
-
-    },
-    "Check walks" : {
-
-    },
     "Create New Entry with details" : {
 
     },
-    "Delete a Dog Walk Entry" : {
+    "Delete walk" : {
 
     },
-    "Delete walk" : {
+    "Delete Walk" : {
+
+    },
+    "Delete Walk Entry" : {
+
+    },
+    "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {
 
     },
     "Dog Interaction Rating" : {
@@ -70,13 +77,16 @@
     "Duration In Minutes" : {
 
     },
+    "Edit a Dog Walk Entry" : {
+
+    },
     "Edit dog walk Entry" : {
       "comment" : "Navigation title when editing a dog walk entry"
     },
     "Edit last activity" : {
 
     },
-    "Entity to delete" : {
+    "Edit Walk" : {
 
     },
     "Get the last activity" : {
@@ -85,7 +95,7 @@
     "Go Back" : {
 
     },
-    "Goal in minute" : {
+    "Goal in minutes" : {
 
     },
     "Here is your last walk data" : {
@@ -100,28 +110,49 @@
     "How will you rate the human interaction?" : {
 
     },
-    "Humain Interaction Rating" : {
+    "Human Interaction Rating" : {
 
     },
     "Keep track of your walks with your dog \nAdd a new entry to get started" : {
 
     },
+    "Last Entry" : {
+
+    },
+    "Last Walk Entry" : {
+
+    },
     "Log a New Dog Walk" : {
+
+    },
+    "Log a Quick Dog Walk" : {
+
+    },
+    "Manage last walks" : {
 
     },
     "min" : {
 
     },
+    "New Dog Interaction" : {
+
+    },
     "New Dog Walk Entry" : {
       "comment" : "Navigation title when creating a new dog walk entry"
     },
-    "Open Secret View With a secter photo of Alfie " : {
+    "New Duration (in minutes)" : {
 
     },
-    "Opens the app and updates the last dog walk" : {
+    "New Human Interaction" : {
 
     },
-    "Quick Activity Registration" : {
+    "Open Secret View With a secret photo of Alfie " : {
+
+    },
+    "Open the app to edit the selected dog walk entry." : {
+
+    },
+    "Quickly register a new dog walk with a given duration." : {
 
     },
     "Rate the interaction" : {
@@ -144,7 +175,7 @@
     "Register manually a new dog walk with interaction" : {
 
     },
-    "Remove a Dog Walk Entry" : {
+    "Remove a previously recorded dog walk." : {
 
     },
     "Return the last activity" : {
@@ -160,6 +191,9 @@
 
     },
     "Something bad happened: %@" : {
+
+    },
+    "Something bad happened: Entity No Found" : {
 
     },
     "Start a dog walk activity" : {
@@ -180,16 +214,55 @@
     "Stop walk" : {
 
     },
-    "The activity of %lld minutes has been added successfully" : {
+    "The dog interaction rating has been updated to %@." : {
 
     },
-    "The amount of minutes that you want to log" : {
+    "The dog walk entry to edit" : {
+
+    },
+    "The durationhas been updated to %lld minutes" : {
+
+    },
+    "The human interaction rating has been updated to %@." : {
+
+    },
+    "The number of minutes you want to log" : {
+
+    },
+    "The updated duration of the walk" : {
+
+    },
+    "The updated rating for dog interaction" : {
+
+    },
+    "The updated rating for human interaction" : {
+
+    },
+    "The walk entry to delete" : {
+
+    },
+    "The walk entry you want to update" : {
 
     },
     "time in minutes" : {
 
     },
-    "Use to delete entry if needed" : {
+    "Update Dog Interaction Rating" : {
+
+    },
+    "Update Human Interaction Rating" : {
+
+    },
+    "Update the dog interaction rating of an existing dog walk entry." : {
+
+    },
+    "Update the duration of an existing dog walk entry." : {
+
+    },
+    "Update the human interaction rating of an existing dog walk entry." : {
+
+    },
+    "Update Walk Duration" : {
 
     },
     "Walk Entry" : {
@@ -198,7 +271,7 @@
     "WHAT?! No Walk Today!!!" : {
 
     },
-    "You find me!" : {
+    "You found me!" : {
 
     },
     "Your activity was registered" : {

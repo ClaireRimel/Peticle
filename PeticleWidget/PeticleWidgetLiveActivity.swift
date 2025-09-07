@@ -9,20 +9,6 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-public struct PeticleWidgetAttributes: ActivityAttributes {
-    public struct ContentState: Codable, Hashable {
-        public var elapsedTime: Int
-        public var goalTime: Int
-        public var isActive: Bool
-    }
-
-    public var walkName: String
-
-    public init(walkName: String) {
-        self.walkName = walkName
-    }
-}
-
 struct PeticleWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: PeticleWidgetAttributes.self) { context in

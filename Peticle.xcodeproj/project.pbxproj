@@ -59,16 +59,16 @@
 		7E6BD0BB2DDDD225001A08E1 /* Exceptions for "Peticle" folder in "peticleWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Intents/DogWalkEntryEntity.swift,
-				Intents/DogWalkIntents.swift,
+				"Intents/App Intents/DogWalkIntents.swift",
 				Intents/Enums/IntentError.swift,
-				Intents/WidgetControlAppIntent/NewDogWalkIntent.swift,
 				Intents/WidgetControlAppIntent/OpenSecretViewWalkIntent.swift,
 				Manager/AppDependencyManager.swift,
 				Manager/NavigationManager.swift,
 				Model/DataModel.swift,
 				Model/DogWalkEntry.swift,
-				Model/Enum/DurationPreset.swift,
+				Model/DogWalkEntryEntity.swift,
+				Model/DogWalkLiveActivityAttributes.swift,
+				Model/Enum/DurationSelected.swift,
 				Model/Enum/InteractionRating.swift,
 				View/DogWalkEntryView.swift,
 				View/HidenView.swift,

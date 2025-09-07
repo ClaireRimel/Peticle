@@ -25,10 +25,10 @@ actor DataModel: Sendable {
 }
 
 class DataModelHelper {
-    static func newEntry(durationInMinutes: Int, humainInteraction: InteractionRating, dogInteraction: InteractionRating) throws -> DogWalkEntry {
+    static func newEntry(durationInMinutes: Int, humanInteraction: InteractionRating, dogInteraction: InteractionRating) throws -> DogWalkEntry {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let entry = DogWalkEntry(durationInMinutes: durationInMinutes,
-                                     humainInteraction: humainInteraction,
+                                     humanInteraction: humanInteraction,
                                      dogInteraction: dogInteraction)
         modelContext.insert(entry)
         try modelContext.save()
@@ -62,7 +62,7 @@ class DataModelHelper {
     }
     
     @MainActor
-    static func modify(entryWalk: DogWalkEntry) async throws  {
+    static func modify(entryWalk: DogWalkEntry) async throws -> DogWalkEntry? {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let dogWalkID = entryWalk.dogWalkID
 
@@ -73,14 +73,16 @@ class DataModelHelper {
         
         guard let entry = try modelContext.fetch(descriptor).first else {
             print("❌ No matching entry found for ID \(entryWalk.dogWalkID)")
-            return
+            return nil
         }
         
-        entry.humainInteraction = entryWalk.humainInteraction
+        entry.humanInteraction = entryWalk.humanInteraction
         entry.dogInteraction = entryWalk.dogInteraction
         entry.durationInMinutes = entryWalk.durationInMinutes
         
         try modelContext.save()
+        
+        return entry
     }
     
     @MainActor

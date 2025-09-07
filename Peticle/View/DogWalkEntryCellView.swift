@@ -27,7 +27,7 @@ struct DogWalkEntryCellView: View {
             
             Spacer()
 
-            dogWalkEntry.dogInteraction.getFusionnedWeatherIcone(with: dogWalkEntry.humainInteraction)
+            dogWalkEntry.dogInteraction.getFusionnedWeatherIcone(with: dogWalkEntry.humanInteraction)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 32, height: 32)
@@ -41,6 +41,6 @@ struct DogWalkEntryCellView: View {
 
 #Preview {
     DogWalkEntryCellView(dogWalkEntry:DogWalkEntry(durationInMinutes: 23,
-                                                   humainInteraction: .good,
+                                                   humanInteraction: .good,
                                                    dogInteraction: .good))
 }

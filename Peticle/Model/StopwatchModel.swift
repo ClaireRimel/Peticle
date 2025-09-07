@@ -36,9 +36,32 @@ class StopwatchViewModel: ObservableObject {
     }
     
     // MARK: - Live Activity Management
+    
+    /// Check if Live Activities are available and properly configured
+    func isLiveActivityAvailable() -> Bool {
+        return ActivityAuthorizationInfo().areActivitiesEnabled
+    }
+    
+    /// Get detailed Live Activity status for debugging
+    func getLiveActivityStatus() -> String {
+        let authInfo = ActivityAuthorizationInfo()
+        if authInfo.areActivitiesEnabled {
+            return "✅ Live Activities are enabled"
+        } else {
+            return "❌ Live Activities are disabled - check Settings > Face ID & Passcode > Live Activities"
+        }
+    }
+    
     private func startLiveActivity() {
+        // Check if Live Activities are supported
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
-            print("⚠️ Live Activities are not enabled")
+            print("⚠️ Live Activities are not enabled in Settings")
+            return
+        }
+        
+        // Check if we already have an active Live Activity
+        guard currentActivity == nil else {
+            print("⚠️ Live Activity is already running")
             return
         }
         
@@ -48,7 +71,7 @@ class StopwatchViewModel: ObservableObject {
             goalTime: goalInSeconds,
             isActive: true
         )
-        
+
         do {
             currentActivity = try Activity.request(
                 attributes: attributes,
@@ -56,11 +79,12 @@ class StopwatchViewModel: ObservableObject {
                 pushType: nil
             )
             
-            
             print("✅ Live Activity started successfully")
             updateLiveActivity()
         } catch {
             print("⚠️ Failed to start Live Activity: \(error)")
+            
+            
         }
     }
     
@@ -172,11 +196,14 @@ class StopwatchViewModel: ObservableObject {
     }
     
     func saveEntryAndStopActivity() throws {
-        guard let startDate else { return }
+        guard let startDate else {
+            throw IntentError.message("No Activity started yet")
+        }
+        
         let minutesPassed = Calendar.current.dateComponents([.minute], from: startDate, to: .now).minute ?? 0
         
         _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
-                                         humainInteraction: .none,
+                                         humanInteraction: .none,
                                          dogInteraction: .none)
         stop()
     }

@@ -28,14 +28,14 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable {
     var entryDate: Date?
     
     @Property var durationInMinutes: Int
-    @Property var humainInteraction: InteractionRating?
+    @Property var humanInteraction: InteractionRating?
     @Property var dogInteraction: InteractionRating?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID
         entryDate = entry.entryDate
         durationInMinutes = entry.durationInMinutes
-        humainInteraction = entry.humainInteraction
+        humanInteraction = entry.humanInteraction
         dogInteraction = entry.dogInteraction
     }
 }
@@ -49,7 +49,6 @@ extension DogWalkEntryEntity {
         return attributeSet
     }
 }
-
 
 /// A query that supports App Intents like Siri and Shortcuts, used to fetch or suggest dog walk entries
 /// EntityQuery:  protocol for defining how to fetch entities, either by ID or suggestion.

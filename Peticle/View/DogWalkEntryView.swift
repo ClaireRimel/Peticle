@@ -56,7 +56,7 @@ struct DogWalkEntryView: View {
             Form {
                 Section {
                     Picker("How will you rate the human interaction?",
-                           selection: $dogWalkEntry.humainInteraction) {
+                           selection: $dogWalkEntry.humanInteraction) {
                         ForEach(InteractionRating.allCases) { rate in
                             Text(rate.localizedName()).tag(rate)
                         }
