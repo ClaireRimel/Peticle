@@ -60,6 +60,24 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
         )
         
         AppShortcut(
+            intent: DeleteWalkIntent(),
+            phrases: [
+                "Delete \(\.$walkEntity) walk in \(.applicationName)",
+                "Remove walk in \(.applicationName)"
+            ],
+            shortTitle: "Delete walk",
+            systemImageName: "trash.fill")
+        
+        AppShortcut(
+            intent: CheckEntryOfTheDay(),
+            phrases: [
+                "Check walks of the Day in \(.applicationName)"
+            ],
+            shortTitle: "Check walks",
+            systemImageName: "magnifyingglass")
+
+        
+        AppShortcut(
             intent: AddActivityIntent(),
             phrases: [
                 "Add an activity in \(.applicationName)",
