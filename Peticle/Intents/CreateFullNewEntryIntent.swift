@@ -40,6 +40,3 @@ struct CreateFullNewEntryIntent: AppIntent {
     }
 }
 
-enum IntentError: Error {
-    case noEntity
-}
