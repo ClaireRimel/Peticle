@@ -61,14 +61,17 @@
 			membershipExceptions = (
 				Intents/DogWalkEntryEntity.swift,
 				Intents/DogWalkIntents.swift,
-				Intents/WidgetControlAppIntent/AddDetailDogWalkIntent.swift,
+				Intents/Enums/IntentError.swift,
 				Intents/WidgetControlAppIntent/NewDogWalkIntent.swift,
+				Intents/WidgetControlAppIntent/OpenSecretViewWalkIntent.swift,
+				Manager/AppDependencyManager.swift,
 				Manager/NavigationManager.swift,
 				Model/DataModel.swift,
 				Model/DogWalkEntry.swift,
 				Model/Enum/DurationPreset.swift,
 				Model/Enum/InteractionRating.swift,
 				View/DogWalkEntryView.swift,
+				View/HidenView.swift,
 			);
 			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
 		};

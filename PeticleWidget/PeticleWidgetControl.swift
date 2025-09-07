@@ -9,31 +9,16 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-struct NewDogWalkControl: ControlWidget {
-    static let kind: String = "com.Yo.Peticle.startWalk"
-    
-    var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: Self.kind){
-            ControlWidgetButton(action: NewDogWalkIntent()) {
-                Label("Create Entry", systemImage: "square.and.arrow.down")
-            }
-        }
-        .displayName("Compose")
-        .description("A control that starts register a new walk activity")
-    }
-}
-
-struct AddDetailsControl: ControlWidget {
-    static let kind: String = "com.Yo.Peticle.addDetails"
+struct OpenSecretViewControl: ControlWidget {
+    static let kind: String = "com.Yo.Peticle.Secret"
     
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: Self.kind) {
-            ControlWidgetButton(action: AddDetailDogWalkIntent()) {
-                Label("Add Detail", systemImage: "pencil")
-                
+            ControlWidgetButton(action: OpenSecretViewWalkIntent()) {
+                Label("Show Secret", systemImage: "eye.fill")
             }
         }
-        .displayName("Modify")
-        .description("Add details to your last walk")
+        .displayName("Show Secret")
+        .description("Use to Display the secret view")
     }
 }

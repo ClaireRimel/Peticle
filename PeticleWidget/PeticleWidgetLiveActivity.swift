@@ -30,7 +30,7 @@ struct PeticleWidgetLiveActivity: Widget {
             VStack(spacing: 12) {
                 HStack {
                     Image(systemName: "dog.fill")
-                        .foregroundColor(.blue)
+                        .foregroundColor(context.state.goalTime > context.state.elapsedTime ? .blue : .green)
                     Text("Dog Walk in Progress")
                         .font(.headline)
                         .foregroundColor(.primary)
@@ -61,7 +61,7 @@ struct PeticleWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.leading) {
                     VStack(alignment: .leading) {
                         Image(systemName: "dog.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(context.state.goalTime > context.state.elapsedTime ? .blue : .green)
                         Text("Walk")
                             .font(.caption)
                             .foregroundColor(.secondary)

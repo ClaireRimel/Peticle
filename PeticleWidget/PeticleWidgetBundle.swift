@@ -13,8 +13,7 @@ struct peticleWidgetBundle: WidgetBundle {
 
     var body: some Widget {
         peticleWidget()
-        NewDogWalkControl()
-        AddDetailsControl()
+        OpenSecretViewControl()
         PeticleWidgetLiveActivity()
     }
     
