@@ -27,8 +27,8 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable, AppEntity {
     var entryDate: Date?
     
     @Property var durationInMinutes: Int
-    var humainInteraction: InteractionEntity?
-    var dogInteraction: InteractionEntity?
+    @Property var humainInteraction: InteractionRating?
+    @Property var dogInteraction: InteractionRating?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID

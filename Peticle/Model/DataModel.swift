@@ -25,7 +25,7 @@ actor DataModel {
 }
 
 class DataModelHelper {
-    static func newEntry(durationInMinutes: Int, humainInteraction: InteractionEntity, dogInteraction: InteractionEntity) throws -> DogWalkEntry {
+    static func newEntry(durationInMinutes: Int, humainInteraction: InteractionRating, dogInteraction: InteractionRating) throws -> DogWalkEntry {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let entry = DogWalkEntry(durationInMinutes: durationInMinutes,
                                      humainInteraction: humainInteraction,

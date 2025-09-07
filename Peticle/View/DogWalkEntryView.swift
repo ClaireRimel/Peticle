@@ -43,30 +43,16 @@ struct DogWalkEntryView: View {
     init(dogWalkEntry: DogWalkEntry, mode: DogWalkEntryViewMode = .create) {
         self.dogWalkEntry = dogWalkEntry
         self.mode = mode
-        humainInteractionRating = dogWalkEntry.humainInteraction.interactionRating
-        dogInteractionRating = dogWalkEntry.dogInteraction.interactionRating
+        humainInteractionRating = dogWalkEntry.humainInteraction
+        dogInteractionRating = dogWalkEntry.dogInteraction
         durationInMinute = dogWalkEntry.durationInMinutes.description
     }
     
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    Picker("How will you rate the human interaction?", selection: $humainInteractionRating) {
-                        ForEach(InteractionRating.allCases) { rate in
-                            Text(rate.localizedName())
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    
-                    Picker("How will you rate the dog interaction?", selection: $dogInteractionRating) {
-                        ForEach(InteractionRating.allCases) { rate in
-                            Text(rate.localizedName())
-                        }
-                    }
-                    .pickerStyle(.menu)
-
-                }
+                AnimalInteractionView(humainInteractionRating: humainInteractionRating,
+                                      dogInteractionRating: dogInteractionRating)
                 
                 Section {
                     HStack {
@@ -104,8 +90,8 @@ struct DogWalkEntryView: View {
     }
 
     private func save() {
-        dogWalkEntry.humainInteraction.interactionRating = humainInteractionRating
-        dogWalkEntry.dogInteraction.interactionRating = dogInteractionRating
+        dogWalkEntry.humainInteraction = humainInteractionRating
+        dogWalkEntry.dogInteraction = dogInteractionRating
         
         dogWalkEntry.durationInMinutes = Int(durationInMinute) ?? 0
         if mode == .create {
@@ -113,5 +99,34 @@ struct DogWalkEntryView: View {
         }
         
         try? modelContext.save()
+    }
+}
+
+struct AnimalInteractionView: View {
+    @State private var humainInteractionRating: InteractionRating
+    @State private var dogInteractionRating: InteractionRating
+    
+    init(humainInteractionRating: InteractionRating, dogInteractionRating: InteractionRating) {
+        self.humainInteractionRating = humainInteractionRating
+        self.dogInteractionRating = dogInteractionRating
+    }
+    
+    var body: some View {
+        Section {
+            Picker("How will you rate the human interaction?", selection: $humainInteractionRating) {
+                ForEach(InteractionRating.allCases) { rate in
+                    Text(rate.localizedName())
+                }
+            }
+            .pickerStyle(.menu)
+            
+            Picker("How will you rate the dog interaction?", selection: $dogInteractionRating) {
+                ForEach(InteractionRating.allCases) { rate in
+                    Text(rate.localizedName())
+                }
+            }
+            .pickerStyle(.menu)
+
+        }
     }
 }

@@ -57,7 +57,7 @@ struct LatestActivityIntent: AppIntent {
                     .font(.system(size: 64))
                     .padding(10)
                 
-                lastEntry?.dogInteraction.interactionRating.getFusionnedWeatherIcone(with: lastEntry?.humainInteraction.interactionRating ?? InteractionRating.average)
+                lastEntry?.dogInteraction.getFusionnedWeatherIcone(with: lastEntry?.humainInteraction ?? InteractionRating.average)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 33, height: 33)
