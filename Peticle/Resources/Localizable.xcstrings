@@ -34,10 +34,28 @@
     "Cancel" : {
 
     },
+    "Check Entry Of The Day" : {
+
+    },
+    "Check walks" : {
+
+    },
     "Create New Entry with details" : {
 
     },
+    "Delete a Dog Walk Entry" : {
+
+    },
+    "Delete walk" : {
+
+    },
     "Dog Interaction Rating" : {
+
+    },
+    "Dog Walk" : {
+
+    },
+    "DogWalkEntry Entity" : {
 
     },
     "DogWalks Chronicle" : {
@@ -56,6 +74,9 @@
       "comment" : "Navigation title when editing a dog walk entry"
     },
     "Edit last activity" : {
+
+    },
+    "Entity to delete" : {
 
     },
     "Get the last activity" : {
@@ -117,6 +138,9 @@
         }
       }
     },
+    "Remove a Dog Walk Entry" : {
+
+    },
     "Return the last activity" : {
 
     },
@@ -157,6 +181,15 @@
 
     },
     "time in minutes" : {
+
+    },
+    "Use to delete entry if needed" : {
+
+    },
+    "Walk Entry" : {
+
+    },
+    "WHAT?! No Walk Today!!!" : {
 
     },
     "Your activity was registered" : {
