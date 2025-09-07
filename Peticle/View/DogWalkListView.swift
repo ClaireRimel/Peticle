@@ -19,7 +19,7 @@ struct DogWalkListView: View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
-            .navigationTitle("DogWalks Chronicle")
+            .navigationTitle("Aflie's Chronicle")
             
             .sheet(item: $navigation.dogWalkEntry,
                    onDismiss: {
@@ -28,14 +28,20 @@ struct DogWalkListView: View {
             }) { entry in
                 DogWalkEntryView(dogWalkEntry: entry, mode: .create)
             }
-    
+            
             .sheet(item: $navigation.modifyEntry,
-                             onDismiss: {
+                   onDismiss: {
                 navigation.clearDogWalkEntry()
-             
             }) { entry in
-                DogWalkEntryView(dogWalkEntry: entry, mode: .edit)
+                DogWalkEntryView(entry: entry, mode: .edit)
             }
+            
+            .sheet(isPresented: $navigation.shouldShowSecretView) {
+                navigation.clearDogWalkEntry()
+            } content: {
+                HidenView()
+            }
+
         }
     }
 }
@@ -85,7 +91,7 @@ struct FilteredDogWalkListView: View {
                 Section(header: Text(group)) {
                     ForEach(groupedEntries[group] ?? []) { entry in
                         DogWalkEntryCellView(dogWalkEntry: entry)
-                            .listRowBackground(Color.green.opacity(0.1))
+                            .listRowBackground(Color.indigo.opacity(0.3))
 
                     }
                     .onDelete { indexSet in

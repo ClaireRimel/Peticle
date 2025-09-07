@@ -61,6 +61,7 @@ struct DogWalkQuery: EntityQuery {
         return entries.map(\.entity)
     }
     
+    @MainActor
     /// Returns a list of suggested dog walk entries, limited to recent items
     func suggestedEntities() async throws -> [DogWalkEntryEntity] {
         let entries = try await DataModelHelper.dogEntries(limit: 5)

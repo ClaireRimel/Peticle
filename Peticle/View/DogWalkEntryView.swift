@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreSpotlight
+import SwiftData
 
 struct DogWalkEntryView: View {
     enum DogWalkEntryViewMode: CaseIterable{
@@ -29,31 +30,46 @@ struct DogWalkEntryView: View {
     }
     
     @Environment(\.modelContext) private var modelContext
-    @Bindable var dogWalkEntry: DogWalkEntry
     @Environment(\.dismiss) var dismiss
+   
+    @Query private var entries: [DogWalkEntry]
+    @Bindable var dogWalkEntry: DogWalkEntry
     var mode: DogWalkEntryViewMode
-    
-    @State private var humainInteractionRating: InteractionRating
-    @State private var dogInteractionRating: InteractionRating
-    @State private var durationInMinute: String
 
+    @State private var durationInMinute: String = ""
 
     @State private var textEditorPadding: CGFloat = 0
 
     init(dogWalkEntry: DogWalkEntry, mode: DogWalkEntryViewMode = .create) {
         self.dogWalkEntry = dogWalkEntry
         self.mode = mode
-        humainInteractionRating = dogWalkEntry.humainInteraction
-        dogInteractionRating = dogWalkEntry.dogInteraction
-        durationInMinute = dogWalkEntry.durationInMinutes.description
+    }
+    
+    init(entry: DogWalkEntry, mode: DogWalkEntryViewMode = .edit) {
+        // Create a temporary entry that will be replaced in onAppear
+        self.dogWalkEntry = entry
+        self.mode = mode
     }
     
     var body: some View {
         NavigationStack {
             Form {
-                AnimalInteractionView(humainInteractionRating: humainInteractionRating,
-                                      dogInteractionRating: dogInteractionRating)
-                
+                Section {
+                    Picker("How will you rate the human interaction?",
+                           selection: $dogWalkEntry.humainInteraction) {
+                        ForEach(InteractionRating.allCases) { rate in
+                            Text(rate.localizedName()).tag(rate)
+                        }
+                    }
+                    
+                    Picker("How will you rate the dog interaction?", selection:  $dogWalkEntry.dogInteraction) {
+                        ForEach(InteractionRating.allCases) { rate in
+                            Text(rate.localizedName()).tag(rate)
+                        }
+                    }
+                }
+                .pickerStyle(.menu)
+
                 Section {
                     HStack {
                         TextField("time in minutes",
@@ -67,17 +83,17 @@ struct DogWalkEntryView: View {
                 
             }
             .navigationTitle(mode.navigationTitle())
+            .onAppear {
+                durationInMinute = dogWalkEntry.durationInMinutes.description
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(mode.buttonTitle()) {
-                        save()
-                        
                         Task {
-                            try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
+                            await save()
+                            dismiss()
                         }
-                        
-                        dismiss()
                     }
                 }
                 ToolbarItem(placement: .topBarLeading) {
@@ -88,45 +104,21 @@ struct DogWalkEntryView: View {
             }
         }
     }
-
-    private func save() {
-        dogWalkEntry.humainInteraction = humainInteractionRating
-        dogWalkEntry.dogInteraction = dogInteractionRating
-        
-        dogWalkEntry.durationInMinutes = Int(durationInMinute) ?? 0
+    
+    @MainActor
+    private func save() async {
+        dogWalkEntry.durationInMinutes = Int(String(durationInMinute)) ?? 0
+        // Only insert for create mode, for edit mode the entry is already managed
         if mode == .create {
             modelContext.insert(dogWalkEntry)
+        } else {
+            do {
+                try await DataModelHelper.modify(entryWalk: dogWalkEntry)
+            } catch {
+                print("❌ \(error.localizedDescription)")
+            }
         }
+        try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
         
-        try? modelContext.save()
-    }
-}
-
-struct AnimalInteractionView: View {
-    @State private var humainInteractionRating: InteractionRating
-    @State private var dogInteractionRating: InteractionRating
-    
-    init(humainInteractionRating: InteractionRating, dogInteractionRating: InteractionRating) {
-        self.humainInteractionRating = humainInteractionRating
-        self.dogInteractionRating = dogInteractionRating
-    }
-    
-    var body: some View {
-        Section {
-            Picker("How will you rate the human interaction?", selection: $humainInteractionRating) {
-                ForEach(InteractionRating.allCases) { rate in
-                    Text(rate.localizedName())
-                }
-            }
-            .pickerStyle(.menu)
-            
-            Picker("How will you rate the dog interaction?", selection: $dogInteractionRating) {
-                ForEach(InteractionRating.allCases) { rate in
-                    Text(rate.localizedName())
-                }
-            }
-            .pickerStyle(.menu)
-
-        }
     }
 }

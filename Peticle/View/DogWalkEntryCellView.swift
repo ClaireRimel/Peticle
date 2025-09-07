@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DogWalkEntryCellView: View {
     var dogWalkEntry: DogWalkEntry
+    @Environment(NavigationManager.self) private var navigation
 
     var body: some View {
         HStack {
@@ -29,11 +30,12 @@ struct DogWalkEntryCellView: View {
             dogWalkEntry.dogInteraction.getFusionnedWeatherIcone(with: dogWalkEntry.humainInteraction)
                 .resizable()
                 .scaledToFill()
-                .frame(width: 33, height: 33)
+                .frame(width: 32, height: 32)
                 .symbolRenderingMode(.multicolor)
                 .foregroundColor(.gray)
                 .symbolEffect(.bounce)
         }
+        .contentShape(Rectangle())
     }
 }
 

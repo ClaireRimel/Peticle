@@ -71,4 +71,3 @@ struct LatestActivityIntent: AppIntent {
 }
 
 
-

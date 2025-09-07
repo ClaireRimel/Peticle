@@ -31,6 +31,9 @@
     "Add New Dog Walk Entry" : {
 
     },
+    "Aflie's Chronicle" : {
+
+    },
     "Cancel" : {
 
     },
@@ -58,9 +61,6 @@
     "DogWalkEntry Entity" : {
 
     },
-    "DogWalks Chronicle" : {
-
-    },
     "Done" : {
       "comment" : "Button title when done editing dog walk entry"
     },
@@ -80,6 +80,9 @@
 
     },
     "Get the last activity" : {
+
+    },
+    "Go Back" : {
 
     },
     "Goal in minute" : {
@@ -112,7 +115,7 @@
     "New Dog Walk Entry" : {
       "comment" : "Navigation title when creating a new dog walk entry"
     },
-    "Opens the app and starts registering a new dog walk" : {
+    "Open Secret View With a secter photo of Alfie " : {
 
     },
     "Opens the app and updates the last dog walk" : {
@@ -137,6 +140,9 @@
           }
         }
       }
+    },
+    "Register manually a new dog walk with interaction" : {
+
     },
     "Remove a Dog Walk Entry" : {
 
@@ -190,6 +196,9 @@
 
     },
     "WHAT?! No Walk Today!!!" : {
+
+    },
+    "You find me!" : {
 
     },
     "Your activity was registered" : {
