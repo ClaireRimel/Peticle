@@ -8,6 +8,7 @@
 import Foundation
 import UserNotifications
 import CoreSpotlight
+import ActivityKit
 
 @MainActor
 class StopwatchViewModel: ObservableObject {
@@ -19,6 +20,7 @@ class StopwatchViewModel: ObservableObject {
     private var midGoalInSeconds: Int = 0
     private var timer: Timer?
     private var startDate: Date?
+    private var currentActivity: Activity<PeticleWidgetAttributes>?
     
     init() {
         requestNotificationPermission()
@@ -27,6 +29,69 @@ class StopwatchViewModel: ObservableObject {
     deinit {
         removeScheduledNotification()
         timer?.invalidate()
+        // Note: We can't call async methods from deinit, so we'll handle this differently
+        Task { @MainActor [weak self] in
+            self?.endLiveActivity()
+        }
+    }
+    
+    // MARK: - Live Activity Management
+    private func startLiveActivity() {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else {
+            print("⚠️ Live Activities are not enabled")
+            return
+        }
+        
+        let attributes = PeticleWidgetAttributes(walkName: "Dog Walk")
+        let contentState = PeticleWidgetAttributes.ContentState(
+            elapsedTime: 0,
+            goalTime: goalInSeconds,
+            isActive: true
+        )
+        
+        do {
+            currentActivity = try Activity.request(
+                attributes: attributes,
+                content: .init(state: contentState, staleDate: nil),
+                pushType: nil
+            )
+            
+            
+            print("✅ Live Activity started successfully")
+            updateLiveActivity()
+        } catch {
+            print("⚠️ Failed to start Live Activity: \(error)")
+        }
+    }
+    
+    private func updateLiveActivity() {
+        guard let activity = currentActivity else { return }
+        
+        let contentState = PeticleWidgetAttributes.ContentState(
+            elapsedTime: timeElapsed,
+            goalTime: goalInSeconds,
+            isActive: isRunning
+        )
+        
+        Task {
+            await activity.update(using: contentState)
+        }
+    }
+    
+    private func endLiveActivity() {
+        guard let activity = currentActivity else { return }
+        
+        let contentState = PeticleWidgetAttributes.ContentState(
+            elapsedTime: timeElapsed,
+            goalTime: goalInSeconds,
+            isActive: false
+        )
+        
+        Task {
+            await activity.end(.init(state: contentState, staleDate: nil), dismissalPolicy: .immediate)
+            currentActivity = nil
+            print("✅ Live Activity ended")
+        }
     }
     
     // MARK: - Notification Permission
@@ -55,6 +120,7 @@ class StopwatchViewModel: ObservableObject {
         
         scheduleNotificationMidTime()
         scheduleCompletionNotification()
+        startLiveActivity()
         
         startDate = .now
         
@@ -73,6 +139,9 @@ class StopwatchViewModel: ObservableObject {
         guard isRunning else { return }
         timeElapsed += 1
         
+        // Update Live Activity
+        updateLiveActivity()
+        
         // Check if goal is reached
         if timeElapsed >= goalInSeconds {
             stop()
@@ -83,6 +152,7 @@ class StopwatchViewModel: ObservableObject {
         pause()
         timeElapsed = 0
         removeScheduledNotification()
+        endLiveActivity()
     }
     
     func stop() {
@@ -91,6 +161,9 @@ class StopwatchViewModel: ObservableObject {
         isRunning = false
         timer?.invalidate()
         timer = nil
+        
+        // End Live Activity
+        endLiveActivity()
     
         // Reset after a short delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -112,12 +185,18 @@ class StopwatchViewModel: ObservableObject {
         isRunning = false
         timer?.invalidate()
         timer = nil
+        
+        // Update Live Activity to show paused state
+        updateLiveActivity()
     }
     
     func resume() {
         guard !isRunning && startDate != nil else { return }
         isRunning = true
         startTimer()
+        
+        // Update Live Activity to show active state
+        updateLiveActivity()
     }
     
     // MARK: - Notifications
@@ -176,5 +255,20 @@ class StopwatchViewModel: ObservableObject {
     var progress: Double {
         guard goalInSeconds > 0 else { return 0.0 }
         return min(Double(timeElapsed) / Double(goalInSeconds), 1.0)
+    }
+}
+
+
+extension StopwatchViewModel {
+    func startActivity(timeElapsed: Int, progress: Double) {
+        
+    }
+    
+    func updateActivity(timeElapsed: Int, progress: Double) {
+        
+    }
+    
+    func endActivity(timeElapsed: Int, progress: Double) {
+        
     }
 }

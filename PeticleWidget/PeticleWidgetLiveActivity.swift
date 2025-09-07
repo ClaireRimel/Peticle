@@ -11,13 +11,15 @@ import SwiftUI
 
 public struct PeticleWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
-        public var emoji: String
+        public var elapsedTime: Int
+        public var goalTime: Int
+        public var isActive: Bool
     }
 
-    public var name: String
+    public var walkName: String
 
-    public init(name: String) {
-        self.name = name
+    public init(walkName: String) {
+        self.walkName = walkName
     }
 }
 
@@ -25,52 +27,103 @@ struct PeticleWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: PeticleWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
-            VStack {
-                Text("Hello \(context.state.emoji)")
+            VStack(spacing: 12) {
+                HStack {
+                    Image(systemName: "dog.fill")
+                        .foregroundColor(.blue)
+                    Text("Dog Walk in Progress")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                }
+                
+                VStack(spacing: 8) {
+                    Text("Elapsed: \(formatTime(context.state.elapsedTime))")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                    
+                    Text("Goal: \(formatTime(context.state.goalTime))")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    ProgressView(value: min(Double(context.state.elapsedTime) / Double(context.state.goalTime), 1.0))
+                        .progressViewStyle(LinearProgressViewStyle(tint: .blue))
+                        .scaleEffect(x: 1, y: 2, anchor: .center)
+                }
+                .padding(.horizontal)
             }
-            .activityBackgroundTint(Color.cyan)
-            .activitySystemActionForegroundColor(Color.black)
+            .padding()
+            .activityBackgroundTint(Color(.systemBackground))
+            .activitySystemActionForegroundColor(Color.primary)
 
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
+                // Expanded UI goes here
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    VStack(alignment: .leading) {
+                        Image(systemName: "dog.fill")
+                            .foregroundColor(.blue)
+                        Text("Walk")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    VStack(alignment: .trailing) {
+                        Text(formatTime(context.state.elapsedTime))
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("Elapsed")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.emoji)")
-                    // more content
+                    VStack(spacing: 8) {
+                        Text("Goal: \(formatTime(context.state.goalTime))")
+                            .font(.subheadline)
+                        
+                        ProgressView(value: min(Double(context.state.elapsedTime) / Double(context.state.goalTime), 1.0))
+                            .progressViewStyle(LinearProgressViewStyle(tint: .blue))
+                    }
                 }
             } compactLeading: {
-                Text("L")
+                Image(systemName: "dog.fill")
+                    .foregroundColor(.blue)
             } compactTrailing: {
-                Text("T \(context.state.emoji)")
+                Text(formatTime(context.state.elapsedTime))
+                    .font(.caption)
+                    .fontWeight(.medium)
             } minimal: {
-                Text(context.state.emoji)
+                Image(systemName: "dog.fill")
+                    .foregroundColor(.blue)
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
+            .widgetURL(URL(string: "peticle://dogwalk"))
+            .keylineTint(Color.blue)
+        }
+    }
+    
+    private func formatTime(_ seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let secs = seconds % 60
+        
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, secs)
+        } else {
+            return String(format: "%d:%02d", minutes, secs)
         }
     }
 }
 
 extension PeticleWidgetAttributes {
     fileprivate static var preview: PeticleWidgetAttributes {
-        PeticleWidgetAttributes(name: "World")
+        PeticleWidgetAttributes(walkName: "Morning Walk")
     }
 }
 
 public extension PeticleWidgetAttributes.ContentState {
-    static var smiley: PeticleWidgetAttributes.ContentState {
-            .init(emoji: "😀")
-        }
-     
-      static var starEyes: PeticleWidgetAttributes.ContentState {
-         PeticleWidgetAttributes.ContentState(emoji: "🤩")
-     }
+    static var preview: PeticleWidgetAttributes.ContentState {
+        .init(elapsedTime: 1800, goalTime: 3600, isActive: true)
+    }
 }
 
