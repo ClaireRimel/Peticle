@@ -174,6 +174,7 @@ class StopwatchViewModel: ObservableObject {
     
     private func reset() {
         pause()
+        startDate = nil
         timeElapsed = 0
         removeScheduledNotification()
         endLiveActivity()
