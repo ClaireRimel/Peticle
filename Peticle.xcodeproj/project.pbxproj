@@ -68,7 +68,7 @@
 				Model/DogWalkEntry.swift,
 				Model/DogWalkEntryEntity.swift,
 				Model/DogWalkLiveActivityAttributes.swift,
-				Model/Enum/DurationSelected.swift,
+				Model/Enum/DurationSelection.swift,
 				Model/Enum/InteractionRating.swift,
 				View/DogWalkEntryView.swift,
 				View/HidenView.swift,
