@@ -18,7 +18,7 @@ struct StartDogWalkIntent: AppIntent {
     func perform() async -> some IntentResult {
         // Start the stopwatch
         await StopwatchViewModel.shared.start(with: goaltime)
-        
+
         return .result()
     }
 }

@@ -17,7 +17,7 @@ struct AddWalkIntent: AppIntent {
         title: "Duration",
         description: "The number of minutes you want to log"
     )
-    var duration: DurationSelected
+    var duration: DurationSelection
     
     func perform() async throws -> some ProvidesDialog {
         let minutes = duration.minutes
