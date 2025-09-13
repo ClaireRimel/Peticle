@@ -14,10 +14,10 @@ struct OpenSecretViewWalkIntent: AppIntent {
     
     static var isDiscoverable = false
     
-    // Wakes up the app and brings it to foreground (for iOS 17–25)
+    // Wakes up the app and brings it to foreground (for iOS 17-18)
     static let openAppWhenRun = true
     
-    // Wakes up and foregrounds app (for iOS 17–25)
+    // Wakes up and foregrounds app (ios 26)
     static let supportedModes: IntentModes = [.foreground(.immediate)]
 
     func perform() async throws -> some IntentResult {

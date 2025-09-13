@@ -70,7 +70,8 @@ struct EditDogInterationIntent: AppIntent  {
                                                                                 humanInteraction: walkEntity.humanInteraction ?? .none,
                                                                                 dogInteraction: dogInteraction )) {
             
-            return .result(value: entry.entity, dialog: "The dog interaction rating has been updated to \(dogInteraction.localizedName()).")
+            return .result(value: entry.entity,
+                           dialog: "The dog interaction rating has been updated to \(dogInteraction.localizedName()).")
             
         } else {
             throw IntentError.noEntity

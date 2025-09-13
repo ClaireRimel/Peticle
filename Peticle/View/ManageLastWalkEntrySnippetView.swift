@@ -21,11 +21,7 @@ struct ManageLastWalkEntrySnippetView: View {
     }
     
     func actionFor(_ walkEntity: DogWalkEntryEntity) -> some View {
-        VStack {
-            // Header
-            Text("Last Entry")
-                .font(.headline)
-            
+        VStack {            
             // Entry details
             if let entryDate = walkEntity.entryDate {
                 Text("\(entryDate.formatted(date: .long, time: .omitted))")

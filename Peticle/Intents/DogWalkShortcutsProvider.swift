@@ -7,7 +7,7 @@
 
 import AppIntents
 
-class DogWalkShortcutsProvider: AppShortcutsProvider {
+struct DogWalkShortcutsProvider: AppShortcutsProvider {
     /// The color the system uses to display the App Shortcuts in the Shortcuts app. This is currently unused.
 
     /**
@@ -15,8 +15,7 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
      Put the App Shortcut most people will use as the first item in the array. This first shortcut shouldn't bring the app to the foreground.
      
      Every phrase that people use to invoke an App Shortcut needs to contain the app name, using the `applicationName` placeholder in the provided
-     phrase text, as well as any app name synonyms declared in the `INAlternativeAppNames` key of the app's `Info.plist` file. These phrases are
-     localized in a string catalog named `AppShortcuts.xcstrings`.
+     phrase text, as well as any app name synonyms declared in the `INAlternativeAppNames` key of the app's `Info.plist` file. These phrases are localized in a string catalog named `AppShortcuts.xcstrings`.
      */
     static var appShortcuts: [AppShortcut] {
     
@@ -45,7 +44,7 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Edit walk in \(.applicationName)",
                 "Edit \(\.$target) in \(.applicationName)"
             ],
-            shortTitle: "Edit last activity",
+            shortTitle: "Edit activity",
             systemImageName: "pencil.circle"
         )
         
@@ -86,8 +85,6 @@ class DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Add Activity",
             systemImageName: "figure.walk"
         )
-        
-        
     }
     
     static var shortcutTileColor: ShortcutTileColor {

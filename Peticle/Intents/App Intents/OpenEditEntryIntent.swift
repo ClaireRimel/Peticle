@@ -17,15 +17,15 @@ struct OpenEditEntryIntent: OpenIntent {
     
     @Parameter(title: "Walk Entry", description: "The dog walk entry to edit")
     var target: DogWalkEntryEntity
-    
-    // Wakes up the app and brings it to foreground (for iOS 17–25)
-    static let openAppWhenRun = true
-    
-    // Wakes up and foregrounds app (for iOS 17–25)
-    static let supportedModes: IntentModes = [.foreground(.immediate)]
+//    
+//    // Wakes up the app and brings it to foreground (iOS 16–18)
+//    static let openAppWhenRun = true
+//    
+//    // Wakes up and foregrounds app  (iOS 26)
+//    static let supportedModes: IntentModes = [.foreground(.immediate)]
     
     init() {}
-    
+
     init(target: DogWalkEntryEntity) {
         self.target = target
     }

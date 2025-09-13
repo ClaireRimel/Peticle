@@ -44,12 +44,10 @@ struct DeleteWalkIntent: AppIntent {
         self.walkEntity = walkEntity
     }
     
-    // ShowsSnippetIntent: iOS 26.0
-    func perform() async throws -> some IntentResult & ShowsSnippetIntent {
+    func perform() async throws -> some IntentResult {
         try await DataModelHelper.deleteWalk(for: walkEntity.id)
         
-        // SnippetIntent: iOS 26.0
-        // Update Shortcuts suggestions 
+        // Update Shortcuts suggestions
         DogWalkShortcutsProvider.updateAppShortcutParameters()
         
         return .result()

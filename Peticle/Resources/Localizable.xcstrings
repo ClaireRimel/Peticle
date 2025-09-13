@@ -80,11 +80,11 @@
     "Edit a Dog Walk Entry" : {
 
     },
+    "Edit activity" : {
+
+    },
     "Edit dog walk Entry" : {
       "comment" : "Navigation title when editing a dog walk entry"
-    },
-    "Edit last activity" : {
-
     },
     "Edit Walk" : {
 
@@ -114,9 +114,6 @@
 
     },
     "Keep track of your walks with your dog \nAdd a new entry to get started" : {
-
-    },
-    "Last Entry" : {
 
     },
     "Last Walk Entry" : {
