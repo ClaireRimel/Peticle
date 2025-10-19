@@ -22,6 +22,9 @@ struct HiddenView: View {
                      .shadow(radius: 10)
                      .padding()
         
+        Text("I'm not a bug, I'm a feature ✨")
+            .font(.body)
+        
         Button(action: {
             dismiss()
         }) {

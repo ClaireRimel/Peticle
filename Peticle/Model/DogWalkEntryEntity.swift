@@ -8,10 +8,12 @@
 import AppIntents
 import CoreLocation
 import CoreSpotlight
+import WidgetKit
 
 /// A SwiftData entity representing a logged dog walk, used in app integration and App Intents
 // IndexedEntity: iOS 18*
-struct DogWalkEntryEntity: IndexedEntity, Identifiable {
+struct DogWalkEntryEntity: IndexedEntity, Identifiable, TimelineEntry {
+    
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "DogWalkEntry Entity")
     
     /// The default query used to fetch dog walk entries, for use with App Intents
@@ -19,21 +21,21 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable {
     
     /// Provides a display name for this entry, shown in Shortcuts or Siri
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(stringLiteral: entryDate?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown Date")
+        DisplayRepresentation(stringLiteral: date.formatted(date: .abbreviated, time: .shortened))
     }
     
     let id: UUID
     
     @Property(indexingKey: \.addedDate)
-    var entryDate: Date?
-    
+    var date: Date
+
     @Property var durationInMinutes: Int
     @Property var humanInteraction: InteractionRating?
     @Property var dogInteraction: InteractionRating?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID
-        entryDate = entry.entryDate
+        date = entry.entryDate
         durationInMinutes = entry.durationInMinutes
         humanInteraction = entry.humanInteraction
         dogInteraction = entry.dogInteraction

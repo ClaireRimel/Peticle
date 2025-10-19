@@ -60,6 +60,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Intents/App Intents/DogWalkIntents.swift",
+				"Intents/App Intents/GetLastActivityIntent.swift",
 				Intents/Enums/IntentError.swift,
 				Intents/WidgetControlAppIntent/OpenSecretViewWalkIntent.swift,
 				Manager/AppDependencyManager.swift,

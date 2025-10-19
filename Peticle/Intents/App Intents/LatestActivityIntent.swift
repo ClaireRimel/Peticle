@@ -45,6 +45,3 @@ struct LatestActivityIntent: AppIntent {
         }
     }
 }
-
-
-
