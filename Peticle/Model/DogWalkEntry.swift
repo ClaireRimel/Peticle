@@ -19,7 +19,7 @@ final class DogWalkEntry: Identifiable, Sendable {
         dogWalkID: UUID = UUID(),
         entryDate: Date = .now,
         durationInMinutes: Int,
-        walkQuality: WalkQuality = .none
+        walkQuality: WalkQuality = .ok
     ) {
         self.dogWalkID = dogWalkID
         self.entryDate = entryDate

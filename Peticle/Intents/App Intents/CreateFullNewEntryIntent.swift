@@ -23,7 +23,7 @@ struct CreateFullNewEntryIntent: AppIntent {
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity> {
         do {
             let entry = try DataModelHelper.newEntry(durationInMinutes: duration ?? 0,
-                                                     walkQuality: walkQualityRating ?? .none)
+                                                     walkQuality: walkQualityRating ?? .ok)
             
             try? await CSSearchableIndex.default().indexAppEntities([entry.entity])
             

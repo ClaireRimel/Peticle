@@ -112,6 +112,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Add an activity in \(.applicationName)",
                 "Add an activity of \(\.$duration) in \(.applicationName)",
                 "Log a walk in \(.applicationName)",
+                "Log a \(\.$walkQuality) walk in \(.applicationName)",
                 "Record a walk in \(.applicationName)",
                 "Add walk entry in \(.applicationName)",
                 "Log walk activity in \(.applicationName)",

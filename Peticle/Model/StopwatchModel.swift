@@ -204,7 +204,7 @@ class StopwatchViewModel: ObservableObject {
         let minutesPassed = Calendar.current.dateComponents([.minute], from: startDate, to: .now).minute ?? 0
         
         _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
-                                         walkQuality: .none)
+                                         walkQuality: .ok)
         stop()
     }
     

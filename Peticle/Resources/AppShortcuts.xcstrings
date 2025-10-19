@@ -11,6 +11,7 @@
               "Add an activity in ${applicationName}",
               "Add an activity of ${duration} in ${applicationName}",
               "Log a walk in ${applicationName}",
+              "Log a ${walkQuality} walk in ${applicationName}",
               "Record a walk in ${applicationName}",
               "Add walk entry in ${applicationName}",
               "Log walk activity in ${applicationName}",
@@ -21,11 +22,12 @@
         },
         "fr" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Ajouter une activité dans ${applicationName}",
               "Ajouter une activité de ${duration} dans ${applicationName}",
               "Enregistrer une promenade dans ${applicationName}",
+              "Enregister un ${walkQuality} promenade dans ${applicationName}",
               "Noter une promenade dans ${applicationName}",
               "Ajouter une entrée de promenade dans ${applicationName}",
               "Enregistrer l'activité de promenade dans ${applicationName}",

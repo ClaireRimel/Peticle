@@ -10,14 +10,14 @@ import SwiftUI
 extension WalkQuality {
     func getWeatherIcon() -> Image {
         switch self {
-        case .none:
-            return Image(systemName: "moon.zzz.fill")
-        case .bad:
-            return Image(systemName: "cloud.bolt.rain.fill")
-        case .average:
-            return Image(systemName: "sun.max.fill")
-        case .good:
-            return Image(systemName: "rainbow")
+            case .ok:
+                return Image(systemName: "moon.zzz.fill")
+            case .bad:
+                return Image(systemName: "cloud.bolt.rain.fill")
+            case .good:
+                return Image(systemName: "sun.max.fill")
+            case .wonderful:
+                return Image(systemName: "rainbow")
         }
     }
 }

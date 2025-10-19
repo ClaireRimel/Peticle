@@ -21,7 +21,7 @@ struct EditDurationIntent: AppIntent {
         
         if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
                                                                                 durationInMinutes: duration,
-                                                                                walkQuality: walkEntity.walkQuality ?? .none)) {
+                                                                                walkQuality: walkEntity.walkQuality ?? .ok)) {
             return .result(value: entry.entity, dialog: "The durationhas been updated to \(duration) minutes")
         } else {
             throw IntentError.noEntity
