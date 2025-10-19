@@ -23,10 +23,37 @@
 
     },
     "Add" : {
-      "comment" : "Button title when done creating a new dog walk entry"
+      "comment" : "Button title when done creating a new dog walk entry",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter"
+          }
+        }
+      }
     },
     "Add Activity" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Activity"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une activité"
+          }
+        }
+      }
     },
     "Added a new walk of %lld minute%@." : {
       "localizations" : {
@@ -35,6 +62,12 @@
             "state" : "new",
             "value" : "Added a new walk of %1$lld minute%2$@."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouté une nouvelle promenade de %1$lld minute%2$@."
+          }
         }
       }
     },
@@ -42,7 +75,20 @@
 
     },
     "Cancel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        }
+      }
     },
     "Create New Entry with details" : {
 
@@ -59,9 +105,6 @@
     "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {
 
     },
-    "Dog Interaction Rating" : {
-
-    },
     "Dog Walk" : {
 
     },
@@ -69,7 +112,21 @@
 
     },
     "Done" : {
-      "comment" : "Button title when done editing dog walk entry"
+      "comment" : "Button title when done editing dog walk entry",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé"
+          }
+        }
+      }
     },
     "Duration" : {
 
@@ -84,7 +141,21 @@
 
     },
     "Edit dog walk Entry" : {
-      "comment" : "Navigation title when editing a dog walk entry"
+      "comment" : "Navigation title when editing a dog walk entry",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit dog walk Entry"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier l'entrée de promenade"
+          }
+        }
+      }
     },
     "Edit Walk" : {
 
@@ -104,20 +175,40 @@
     "How many walks have you done today?" : {
 
     },
-    "How will you rate the dog interaction?" : {
-
-    },
-    "How will you rate the human interaction?" : {
-
-    },
-    "Human Interaction Rating" : {
-
+    "How will you rate the walk quality?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How will you rate the walk quality?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comment évaluez-vous la qualité de la promenade ?"
+          }
+        }
+      }
     },
     "I'm not a bug, I'm a feature ✨" : {
 
     },
     "Keep track of your walks with your dog \nAdd a new entry to get started" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep track of your walks with your dog \nAdd a new entry to get started"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivez vos promenades avec votre chien \nAjoutez une nouvelle entrée pour commencer"
+          }
+        }
+      }
     },
     "Last Walk Entry" : {
 
@@ -134,16 +225,30 @@
     "min" : {
 
     },
-    "New Dog Interaction" : {
-
-    },
     "New Dog Walk Entry" : {
-      "comment" : "Navigation title when creating a new dog walk entry"
+      "comment" : "Navigation title when creating a new dog walk entry",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Dog Walk Entry"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle entrée de promenade"
+          }
+        }
+      }
     },
     "New Duration (in minutes)" : {
 
     },
-    "New Human Interaction" : {
+    "New Walk Quality" : {
+
+    },
+    "No last entry found" : {
 
     },
     "Open Secret View With a secret photo of Alfie " : {
@@ -200,7 +305,20 @@
 
     },
     "Start an activity" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start an activity"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commencer une activité"
+          }
+        }
+      }
     },
     "Start walking" : {
 
@@ -212,18 +330,25 @@
 
     },
     "Stop walk" : {
-
-    },
-    "The dog interaction rating has been updated to %@." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop walk"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter la promenade"
+          }
+        }
+      }
     },
     "The dog walk entry to edit" : {
 
     },
     "The durationhas been updated to %lld minutes" : {
-
-    },
-    "The human interaction rating has been updated to %@." : {
 
     },
     "The number of minutes you want to log" : {
@@ -232,10 +357,7 @@
     "The updated duration of the walk" : {
 
     },
-    "The updated rating for dog interaction" : {
-
-    },
-    "The updated rating for human interaction" : {
+    "The updated walk quality" : {
 
     },
     "The walk entry to delete" : {
@@ -244,32 +366,80 @@
     "The walk entry you want to update" : {
 
     },
+    "The walk quality has been updated to %@." : {
+
+    },
     "time in minutes" : {
-
-    },
-    "Update Dog Interaction Rating" : {
-
-    },
-    "Update Human Interaction Rating" : {
-
-    },
-    "Update the dog interaction rating of an existing dog walk entry." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "time in minutes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "temps en minutes"
+          }
+        }
+      }
     },
     "Update the duration of an existing dog walk entry." : {
 
     },
-    "Update the human interaction rating of an existing dog walk entry." : {
+    "Update the walk quality of an existing dog walk entry." : {
+
+    },
+    "Update the walk quality of the last activity" : {
 
     },
     "Update Walk Duration" : {
 
     },
+    "Update Walk Quality" : {
+
+    },
+    "Update walk quality for last activity" : {
+
+    },
     "Walk Entry" : {
 
     },
-    "WHAT?! No Walk Today!!!" : {
+    "Walk Quality Rating" : {
 
+    },
+    "Walk quality updated successfully" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk quality updated successfully"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualité de la promenade mise à jour avec succès"
+          }
+        }
+      }
+    },
+    "WHAT?! No Walk Today!!!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHAT?! No Walk Today!!!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QUOI ?! Aucune promenade aujourd'hui !!!"
+          }
+        }
+      }
     },
     "You found me!" : {
 

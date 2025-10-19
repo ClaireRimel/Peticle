@@ -9,7 +9,28 @@
             "state" : "new",
             "values" : [
               "Add an activity in ${applicationName}",
-              "Add an activity of ${duration} in ${applicationName}"
+              "Add an activity of ${duration} in ${applicationName}",
+              "Log a walk in ${applicationName}",
+              "Record a walk in ${applicationName}",
+              "Add walk entry in ${applicationName}",
+              "Log walk activity in ${applicationName}",
+              "Record walk session in ${applicationName}",
+              "Add walk record in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Ajouter une activité dans ${applicationName}",
+              "Ajouter une activité de ${duration} dans ${applicationName}",
+              "Enregistrer une promenade dans ${applicationName}",
+              "Noter une promenade dans ${applicationName}",
+              "Ajouter une entrée de promenade dans ${applicationName}",
+              "Enregistrer l'activité de promenade dans ${applicationName}",
+              "Noter la session de promenade dans ${applicationName}",
+              "Ajouter un enregistrement de promenade dans ${applicationName}"
             ]
           }
         }
@@ -23,7 +44,26 @@
             "state" : "new",
             "values" : [
               "Delete ${walkEntity} walk in ${applicationName}",
-              "Remove walk in ${applicationName}"
+              "Remove walk in ${applicationName}",
+              "Delete walk entry in ${applicationName}",
+              "Remove walk entry in ${applicationName}",
+              "Delete walk record in ${applicationName}",
+              "Remove walk record in ${applicationName}",
+              "Delete walk data in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Supprimer la promenade ${walkEntity} dans ${applicationName}",
+              "Supprimer la promenade dans ${applicationName}",
+              "Supprimer l'entrée de promenade dans ${applicationName}",
+              "Enlever l'entrée de promenade dans ${applicationName}",
+              "Supprimer l'enregistrement de promenade dans ${applicationName}",
+              "Enlever l'enregistrement de promenade dans ${applicationName}",
+              "Supprimer les données de promenade dans ${applicationName}"
             ]
           }
         }
@@ -37,7 +77,26 @@
             "state" : "new",
             "values" : [
               "Edit walk in ${applicationName}",
-              "Edit ${target} in ${applicationName}"
+              "Edit ${target} in ${applicationName}",
+              "Modify walk in ${applicationName}",
+              "Change walk details in ${applicationName}",
+              "Update walk in ${applicationName}",
+              "Edit walk entry in ${applicationName}",
+              "Modify walk entry in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Modifier la promenade dans ${applicationName}",
+              "Modifier ${target} dans ${applicationName}",
+              "Éditer la promenade dans ${applicationName}",
+              "Changer les détails de la promenade dans ${applicationName}",
+              "Mettre à jour la promenade dans ${applicationName}",
+              "Modifier l'entrée de promenade dans ${applicationName}",
+              "Éditer l'entrée de promenade dans ${applicationName}"
             ]
           }
         }
@@ -50,7 +109,27 @@
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "Manage lastest walks in ${applicationName}"
+              "Manage lastest walks in ${applicationName}",
+              "Manage recent walks in ${applicationName}",
+              "Manage walk entries in ${applicationName}",
+              "Manage walk records in ${applicationName}",
+              "View walk management in ${applicationName}",
+              "Manage walk data in ${applicationName}",
+              "Manage walk history in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Gérer les dernières promenades dans ${applicationName}",
+              "Gérer les promenades récentes dans ${applicationName}",
+              "Gérer les entrées de promenade dans ${applicationName}",
+              "Gérer les enregistrements de promenade dans ${applicationName}",
+              "Voir la gestion des promenades dans ${applicationName}",
+              "Gérer les données de promenade dans ${applicationName}",
+              "Gérer l'historique des promenades dans ${applicationName}"
             ]
           }
         }
@@ -63,7 +142,25 @@
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "Show me the last activity in ${applicationName}"
+              "Show me the last activity in ${applicationName}",
+              "Show my last walk in ${applicationName}",
+              "What was my last walk in ${applicationName}",
+              "Show recent activity in ${applicationName}",
+              "Display last walk in ${applicationName}",
+              "Show me my latest walk in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Montre-moi la dernière activité dans ${applicationName}",
+              "Montre ma dernière promenade dans ${applicationName}",
+              "Quelle était ma dernière promenade dans ${applicationName}",
+              "Montre l'activité récente dans ${applicationName}",
+              "Affiche la dernière promenade dans ${applicationName}",
+              "Montre-moi ma dernière promenade dans ${applicationName}"
             ]
           }
         }
@@ -77,7 +174,24 @@
             "state" : "new",
             "values" : [
               "Start a walk in ${applicationName}",
-              "Start an activity in ${applicationName}"
+              "Start an activity in ${applicationName}",
+              "Begin walking in ${applicationName}",
+              "Start tracking my walk in ${applicationName}",
+              "Start a dog walk in ${applicationName}",
+              "Begin a walk session in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Commencer une promenade dans ${applicationName}",
+              "Commencer une activité dans ${applicationName}",
+              "Démarrer la marche dans ${applicationName}",
+              "Commencer le suivi de ma promenade dans ${applicationName}",
+              "Commencer une promenade de chien dans ${applicationName}",
+              "Démarrer une session de promenade dans ${applicationName}"
             ]
           }
         }
@@ -91,7 +205,26 @@
             "state" : "new",
             "values" : [
               "Stop a walk in ${applicationName}",
-              "Stop the activity ${applicationName}"
+              "Stop the activity ${applicationName}",
+              "End walk in ${applicationName}",
+              "Finish walk in ${applicationName}",
+              "Stop walking in ${applicationName}",
+              "End walk session in ${applicationName}",
+              "Stop tracking walk in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Arrêter une promenade dans ${applicationName}",
+              "Arrêter l'activité ${applicationName}",
+              "Terminer la promenade dans ${applicationName}",
+              "Finir la promenade dans ${applicationName}",
+              "Arrêter de marcher dans ${applicationName}",
+              "Terminer la session de promenade dans ${applicationName}",
+              "Arrêter le suivi de la promenade dans ${applicationName}"
             ]
           }
         }
