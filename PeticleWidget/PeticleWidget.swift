@@ -10,41 +10,119 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        SimpleEntry(
+            date: Date(),
+            configuration: ConfigurationAppIntent(),
+            walkEntity: nil
+        )
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+        let walkEntity = try? await DataModelHelper.lastDogEntry()?.entity
+        return SimpleEntry(
+            date: Date(),
+            configuration: configuration,
+            walkEntity: walkEntity
+        )
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
+        let walkEntity = try? await DataModelHelper.lastDogEntry()?.entity
+        
+        let entry = SimpleEntry(
+            date: currentDate,
+            configuration: configuration,
+            walkEntity:walkEntity
+        )
 
-        return Timeline(entries: entries, policy: .atEnd)
+        // Refresh every 15 minutes to keep data current
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: currentDate)!
+        
+        return Timeline(
+            entries: [entry],
+            policy: .after(nextUpdate)
+        )
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationAppIntent
+    let walkEntity: DogWalkEntryEntity?
 }
 
 struct PeticleWidgetEntryView : View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("Last Walk:")
-        Text(entry.date.formatted(date: .numeric, time: .omitted))
+        if let walkEntity = entry.walkEntity {
+            actionFor(walkEntity)
+        } else {
+            noWalksView
+        }
     }
+    
+    func actionFor(_ walkEntity: DogWalkEntryEntity) -> some View {
+        VStack(spacing: 8) {
+            // Entry details
+            Text("Last Walk:")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Text("\(walkEntity.date.formatted(date: .abbreviated, time: .omitted))")
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .medium
+                    )
+                )
+                .multilineTextAlignment(.center)
 
+            Text("\(walkEntity.durationInMinutes) min")
+                .font(.system(size: 14, weight: .semibold))
+
+            walkEntity.dogInteraction?.getFusionnedWeatherIcon(with: walkEntity.humanInteraction ?? InteractionRating.average)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 24, height: 24)
+                .symbolRenderingMode(.multicolor)
+            
+            // Action buttons
+            VStack(spacing: 6) {
+                Button(intent: DeleteWalkIntent(walkEntity: walkEntity)) {
+                    Label("Delete", systemImage: "trash")
+                        .font(.caption2)
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+                
+                Button(intent: OpenEditEntryIntent(target: walkEntity)) {
+                    Label("Edit", systemImage: "pencil")
+                        .font(.caption2)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+            }
+        }
+        .padding(8)
+        .background(.indigo.opacity(0.3),
+                    in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+   
+    var noWalksView: some View {
+        VStack(spacing: 4) {
+            Text("No Walk Today!")
+                .font(.caption)
+                .fontWeight(.medium)
+            Spacer()
+            Image("Rotated Alfie")
+                .resizable()
+                .scaledToFit()
+        }
+        .padding(8)
+    }
 }
 struct peticleWidget: Widget {
     let kind: String = "peticleWidget"
@@ -74,6 +152,14 @@ extension ConfigurationAppIntent {
 #Preview(as: .systemSmall) {
     peticleWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
+    SimpleEntry(
+        date: .now,
+        configuration: .smiley,
+        walkEntity: nil
+    )
+    SimpleEntry(
+        date: .now,
+        configuration: .starEyes,
+        walkEntity: nil
+    )
 }

@@ -21,14 +21,12 @@ struct ManageLastWalkEntrySnippetView: View {
     }
     
     func actionFor(_ walkEntity: DogWalkEntryEntity) -> some View {
-        VStack {            
+        VStack {
             // Entry details
-            if let entryDate = walkEntity.entryDate {
-                Text("\(entryDate.formatted(date: .long, time: .omitted))")
-            }
-            
+            Text("\(walkEntity.date.formatted(date: .long, time: .omitted))")
+
             Text("\(walkEntity.durationInMinutes) min")
-            
+
             walkEntity.dogInteraction?.getFusionnedWeatherIcon(with: walkEntity.humanInteraction ?? InteractionRating.average)
                 .resizable()
                 .scaledToFill()
