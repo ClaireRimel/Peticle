@@ -19,8 +19,7 @@ struct CreateNewDogWalkIIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult {
        _ = try DataModelHelper.newEntry(durationInMinutes: target.durationInMinutes,
-                                     humanInteraction: target.humanInteraction ?? .none,
-                                     dogInteraction: target.dogInteraction ?? .none)
+                                     walkQuality: target.walkQuality ?? .none)
         return .result()
     }
 }
