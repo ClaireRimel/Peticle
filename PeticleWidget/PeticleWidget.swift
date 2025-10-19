@@ -82,7 +82,7 @@ struct PeticleWidgetEntryView : View {
             Text("\(walkEntity.durationInMinutes) min")
                 .font(.system(size: 14, weight: .semibold))
 
-            walkEntity.dogInteraction?.getFusionnedWeatherIcon(with: walkEntity.humanInteraction ?? InteractionRating.average)
+            walkEntity.walkQuality?.getWeatherIcon()
                 .resizable()
                 .scaledToFill()
                 .frame(width: 24, height: 24)

@@ -25,11 +25,10 @@ actor DataModel: Sendable {
 }
 
 class DataModelHelper {
-    static func newEntry(durationInMinutes: Int, humanInteraction: InteractionRating, dogInteraction: InteractionRating) throws -> DogWalkEntry {
+    static func newEntry(durationInMinutes: Int, walkQuality: InteractionRating) throws -> DogWalkEntry {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let entry = DogWalkEntry(durationInMinutes: durationInMinutes,
-                                     humanInteraction: humanInteraction,
-                                     dogInteraction: dogInteraction)
+                                     walkQuality: walkQuality)
         modelContext.insert(entry)
         try modelContext.save()
         
@@ -76,8 +75,7 @@ class DataModelHelper {
             return nil
         }
         
-        entry.humanInteraction = entryWalk.humanInteraction
-        entry.dogInteraction = entryWalk.dogInteraction
+        entry.walkQuality = entryWalk.walkQuality
         entry.durationInMinutes = entryWalk.durationInMinutes
         
         try modelContext.save()

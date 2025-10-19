@@ -22,8 +22,7 @@ struct AddWalkIntent: AppIntent {
     func perform() async throws -> some ProvidesDialog {
         let minutes = duration.minutes
         _ = try DataModelHelper.newEntry(durationInMinutes: minutes,
-                                         humanInteraction: .none,
-                                         dogInteraction: .none)
+                                         walkQuality: .none)
         
         DogWalkShortcutsProvider.updateAppShortcutParameters()
         

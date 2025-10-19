@@ -21,8 +21,7 @@ struct EditDurationIntent: AppIntent {
         
         if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
                                                                                 durationInMinutes: duration,
-                                                                                humanInteraction: walkEntity.humanInteraction ?? .none,
-                                                                                dogInteraction: walkEntity.dogInteraction ?? .none)) {
+                                                                                walkQuality: walkEntity.walkQuality ?? .none)) {
             return .result(value: entry.entity, dialog: "The durationhas been updated to \(duration) minutes")
         } else {
             throw IntentError.noEntity
@@ -30,23 +29,22 @@ struct EditDurationIntent: AppIntent {
     }
 }
 
-struct EditHumainInteractionIntent: AppIntent {
-    static var title: LocalizedStringResource = "Update Human Interaction Rating"
-    static var description = IntentDescription("Update the human interaction rating of an existing dog walk entry.")
+struct EditWalkQualityIntent: AppIntent {
+    static var title: LocalizedStringResource = "Update Walk Quality"
+    static var description = IntentDescription("Update the walk quality of an existing dog walk entry.")
     
     @Parameter(title: "Walk Entry", description: "The walk entry you want to update")
     var walkEntity: DogWalkEntryEntity
     
-    @Parameter(title: "New Human Interaction", description: "The updated rating for human interaction")
-    var humanInteraction: InteractionRating
+    @Parameter(title: "New Walk Quality", description: "The updated walk quality")
+    var walkQuality: InteractionRating
     
     func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> {
         if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
                                                                                 durationInMinutes: walkEntity.durationInMinutes,
-                                                                                humanInteraction: humanInteraction,
-                                                                                dogInteraction: walkEntity.dogInteraction ?? .none)) {
+                                                                                walkQuality: walkQuality)) {
             
-            return .result(value: entry.entity, dialog: "The human interaction rating has been updated to \(humanInteraction.localizedName()).")
+            return .result(value: entry.entity, dialog: "The walk quality has been updated to \(walkQuality.localizedName()).")
             
         } else {
             throw IntentError.noEntity
@@ -54,28 +52,4 @@ struct EditHumainInteractionIntent: AppIntent {
     }
 }
 
-struct EditDogInterationIntent: AppIntent  {
-    static var title: LocalizedStringResource = "Update Dog Interaction Rating"
-    static var description = IntentDescription("Update the dog interaction rating of an existing dog walk entry.")
-    
-    @Parameter(title: "Walk Entry", description: "The walk entry you want to update")
-    var walkEntity: DogWalkEntryEntity
-    
-    @Parameter(title: "New Dog Interaction", description: "The updated rating for dog interaction")
-    var dogInteraction: InteractionRating
-    
-    func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> {
-        if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
-                                                                                durationInMinutes: walkEntity.durationInMinutes,
-                                                                                humanInteraction: walkEntity.humanInteraction ?? .none,
-                                                                                dogInteraction: dogInteraction )) {
-            
-            return .result(value: entry.entity,
-                           dialog: "The dog interaction rating has been updated to \(dogInteraction.localizedName()).")
-            
-        } else {
-            throw IntentError.noEntity
-        }
-    }
-}
 

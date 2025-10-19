@@ -27,7 +27,7 @@ struct ManageLastWalkEntrySnippetView: View {
 
             Text("\(walkEntity.durationInMinutes) min")
 
-            walkEntity.dogInteraction?.getFusionnedWeatherIcon(with: walkEntity.humanInteraction ?? InteractionRating.average)
+            walkEntity.walkQuality?.getWeatherIcon()
                 .resizable()
                 .scaledToFill()
                 .frame(width: 32, height: 32)
