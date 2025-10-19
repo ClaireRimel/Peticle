@@ -12,15 +12,15 @@ struct WalkingRecommendationIntent: AppIntent {
     static var title: LocalizedStringResource = "Should I walk my dog today based on our history?"
     static var description = IntentDescription("Get a personalized walking recommendation for your dog's health based on your walking history and patterns.")
     
-    func perform() async throws -> some ProvidesDialog & ReturnsValue<String> {
+    func perform() async throws -> some ProvidesDialog {
         do {
             let recommendation = try await generateWalkingRecommendation()
-            let dialog = IntentDialog(recommendation)
-            
-            return .result(value: recommendation, dialog: dialog)
+            let dialog = IntentDialog("\(recommendation)")
+
+            return .result(dialog: dialog)
         } catch {
-            let errorMessage = "Unable to analyze your dog's walking history. Please try again later."
-            return .result(value: errorMessage, dialog: IntentDialog(errorMessage))
+            let errorMessage = IntentDialog("Unable to analyze your dog's walking history. Please try again later.")
+            return .result(dialog: errorMessage)
         }
     }
     
