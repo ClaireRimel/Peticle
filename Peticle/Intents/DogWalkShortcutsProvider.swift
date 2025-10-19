@@ -23,7 +23,11 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: StartDogWalkIntent(),
             phrases: [
                 "Start a walk in \(.applicationName)",
-                "Start an activity in \(.applicationName)"
+                "Start an activity in \(.applicationName)",
+                "Begin walking in \(.applicationName)",
+                "Start tracking my walk in \(.applicationName)",
+                "Start a dog walk in \(.applicationName)",
+                "Begin a walk session in \(.applicationName)"
             ],
             shortTitle: "Start an activity",
             systemImageName: "timer"
@@ -33,6 +37,11 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: LatestActivityIntent(),
             phrases: [
                 "Show me the last activity in \(.applicationName)",
+                "Show my last walk in \(.applicationName)",
+                "What was my last walk in \(.applicationName)",
+                "Show recent activity in \(.applicationName)",
+                "Display last walk in \(.applicationName)",
+                "Show me my latest walk in \(.applicationName)"
             ],
             shortTitle: "Show the last activity",
             systemImageName: "eye"
@@ -42,7 +51,12 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: OpenEditEntryIntent(),
             phrases: [
                 "Edit walk in \(.applicationName)",
-                "Edit \(\.$target) in \(.applicationName)"
+                "Edit \(\.$target) in \(.applicationName)",
+                "Modify walk in \(.applicationName)",
+                "Change walk details in \(.applicationName)",
+                "Update walk in \(.applicationName)",
+                "Edit walk entry in \(.applicationName)",
+                "Modify walk entry in \(.applicationName)"
             ],
             shortTitle: "Edit activity",
             systemImageName: "pencil.circle"
@@ -52,7 +66,12 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: StopDogWalkIntent(),
             phrases: [
                 "Stop a walk in \(.applicationName)",
-                "Stop the activity \(.applicationName)"
+                "Stop the activity \(.applicationName)",
+                "End walk in \(.applicationName)",
+                "Finish walk in \(.applicationName)",
+                "Stop walking in \(.applicationName)",
+                "End walk session in \(.applicationName)",
+                "Stop tracking walk in \(.applicationName)"
             ],
             shortTitle: "Stop walk",
             systemImageName: "stop.circle.fill"
@@ -62,7 +81,12 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: DeleteWalkIntent(),
             phrases: [
                 "Delete \(\.$walkEntity) walk in \(.applicationName)",
-                "Remove walk in \(.applicationName)"
+                "Remove walk in \(.applicationName)",
+                "Delete walk entry in \(.applicationName)",
+                "Remove walk entry in \(.applicationName)",
+                "Delete walk record in \(.applicationName)",
+                "Remove walk record in \(.applicationName)",
+                "Delete walk data in \(.applicationName)"
             ],
             shortTitle: "Delete walk",
             systemImageName: "trash.fill")
@@ -70,7 +94,13 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: ManageLastWalkEntryIntent(),
             phrases: [
-                "Manage lastest walks in \(.applicationName)"
+                "Manage lastest walks in \(.applicationName)",
+                "Manage recent walks in \(.applicationName)",
+                "Manage walk entries in \(.applicationName)",
+                "Manage walk records in \(.applicationName)",
+                "View walk management in \(.applicationName)",
+                "Manage walk data in \(.applicationName)",
+                "Manage walk history in \(.applicationName)"
             ],
             shortTitle: "Manage last walks",
             systemImageName: "magnifyingglass")
@@ -80,7 +110,13 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: AddWalkIntent(),
             phrases: [
                 "Add an activity in \(.applicationName)",
-                "Add an activity of \(\.$duration) in \(.applicationName)"
+                "Add an activity of \(\.$duration) in \(.applicationName)",
+                "Log a walk in \(.applicationName)",
+                "Record a walk in \(.applicationName)",
+                "Add walk entry in \(.applicationName)",
+                "Log walk activity in \(.applicationName)",
+                "Record walk session in \(.applicationName)",
+                "Add walk record in \(.applicationName)"
             ],
             shortTitle: "Add Activity",
             systemImageName: "figure.walk"
