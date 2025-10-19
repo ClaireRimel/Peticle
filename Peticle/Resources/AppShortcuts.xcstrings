@@ -231,6 +231,41 @@
           }
         }
       }
+    },
+    "Should I walk my dog today in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Should I walk my dog today in ${applicationName}",
+              "Does my dog need a walk today in ${applicationName}",
+              "Should I take my dog for a walk in ${applicationName}",
+              "Do I need to walk my dog today in ${applicationName}",
+              "Is it time to walk my dog in ${applicationName}",
+              "Should I go for a walk with my dog in ${applicationName}",
+              "Does my dog need exercise today in ${applicationName}",
+              "Should I walk my pup today in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Devrais-je promener mon chien aujourd'hui dans ${applicationName}",
+              "Mon chien a-t-il besoin d'une promenade aujourd'hui dans ${applicationName}",
+              "Devrais-je sortir mon chien en promenade dans ${applicationName}",
+              "Dois-je promener mon chien aujourd'hui dans ${applicationName}",
+              "Est-il temps de promener mon chien dans ${applicationName}",
+              "Devrais-je faire une promenade avec mon chien dans ${applicationName}",
+              "Mon chien a-t-il besoin d'exercice aujourd'hui dans ${applicationName}",
+              "Devrais-je promener mon toutou aujourd'hui dans ${applicationName}"
+            ]
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

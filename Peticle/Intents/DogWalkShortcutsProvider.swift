@@ -122,6 +122,22 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Add Activity",
             systemImageName: "figure.walk"
         )
+        
+        AppShortcut(
+            intent: WalkingRecommendationIntent(),
+            phrases: [
+                "Should I walk my dog today in \(.applicationName)",
+                "Does my dog need a walk today in \(.applicationName)",
+                "Should I take my dog for a walk in \(.applicationName)",
+                "Do I need to walk my dog today in \(.applicationName)",
+                "Is it time to walk my dog in \(.applicationName)",
+                "Should I go for a walk with my dog in \(.applicationName)",
+                "Does my dog need exercise today in \(.applicationName)",
+                "Should I walk my pup today in \(.applicationName)"
+            ],
+            shortTitle: "Dog Walking Recommendation",
+            systemImageName: "pawprint.circle"
+        )
     }
     
     static var shortcutTileColor: ShortcutTileColor {
