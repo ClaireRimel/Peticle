@@ -16,7 +16,7 @@ struct CreateFullNewEntryIntent: AppIntent {
     var duration: Int?
     
     @Parameter(title: "Walk Quality Rating")
-    var walkQualityRating: InteractionRating?
+    var walkQualityRating: WalkQuality?
     
     static var openAppWhenRun: Bool = true
     

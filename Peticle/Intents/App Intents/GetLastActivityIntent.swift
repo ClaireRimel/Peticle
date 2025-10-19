@@ -27,8 +27,9 @@ struct AddWalkQualityLatestActivityIntent: AppIntent {
     
     static var isDiscoverable: Bool = false
     
-    @Parameter(title: "New Walk Quality", description: "The updated walk quality")
-    var walkQuality: InteractionRating
+    @Parameter(title: "New Walk Quality",
+               description: "The quality rating for how the walk went")
+    var walkQuality: WalkQuality
     
     func perform() async throws -> some ProvidesDialog {
         

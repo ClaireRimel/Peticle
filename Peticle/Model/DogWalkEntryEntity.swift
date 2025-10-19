@@ -30,7 +30,7 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable, TimelineEntry {
     var date: Date
 
     @Property var durationInMinutes: Int
-    @Property var walkQuality: InteractionRating?
+    @Property var walkQuality: WalkQuality?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID

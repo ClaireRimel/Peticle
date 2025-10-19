@@ -246,7 +246,21 @@
 
     },
     "New Walk Quality" : {
-
+      "comment" : "Parameter title for walk quality rating",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Walk Quality"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle qualité de promenade"
+          }
+        }
+      }
     },
     "No last entry found" : {
 
@@ -276,6 +290,9 @@
           }
         }
       }
+    },
+    "Rate the walk quality" : {
+
     },
     "Register manually a new dog walk with interaction" : {
 
@@ -345,25 +362,25 @@
         }
       }
     },
-    "The dog walk entry to edit" : {
-
-    },
     "The durationhas been updated to %lld minutes" : {
 
     },
     "The number of minutes you want to log" : {
 
     },
+    "The quality rating for how the walk went" : {
+
+    },
+    "The specific walk entry to delete" : {
+
+    },
+    "The specific walk entry to edit" : {
+
+    },
+    "The specific walk entry to update" : {
+
+    },
     "The updated duration of the walk" : {
-
-    },
-    "The updated walk quality" : {
-
-    },
-    "The walk entry to delete" : {
-
-    },
-    "The walk entry you want to update" : {
 
     },
     "The walk quality has been updated to %@." : {
@@ -404,10 +421,53 @@
 
     },
     "Walk Entry" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk Entry"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrée de promenade"
+          }
+        }
+      }
+    },
+    "Walk Quality" : {
+      "comment" : "Parameter title for walk quality rating",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk Quality"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualité de la promenade"
+          }
+        }
+      }
     },
     "Walk Quality Rating" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk Quality Rating"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Évaluation de la qualité de la promenade"
+          }
+        }
+      }
     },
     "Walk quality updated successfully" : {
       "localizations" : {

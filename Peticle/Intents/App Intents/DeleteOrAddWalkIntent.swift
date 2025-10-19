@@ -18,13 +18,20 @@ struct AddWalkIntent: AppIntent {
         description: "The number of minutes you want to log"
     )
     var duration: DurationSelection
-    
+
+
+    @Parameter(
+        title: "Walk Quality",
+        description: "The quality rating for how the walk went"
+    )
+    var walkQuality: WalkQuality
+
     func perform() async throws -> some ProvidesDialog {
         let minutes = duration.minutes
         _ = try DataModelHelper.newEntry(durationInMinutes: minutes,
-                                         walkQuality: .none)
-        
-        DogWalkShortcutsProvider.updateAppShortcutParameters()
+                                         walkQuality: walkQuality)
+
+//        DogWalkShortcutsProvider.updateAppShortcutParameters()
         
         return .result(dialog: "Added a new walk of \(minutes) minute\(minutes == 1 ? "" : "s").")
     }
@@ -34,7 +41,10 @@ struct DeleteWalkIntent: AppIntent {
     static var title: LocalizedStringResource = "Delete Walk Entry"
     static var description = IntentDescription("Remove a previously recorded dog walk.")
     
-    @Parameter(title: "Walk Entry", description: "The walk entry to delete")
+    @Parameter(
+        title: "Walk Entry",
+        description: "The specific walk entry to delete"
+    )
     var walkEntity: DogWalkEntryEntity
     
     init() {}

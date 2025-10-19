@@ -13,13 +13,13 @@ final class DogWalkEntry: Identifiable, Sendable {
     @Attribute(.unique) var dogWalkID: UUID
     var entryDate: Date
     var durationInMinutes: Int
-    var walkQuality: InteractionRating
+    var walkQuality: WalkQuality
     
     init(
         dogWalkID: UUID = UUID(),
         entryDate: Date = .now,
         durationInMinutes: Int,
-        walkQuality: InteractionRating = .none
+        walkQuality: WalkQuality = .none
     ) {
         self.dogWalkID = dogWalkID
         self.entryDate = entryDate

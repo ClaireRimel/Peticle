@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension InteractionRating {
+extension WalkQuality {
     func getWeatherIcon() -> Image {
         switch self {
         case .none:

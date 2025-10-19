@@ -7,13 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "It was ok "
+            "value" : "Average"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce fût tranquille "
+            "value" : "Moyen"
           }
         }
       }
@@ -24,13 +24,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not cool"
+            "value" : "Bad"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pas fifou"
+            "value" : "Mauvais"
           }
         }
       }
@@ -41,13 +41,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We had a lot of fun "
+            "value" : "Good"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On s’est bien amusé"
+            "value" : "Bon"
           }
         }
       }
@@ -64,7 +64,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RAS "
+            "value" : "Aucun"
           }
         }
       }
