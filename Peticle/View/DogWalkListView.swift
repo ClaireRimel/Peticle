@@ -14,12 +14,16 @@ import AppIntents
 struct DogWalkListView: View {
     @Environment(NavigationManager.self) private var navigation
     @State private var isEditSheetPresented: Bool = false
+    @State private var showingAddDog = false
 
     var body: some View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
             .navigationTitle("Alfie's Chronicle")
+            .onShake {
+                showingAddDog = true
+            }
             
             .sheet(item: $navigation.dogWalkEntry,
                    onDismiss: {
@@ -40,6 +44,10 @@ struct DogWalkListView: View {
                 navigation.clearDogWalkEntry()
             } content: {
                 HiddenView()
+            }
+            
+            .sheet(isPresented: $showingAddDog) {
+                AddDogView()
             }
 
         }
