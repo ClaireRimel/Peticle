@@ -1,6 +1,37 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add a new dog in ${applicationName}" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Add a new dog in ${applicationName}",
+              "Add a dog to my pets in ${applicationName}",
+              "Register a new dog in ${applicationName}",
+              "Add a dog in ${applicationName}",
+              "Create a new pet profile in ${applicationName}",
+              "Add my dog in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Ajouter un nouveau chien dans ${applicationName}",
+              "Ajouter un chien à mes animaux dans ${applicationName}",
+              "Enregistrer un nouveau chien dans ${applicationName}",
+              "Ajouter un chien dans ${applicationName}",
+              "Créer un nouveau profil d'animal dans ${applicationName}",
+              "Ajouter mon chien dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Add an activity in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -80,6 +111,7 @@
             "values" : [
               "Edit walk in ${applicationName}",
               "Edit ${target} in ${applicationName}",
+              "Modify the walk of ${target} in ${applicationName}",
               "Modify walk in ${applicationName}",
               "Change walk details in ${applicationName}",
               "Update walk in ${applicationName}",
@@ -90,7 +122,7 @@
         },
         "fr" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "translated",
             "values" : [
               "Modifier la promenade dans ${applicationName}",
               "Modifier ${target} dans ${applicationName}",
@@ -137,6 +169,41 @@
         }
       }
     },
+    "Should I walk my dog today in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Should I walk my dog today in ${applicationName}",
+              "Does my dog need a walk today in ${applicationName}",
+              "Should I take my dog for a walk in ${applicationName}",
+              "Do I need to walk my dog today in ${applicationName}",
+              "Is it time to walk my dog in ${applicationName}",
+              "Should I go for a walk with my dog in ${applicationName}",
+              "Does my dog need exercise today in ${applicationName}",
+              "Should I walk my pup today in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Devrais-je promener mon chien aujourd'hui dans ${applicationName}",
+              "Mon chien a-t-il besoin d'une promenade aujourd'hui dans ${applicationName}",
+              "Devrais-je sortir mon chien en promenade dans ${applicationName}",
+              "Dois-je promener mon chien aujourd'hui dans ${applicationName}",
+              "Est-il temps de promener mon chien dans ${applicationName}",
+              "Devrais-je faire une promenade avec mon chien dans ${applicationName}",
+              "Mon chien a-t-il besoin d'exercice aujourd'hui dans ${applicationName}",
+              "Devrais-je promener mon toutou aujourd'hui dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Show me the last activity in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -163,6 +230,43 @@
               "Montre l'activité récente dans ${applicationName}",
               "Affiche la dernière promenade dans ${applicationName}",
               "Montre-moi ma dernière promenade dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Show my dogs in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Show my dogs in ${applicationName}",
+              "Show dog information in ${applicationName}",
+              "Display my dogs in ${applicationName}",
+              "List my dogs in ${applicationName}",
+              "Show dog details in ${applicationName}",
+              "View my dogs in ${applicationName}",
+              "Show ${dog} in ${applicationName}",
+              "Display ${dog} in ${applicationName}",
+              "Show information about ${dog} in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Montrer mes chiens dans ${applicationName}",
+              "Afficher les informations du chien dans ${applicationName}",
+              "Afficher mes chiens dans ${applicationName}",
+              "Lister mes chiens dans ${applicationName}",
+              "Afficher les détails du chien dans ${applicationName}",
+              "Voir mes chiens dans ${applicationName}",
+              "Montrer ${dog} dans ${applicationName}",
+              "Afficher ${dog} dans ${applicationName}",
+              "Montrer des informations sur ${dog} dans ${applicationName}"
             ]
           }
         }
@@ -232,36 +336,14 @@
         }
       }
     },
-    "Should I walk my dog today in ${applicationName}" : {
+    "sync shortcuts in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "Should I walk my dog today in ${applicationName}",
-              "Does my dog need a walk today in ${applicationName}",
-              "Should I take my dog for a walk in ${applicationName}",
-              "Do I need to walk my dog today in ${applicationName}",
-              "Is it time to walk my dog in ${applicationName}",
-              "Should I go for a walk with my dog in ${applicationName}",
-              "Does my dog need exercise today in ${applicationName}",
-              "Should I walk my pup today in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Devrais-je promener mon chien aujourd'hui dans ${applicationName}",
-              "Mon chien a-t-il besoin d'une promenade aujourd'hui dans ${applicationName}",
-              "Devrais-je sortir mon chien en promenade dans ${applicationName}",
-              "Dois-je promener mon chien aujourd'hui dans ${applicationName}",
-              "Est-il temps de promener mon chien dans ${applicationName}",
-              "Devrais-je faire une promenade avec mon chien dans ${applicationName}",
-              "Mon chien a-t-il besoin d'exercice aujourd'hui dans ${applicationName}",
-              "Devrais-je promener mon toutou aujourd'hui dans ${applicationName}"
+              "sync shortcuts in ${applicationName}"
             ]
           }
         }

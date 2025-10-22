@@ -10,6 +10,16 @@
     "%lld mins" : {
 
     },
+    "🐕 %@\nAge: %lld years old\nAdded: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🐕 %1$@\nAge: %2$lld years old\nAdded: %3$@"
+          }
+        }
+      }
+    },
     "1 hour" : {
 
     },
@@ -39,6 +49,12 @@
         }
       }
     },
+    "Add a New Dog" : {
+
+    },
+    "Add a new dog to your pet collection." : {
+
+    },
     "Add Activity" : {
       "localizations" : {
         "en" : {
@@ -55,6 +71,12 @@
         }
       }
     },
+    "Add Dog" : {
+
+    },
+    "Add New Dog" : {
+
+    },
     "Added a new walk of %lld minute%@." : {
       "localizations" : {
         "en" : {
@@ -70,6 +92,12 @@
           }
         }
       }
+    },
+    "Age" : {
+
+    },
+    "Age: %lld years" : {
+
     },
     "Alfie's Chronicle" : {
 
@@ -93,6 +121,9 @@
     "Create New Entry with details" : {
 
     },
+    "Date Selection" : {
+
+    },
     "Delete walk" : {
 
     },
@@ -102,10 +133,28 @@
     "Delete Walk Entry" : {
 
     },
+    "Display information about a specific dog or show all your dogs." : {
+
+    },
     "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {
 
     },
+    "Dog" : {
+
+    },
+    "Dog Entity" : {
+
+    },
+    "Dog Information" : {
+
+    },
+    "Dog Name" : {
+
+    },
     "Dog Walk" : {
+
+    },
+    "Dog Walking Recommendation" : {
 
     },
     "DogWalkEntry Entity" : {
@@ -158,6 +207,9 @@
       }
     },
     "Edit Walk" : {
+
+    },
+    "Get a personalized walking recommendation for your dog's health based on your walking history and patterns." : {
 
     },
     "Get the last activity" : {
@@ -265,10 +317,16 @@
     "No last entry found" : {
 
     },
+    "OK" : {
+
+    },
     "Open Secret View With a secret photo of Alfie " : {
 
     },
     "Open the app to edit the selected dog walk entry." : {
+
+    },
+    "Photo" : {
 
     },
     "Quickly register a new dog walk with a given duration." : {
@@ -306,7 +364,22 @@
     "Return the number of walks completed today" : {
 
     },
+    "Save" : {
+
+    },
+    "Select Photo" : {
+
+    },
     "Set your goal, and a notification will pop up when it's time to go back" : {
+
+    },
+    "Should I walk my dog today based on our history?" : {
+
+    },
+    "Show Dog Information" : {
+
+    },
+    "Show Dogs" : {
 
     },
     "Show the last activity" : {
@@ -362,7 +435,25 @@
         }
       }
     },
+    "Successfully added %@ to your pet collection!" : {
+
+    },
+    "Sync Shortcuts" : {
+
+    },
+    "The age of your dog in years" : {
+
+    },
+    "The dog to show information for" : {
+
+    },
+    "The dog walk entry to edit" : {
+
+    },
     "The durationhas been updated to %lld minutes" : {
+
+    },
+    "The name of your dog" : {
 
     },
     "The number of minutes you want to log" : {
@@ -372,9 +463,6 @@
 
     },
     "The specific walk entry to delete" : {
-
-    },
-    "The specific walk entry to edit" : {
 
     },
     "The specific walk entry to update" : {
@@ -402,6 +490,15 @@
         }
       }
     },
+    "Today" : {
+
+    },
+    "Unable to analyze your dog's walking history. Please try again later." : {
+
+    },
+    "Update catalog" : {
+
+    },
     "Update the duration of an existing dog walk entry." : {
 
     },
@@ -418,6 +515,9 @@
 
     },
     "Update walk quality for last activity" : {
+
+    },
+    "Use to update the app shorcuts catalog" : {
 
     },
     "Walk Entry" : {
@@ -501,11 +601,27 @@
         }
       }
     },
+    "Yesterday" : {
+
+    },
+    "You don't have any dogs registered yet. Shake your phone to add your first dog! 🐕" : {
+
+    },
     "You found me!" : {
 
     },
     "Your activity was registered" : {
 
+    },
+    "Your Dogs (%lld total):\n\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your Dogs (%1$lld total):\n\n%2$@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

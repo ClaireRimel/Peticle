@@ -15,7 +15,7 @@ struct OpenEditEntryIntent: OpenIntent {
     static var description = IntentDescription("Open the app to edit the selected dog walk entry.")
     
     
-    @Parameter(title: "Walk Entry", description: "The specific walk entry to edit")
+    @Parameter(title: "Walk Entry", description: "The dog walk entry to edit")
     var target: DogWalkEntryEntity
 //    
 //    // Wakes up the app and brings it to foreground (iOS 16–18)
@@ -35,7 +35,7 @@ struct OpenEditEntryIntent: OpenIntent {
         // Get NavigationManager from AppDependencyManager
         guard let navigationManager: NavigationManager =
                 AppDependencyManager.shared.get() else {
-            throw IntentError.message("⚠️ Could not resolve NavigationManager. Make sure it’s registered in AppDependencyManager.")
+            throw IntentError.message("⚠️ Could not resolve NavigationManager. Make sure it's registered in AppDependencyManager.")
         }
         
         try await navigationManager.openEditDogWalk(for: target.id)
