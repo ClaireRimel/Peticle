@@ -52,6 +52,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             phrases: [
                 "Edit walk in \(.applicationName)",
                 "Edit \(\.$target) in \(.applicationName)",
+                "Modify the walk of \(\.$target) in \(.applicationName)",
                 "Modify walk in \(.applicationName)",
                 "Change walk details in \(.applicationName)",
                 "Update walk in \(.applicationName)",
@@ -137,6 +138,32 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             ],
             shortTitle: "Dog Walking Recommendation",
             systemImageName: "pawprint.circle"
+        )
+
+        AppShortcut(
+            intent: UpdateAppShortcutsIntent(),
+            phrases: [
+                "sync shortcuts in \(.applicationName)",
+            ],
+            shortTitle: "Sync Shortcuts",
+            systemImageName: "arrow.trianglehead.2.clockwise.rotate.90"
+        )
+        
+        AppShortcut(
+            intent: ShowDogIntent(),
+            phrases: [
+                "Show my dogs in \(.applicationName)",
+                "Show dog information in \(.applicationName)",
+                "Display my dogs in \(.applicationName)",
+                "List my dogs in \(.applicationName)",
+                "Show dog details in \(.applicationName)",
+                "View my dogs in \(.applicationName)",
+                "Show \(\.$dog) in \(.applicationName)",
+                "Display \(\.$dog) in \(.applicationName)",
+                "Show information about \(\.$dog) in \(.applicationName)"
+            ],
+            shortTitle: "Show Dogs",
+            systemImageName: "list.bullet.circle"
         )
     }
     

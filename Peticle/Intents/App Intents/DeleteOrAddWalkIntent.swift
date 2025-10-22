@@ -31,8 +31,6 @@ struct AddWalkIntent: AppIntent {
         _ = try DataModelHelper.newEntry(durationInMinutes: minutes,
                                          walkQuality: walkQuality)
 
-//        DogWalkShortcutsProvider.updateAppShortcutParameters()
-        
         return .result(dialog: "Added a new walk of \(minutes) minute\(minutes == 1 ? "" : "s").")
     }
 }
@@ -55,10 +53,7 @@ struct DeleteWalkIntent: AppIntent {
     
     func perform() async throws -> some IntentResult {
         try await DataModelHelper.deleteWalk(for: walkEntity.id)
-        
-        // Update Shortcuts suggestions
-        DogWalkShortcutsProvider.updateAppShortcutParameters()
-        
+
         return .result()
     }
 }
