@@ -335,19 +335,6 @@
           }
         }
       }
-    },
-    "sync shortcuts in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "sync shortcuts in ${applicationName}"
-            ]
-          }
-        }
-      }
     }
   },
   "version" : "1.1"

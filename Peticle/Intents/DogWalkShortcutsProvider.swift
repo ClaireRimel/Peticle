@@ -139,15 +139,6 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Dog Walking Recommendation",
             systemImageName: "pawprint.circle"
         )
-
-        AppShortcut(
-            intent: UpdateAppShortcutsIntent(),
-            phrases: [
-                "sync shortcuts in \(.applicationName)",
-            ],
-            shortTitle: "Sync Shortcuts",
-            systemImageName: "arrow.trianglehead.2.clockwise.rotate.90"
-        )
         
         AppShortcut(
             intent: ShowDogIntent(),

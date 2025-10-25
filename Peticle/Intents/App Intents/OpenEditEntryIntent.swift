@@ -8,8 +8,7 @@
 import AppIntents
 
 struct OpenEditEntryIntent: OpenIntent {
-    // Required for OpenIntent
-       typealias Value = DogWalkEntryEntity
+    typealias Value = DogWalkEntryEntity
 
     static var title: LocalizedStringResource = "Edit a Dog Walk Entry"
     static var description = IntentDescription("Open the app to edit the selected dog walk entry.")

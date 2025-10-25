@@ -8,6 +8,7 @@
 import AppIntents
 import Foundation
 import CoreSpotlight
+import SwiftData
 
 struct AddWalkIntent: AppIntent {
     static var title: LocalizedStringResource = "Log a Quick Dog Walk"

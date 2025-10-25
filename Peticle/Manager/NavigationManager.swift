@@ -31,22 +31,7 @@ final class NavigationManager {
         modifyEntry = nil
         shouldShowSecretView = false
     }
-    
-    func openEditDogWalk(for id: UUID) async throws {
-        modifyEntry = try await DataModelHelper.dogWalkEntry(for: id)
-    }
-    
-    func openLastDogWalk() async throws {
-        guard let latestEntry = try await DataModelHelper.lastDogEntry() else {
-            return
-        }
-        modifyEntry = latestEntry
-    }
-    
-    func showSecretView() {
-        shouldShowSecretView = true
-    }
-    
+
     func navigateToRoot() {
         dogWalkNavigationPath.removeLast(dogWalkNavigationPath.count)
     }

@@ -21,12 +21,7 @@ struct OpenSecretViewWalkIntent: AppIntent {
     static let supportedModes: IntentModes = [.foreground(.immediate)]
 
     func perform() async throws -> some IntentResult {
-        guard let navigationManager: NavigationManager =
-                AppDependencyManager.shared.get() else {
-            throw IntentError.message("NavigationManager not available")
-        }
-        
-        await navigationManager.showSecretView()
+  // ToDO show secret Popup
         return .result()
     }
 }
