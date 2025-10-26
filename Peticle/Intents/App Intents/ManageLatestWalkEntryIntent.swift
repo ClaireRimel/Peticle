@@ -8,7 +8,7 @@
 import AppIntents
 
 // SnippetIntent: iOS 26.0
-struct ManageLastWalkEntryIntent: SnippetIntent {
+struct ManageLatestWalkEntryIntent: SnippetIntent {
     static var title: LocalizedStringResource = "Last Walk Entry"
     static var description = IntentDescription(
         "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes."

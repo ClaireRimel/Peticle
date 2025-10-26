@@ -8,7 +8,7 @@
 import AppIntents
 import SwiftUI
 
-struct LatestActivityIntent: AppIntent {
+struct SeeLatestActivityIntent: AppIntent {
     static var title: LocalizedStringResource = "Get the last activity"
     static var description = IntentDescription("Return the last activity")
     
