@@ -35,13 +35,13 @@ struct ManageLastWalkEntrySnippetView: View {
             
             // Action buttons
             VStack(spacing: 10) {
+                Button(intent: OpenEditEntryIntent(target: walkEntity)) {
+                    Label("Edit Walk", systemImage: "pencil")
+                }
+
                 Button(intent: DeleteWalkIntent(walkEntity: walkEntity)) {
                     Label("Delete Walk", systemImage: "trash")
                         .foregroundColor(.red)
-                }
-                
-                Button(intent: OpenEditEntryIntent(target: walkEntity)) {
-                    Label("Edit Walk", systemImage: "pencil")
                 }
             }
             .padding(.top, 8)

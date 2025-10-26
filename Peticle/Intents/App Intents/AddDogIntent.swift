@@ -7,26 +7,23 @@
 
 import AppIntents
 import CoreSpotlight
+import SwiftUI
 
 struct AddDogIntent: AppIntent {
     static var title: LocalizedStringResource = "Add a New Dog"
     static var description = IntentDescription("Add a new dog to your pet collection.")
-    
+    static var suggestedInvocationPhrase: String? = "Add a dog to my pets"
+
     @Parameter(title: "Dog Name", description: "The name of your dog")
     var name: String
     
     @Parameter(title: "Age", description: "The age of your dog in years")
     var age: Int
 
-    static var openAppWhenRun: Bool = true
-    
+    static var isDiscoverable: Bool = false
+
     init() {}
-    
-    init(name: String, age: Int) {
-        self.name = name
-        self.age = age
-    }
-    
+
     func perform() async throws -> some ReturnsValue<DogEntity> & ProvidesDialog {
         do {
             let dog = try DataModelHelper.addDog(name: name, imageData: nil, age: age)
@@ -39,9 +36,45 @@ struct AddDogIntent: AppIntent {
             return .result(value: dog.entity, dialog: dialog)
             
         } catch {
+            
             throw IntentError.message("Failed to add dog: \(error.localizedDescription)")
         }
     }
 }
 
+
+struct RemoveDogIntent: AppIntent {
+    static var title: LocalizedStringResource = "Remove Dog"
+    static var description = IntentDescription("Remove a dog from your pet collection.")
+    static var suggestedInvocationPhrase: String? = "Remove a dog from my pets"
+    static var openAppWhenRun: Bool = false
+
+    @Parameter(
+        title: "Dog",
+        description: "Choose the dog to remove"
+    )
+    var dog: DogEntity
+
+    // Nice, compact summary shown in Shortcuts / Siri UI
+    static var parameterSummary: some ParameterSummary {
+        Summary("Remove \(\.$dog)")
+    }
+
+    init() {}
+
+    func perform() async throws -> some ProvidesDialog {
+        do {
+            try await DataModelHelper.deleteDog(for: dog.id)
+
+            let dogName = dog.name
+            let dialog = IntentDialog("Successfully removed \(dogName) from your pet collection.")
+
+            return .result(dialog: dialog)
+        } catch {
+            let dialog = IntentDialog("Failed to remove the dog: \(error.localizedDescription)")
+
+            return .result(dialog: dialog)
+        }
+    }
+}
 

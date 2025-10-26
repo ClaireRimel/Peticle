@@ -8,6 +8,7 @@
 import AppIntents
 import CoreSpotlight
 import WidgetKit
+import SwiftUI
 
 /// A SwiftData entity representing a dog, used in app integration and App Intents
 struct DogEntity: IndexedEntity, Identifiable {
@@ -19,8 +20,12 @@ struct DogEntity: IndexedEntity, Identifiable {
     
     /// Provides a display name for this dog, shown in Shortcuts or Siri
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(stringLiteral: "\(name)")
+        DisplayRepresentation(
+            title: "\(name)",
+            image: .init(data: imageData ?? Data())
+        )
     }
+
     
     let id: UUID
     
@@ -29,10 +34,12 @@ struct DogEntity: IndexedEntity, Identifiable {
     
     @Property var name: String
     @Property var age: Int
-    
+    var imageData: Data?
+
     init(_ dog: Dog) {
         id = dog.dogID
         addedDate = dog.addedDate
+        imageData = dog.imageData
         name = dog.name
         age = dog.age
     }

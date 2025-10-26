@@ -60,15 +60,32 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				"Intents/App Intents/DeleteOrAddWalkIntent.swift",
+				"Intents/App Intents/ManageLatestWalkEntryIntent.swift",
+				"Intents/App Intents/OpenEditEntryIntent.swift",
+				"Intents/App Intents/SeeLatestActivityIntent.swift",
+				"Intents/App Intents/ShowDogIntent.swift",
+				"Intents/App Intents/StopwatchIntents.swift",
+				"Intents/App Intents/UpdateWalkQualityIntent.swift",
+				Intents/DogWalkShortcutsProvider.swift,
 				Intents/Enums/IntentError.swift,
 				Intents/WidgetControlAppIntent/OpenSecretViewWalkIntent.swift,
 				Manager/AppDependencyManager.swift,
+				Manager/NavigationManager.swift,
+				"Manager/NavigationManager+Extension.swift",
+				Model/DataModel.swift,
+				"Model/DataModel+Exensions.swift",
+				Model/Dog.swift,
+				Model/DogEntity.swift,
+				Model/DogWalkEntry.swift,
+				Model/DogWalkEntryEntity.swift,
 				Model/DogWalkLiveActivityAttributes.swift,
-				Model/Enum/DurationSelection.swift,
+				Model/Enum/DateSelection.swift,
 				Model/Enum/InteractionRating.swift,
+				Model/StopwatchModel.swift,
 				Resources/AppShortcuts.xcstrings,
 				"Utils/InteractionRating+Extentions.swift",
-				View/HidenView.swift,
+				View/ManageLastWalkEntrySnippetView.swift,
 			);
 			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
 		};
@@ -216,7 +233,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					7E4733DE2DD09573006CDCA1 = {
 						CreatedOnToolsVersion = 16.3;
@@ -352,6 +369,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -410,6 +428,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -420,13 +439,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = Peticle/Peticle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = BDMB887655;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Peticle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Peticle;
@@ -465,13 +487,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = Peticle/Peticle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = BDMB887655;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Peticle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Peticle;

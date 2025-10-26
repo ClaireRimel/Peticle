@@ -15,7 +15,7 @@ struct OpenSecretViewControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: Self.kind) {
             ControlWidgetButton(action: OpenSecretViewWalkIntent()) {
-                Label("Show Secret", systemImage: "eye.fill")
+                Label("Show Secret", systemImage: "lock.fill")
             }
         }
         .displayName("Show Secret")

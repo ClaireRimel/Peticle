@@ -15,7 +15,7 @@ final class NavigationManager {
     var dogWalkEntry: DogWalkEntry?
     var modifyEntry: DogWalkEntry?
 
-    var shouldShowSecretView: Bool = false
+    var shouldShowSecretFeature: Bool = false
 
     // MARK: Methods
     func openSearch(with criteria: String) {
@@ -29,7 +29,7 @@ final class NavigationManager {
     func clearDogWalkEntry() {
         dogWalkEntry = nil
         modifyEntry = nil
-        shouldShowSecretView = false
+        shouldShowSecretFeature = false
     }
 
     func navigateToRoot() {

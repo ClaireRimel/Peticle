@@ -10,26 +10,10 @@
     "%lld mins" : {
 
     },
-    "🐕 %@\nAge: %lld years old\nAdded: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "🐕 %1$@\nAge: %2$lld years old\nAdded: %3$@"
-          }
-        }
-      }
-    },
-    "1 hour" : {
+    "🐕 Here all your dogs" : {
 
     },
-    "30 minutes" : {
-
-    },
-    "40 minutes" : {
-
-    },
-    "50 minutes" : {
+    "🐕 Here is %@" : {
 
     },
     "Add" : {
@@ -102,6 +86,9 @@
     "Alfie's Chronicle" : {
 
     },
+    "Are you sure you want to delete this walk?" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "en" : {
@@ -118,13 +105,13 @@
         }
       }
     },
-    "Create New Entry with details" : {
+    "Choose the dog to remove" : {
+
+    },
+    "Choose which date to update the walk quality for" : {
 
     },
     "Date Selection" : {
-
-    },
-    "Delete walk" : {
 
     },
     "Delete Walk" : {
@@ -154,9 +141,6 @@
     "Dog Walk" : {
 
     },
-    "Dog Walking Recommendation" : {
-
-    },
     "DogWalkEntry Entity" : {
 
     },
@@ -180,7 +164,7 @@
     "Duration" : {
 
     },
-    "Duration In Minutes" : {
+    "Duration (in minutes)" : {
 
     },
     "Edit a Dog Walk Entry" : {
@@ -209,6 +193,9 @@
     "Edit Walk" : {
 
     },
+    "Failed to remove the dog: %@" : {
+
+    },
     "Get a personalized walking recommendation for your dog's health based on your walking history and patterns." : {
 
     },
@@ -219,9 +206,6 @@
 
     },
     "Goal in minutes" : {
-
-    },
-    "Here is your last walk data" : {
 
     },
     "How many walks have you done today?" : {
@@ -294,9 +278,6 @@
         }
       }
     },
-    "New Duration (in minutes)" : {
-
-    },
     "New Walk Quality" : {
       "comment" : "Parameter title for walk quality rating",
       "localizations" : {
@@ -320,7 +301,10 @@
     "OK" : {
 
     },
-    "Open Secret View With a secret photo of Alfie " : {
+    "Open Secret View" : {
+
+    },
+    "Open the app and find a hidden feature" : {
 
     },
     "Open the app to edit the selected dog walk entry." : {
@@ -355,7 +339,16 @@
     "Register manually a new dog walk with interaction" : {
 
     },
+    "Remove ${dog}" : {
+
+    },
+    "Remove a dog from your pet collection." : {
+
+    },
     "Remove a previously recorded dog walk." : {
+
+    },
+    "Remove Dog" : {
 
     },
     "Return the last activity" : {
@@ -365,6 +358,9 @@
 
     },
     "Save" : {
+
+    },
+    "Select Date" : {
 
     },
     "Select Photo" : {
@@ -438,6 +434,9 @@
     "Successfully added %@ to your pet collection!" : {
 
     },
+    "Successfully removed %@ from your pet collection." : {
+
+    },
     "The age of your dog in years" : {
 
     },
@@ -471,6 +470,9 @@
     "The walk quality has been updated to %@." : {
 
     },
+    "There’s no walk %@ 😱😱😱" : {
+
+    },
     "time in minutes" : {
       "localizations" : {
         "en" : {
@@ -487,13 +489,13 @@
         }
       }
     },
-    "Today" : {
-
-    },
     "Unable to analyze your dog's walking history. Please try again later." : {
 
     },
     "Update the duration of an existing dog walk entry." : {
+
+    },
+    "Update the quality rating for your most recent walk from today or yesterday." : {
 
     },
     "Update the walk quality of an existing dog walk entry." : {
@@ -511,6 +513,12 @@
     "Update walk quality for last activity" : {
 
     },
+    "Walk duration and quality updated fails" : {
+
+    },
+    "Walk duration and quality updated successfully" : {
+
+    },
     "Walk Entry" : {
       "localizations" : {
         "en" : {
@@ -526,6 +534,9 @@
           }
         }
       }
+    },
+    "walk Quality" : {
+      "comment" : "The updated quality of the walk"
     },
     "Walk Quality" : {
       "comment" : "Parameter title for walk quality rating",
@@ -545,6 +556,7 @@
       }
     },
     "Walk Quality Rating" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -576,6 +588,19 @@
         }
       }
     },
+    "Walk quality updated to %@" : {
+
+    },
+    "Walk quality updated to %@ for your %@ walk." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Walk quality updated to %1$@ for your %2$@ walk."
+          }
+        }
+      }
+    },
     "WHAT?! No Walk Today!!!" : {
       "localizations" : {
         "en" : {
@@ -592,10 +617,13 @@
         }
       }
     },
-    "Yesterday" : {
+    "Which value would you like to apply?" : {
 
     },
-    "You don't have any dogs registered yet. Shake your phone to add your first dog! 🐕" : {
+    "Which walk would you like to rate?" : {
+
+    },
+    "You don't have any dogs registered yet. Are you a cat lover ? " : {
 
     },
     "You found me!" : {
@@ -603,16 +631,6 @@
     },
     "Your activity was registered" : {
 
-    },
-    "Your Dogs (%lld total):\n\n%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Your Dogs (%1$lld total):\n\n%2$@"
-          }
-        }
-      }
     }
   },
   "version" : "1.0"

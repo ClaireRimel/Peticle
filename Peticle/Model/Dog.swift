@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import UIKit
 
 @Model
 final class Dog: Identifiable, Sendable {
@@ -15,7 +16,12 @@ final class Dog: Identifiable, Sendable {
     var imageData: Data?
     var age: Int
     var addedDate: Date
-    
+
+    var photo: UIImage? {
+         guard let imageData else { return nil }
+         return UIImage(data: imageData)
+     }
+
     init(
         dogID: UUID = UUID(),
         name: String,
@@ -36,3 +42,4 @@ extension Dog {
         DogEntity(self)
     }
 }
+

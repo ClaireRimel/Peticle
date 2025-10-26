@@ -11,7 +11,7 @@ import Foundation
 struct WalkingRecommendationIntent: AppIntent {
     static var title: LocalizedStringResource = "Should I walk my dog today based on our history?"
     static var description = IntentDescription("Get a personalized walking recommendation for your dog's health based on your walking history and patterns.")
-    
+
     func perform() async throws -> some ProvidesDialog {
         do {
             let recommendation = try await generateWalkingRecommendation()
@@ -23,11 +23,11 @@ struct WalkingRecommendationIntent: AppIntent {
             return .result(dialog: errorMessage)
         }
     }
-    
+
     private func generateWalkingRecommendation() async throws -> String {
         // Check if there's a walk registered today
         let todayWalks = try await DataModelHelper.walksOfToday()
-        
+
         if todayWalks.isEmpty {
             // No walk today - dog needs exercise
             return "Yes! Your dog needs a walk today! Daily exercise is essential for your pup's health and happiness! 🐕"

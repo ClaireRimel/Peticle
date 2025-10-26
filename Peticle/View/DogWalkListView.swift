@@ -14,7 +14,7 @@ import AppIntents
 struct DogWalkListView: View {
     @Environment(NavigationManager.self) private var navigation
     @State private var isEditSheetPresented: Bool = false
-    @State private var showingAddDog = false
+    @State private var showingHiddenView = false
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -22,7 +22,7 @@ struct DogWalkListView: View {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
             .navigationTitle("Alfie's Chronicle")
             .onShake {
-                showingAddDog = true
+                showingHiddenView = true
             }
             
             .sheet(item: $navigation.dogWalkEntry,
@@ -40,14 +40,14 @@ struct DogWalkListView: View {
                 DogWalkEntryView(entry: entry, mode: .edit)
             }
             
-            .sheet(isPresented: $navigation.shouldShowSecretView) {
+            .sheet(isPresented: $navigation.shouldShowSecretFeature) {
                 navigation.clearDogWalkEntry()
             } content: {
-                HiddenView()
+                AddDogView()
             }
             
-            .sheet(isPresented: $showingAddDog) {
-                AddDogView()
+            .sheet(isPresented: $showingHiddenView) {
+                HiddenView()
             }
 
         }

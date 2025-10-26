@@ -1,7 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Today" : {
 
+    },
+    "Yesterday" : {
+
+    }
   },
   "version" : "1.1"
 }

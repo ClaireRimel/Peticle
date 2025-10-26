@@ -11,7 +11,7 @@ import PhotosUI
 struct AddDogView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var dogName: String = ""
-    @State private var dogAge: Int = 1
+    @State private var dogAge: Int = 0
     @State private var selectedImage: PhotosPickerItem?
     @State private var selectedImageData: Data?
     @State private var showingImagePicker = false
@@ -25,7 +25,7 @@ struct AddDogView: View {
                     TextField("Dog Name", text: $dogName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    Stepper("Age: \(dogAge) years", value: $dogAge, in: 1...30)
+                    Stepper("Age: \(dogAge) years", value: $dogAge, in: 0...30)
                 }
                 
                 Section("Photo") {
@@ -99,3 +99,5 @@ struct AddDogView: View {
 #Preview {
     AddDogView()
 }
+
+

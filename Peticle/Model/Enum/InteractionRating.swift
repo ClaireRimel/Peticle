@@ -17,10 +17,22 @@ enum WalkQuality: String, Codable, CaseIterable, Identifiable, AppEnum, Hashable
 
     /// A mapping of each enum case to a localized display representation.
     static var caseDisplayRepresentations: [WalkQuality: DisplayRepresentation] = [
-        .ok: DisplayRepresentation(title: LocalizedStringResource("ok", table: "WalkQualityRates")),
-        .bad: DisplayRepresentation(title: LocalizedStringResource("bad", table: "WalkQualityRates")),
-        .good: DisplayRepresentation(title: LocalizedStringResource("good", table: "WalkQualityRates")),
-        .wonderful: DisplayRepresentation(title: LocalizedStringResource("wonderful", table: "WalkQualityRates"))
+        .ok: DisplayRepresentation(
+            title: LocalizedStringResource("ok", table: "WalkQualityRates"),
+            image: .init(systemName: "moon.zzz.fill")
+        ),
+        .bad: DisplayRepresentation(
+            title: LocalizedStringResource("bad", table: "WalkQualityRates"),
+            image: .init(systemName:"cloud.bolt.rain.fill")
+        ),
+        .good: DisplayRepresentation(
+            title: LocalizedStringResource("good", table: "WalkQualityRates"),
+            image: .init(systemName: "sun.max.fill")
+        ),
+        .wonderful: DisplayRepresentation(
+            title: LocalizedStringResource("wonderful", table: "WalkQualityRates"),
+            image: .init(systemName: "rainbow")
+        )
     ]
 
     /// Returns the localized name for the quality rating.
@@ -29,7 +41,7 @@ enum WalkQuality: String, Codable, CaseIterable, Identifiable, AppEnum, Hashable
     func localizedName() -> String {
         String(localized: .init(rawValue), table: "WalkQualityRates")
     }
-    
+
     /// Conformance to `Identifiable` — returns the enum case itself as its identifier.
     var id: Self { self }
 }

@@ -1,37 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Add a new dog in ${applicationName}" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Add a new dog in ${applicationName}",
-              "Add a dog to my pets in ${applicationName}",
-              "Register a new dog in ${applicationName}",
-              "Add a dog in ${applicationName}",
-              "Create a new pet profile in ${applicationName}",
-              "Add my dog in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Ajouter un nouveau chien dans ${applicationName}",
-              "Ajouter un chien à mes animaux dans ${applicationName}",
-              "Enregistrer un nouveau chien dans ${applicationName}",
-              "Ajouter un chien dans ${applicationName}",
-              "Créer un nouveau profil d'animal dans ${applicationName}",
-              "Ajouter mon chien dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
     "Add an activity in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -40,9 +9,7 @@
             "state" : "new",
             "values" : [
               "Add an activity in ${applicationName}",
-              "Add an activity of ${duration} in ${applicationName}",
               "Log a walk in ${applicationName}",
-              "Log a ${walkQuality} walk in ${applicationName}",
               "Record a walk in ${applicationName}",
               "Add walk entry in ${applicationName}",
               "Log walk activity in ${applicationName}",
@@ -53,50 +20,15 @@
         },
         "fr" : {
           "stringSet" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "values" : [
               "Ajouter une activité dans ${applicationName}",
-              "Ajouter une activité de ${duration} dans ${applicationName}",
               "Enregistrer une promenade dans ${applicationName}",
-              "Enregister un ${walkQuality} promenade dans ${applicationName}",
               "Noter une promenade dans ${applicationName}",
               "Ajouter une entrée de promenade dans ${applicationName}",
               "Enregistrer l'activité de promenade dans ${applicationName}",
               "Noter la session de promenade dans ${applicationName}",
               "Ajouter un enregistrement de promenade dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Delete ${walkEntity} walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Delete ${walkEntity} walk in ${applicationName}",
-              "Remove walk in ${applicationName}",
-              "Delete walk entry in ${applicationName}",
-              "Remove walk entry in ${applicationName}",
-              "Delete walk record in ${applicationName}",
-              "Remove walk record in ${applicationName}",
-              "Delete walk data in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Supprimer la promenade ${walkEntity} dans ${applicationName}",
-              "Supprimer la promenade dans ${applicationName}",
-              "Supprimer l'entrée de promenade dans ${applicationName}",
-              "Enlever l'entrée de promenade dans ${applicationName}",
-              "Supprimer l'enregistrement de promenade dans ${applicationName}",
-              "Enlever l'enregistrement de promenade dans ${applicationName}",
-              "Supprimer les données de promenade dans ${applicationName}"
             ]
           }
         }
@@ -110,8 +42,6 @@
             "state" : "new",
             "values" : [
               "Edit walk in ${applicationName}",
-              "Edit ${target} in ${applicationName}",
-              "Modify the walk of ${target} in ${applicationName}",
               "Modify walk in ${applicationName}",
               "Change walk details in ${applicationName}",
               "Update walk in ${applicationName}",
@@ -122,7 +52,7 @@
         },
         "fr" : {
           "stringSet" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "values" : [
               "Modifier la promenade dans ${applicationName}",
               "Modifier ${target} dans ${applicationName}",
@@ -170,7 +100,7 @@
       }
     },
     "Should I walk my dog today in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringSet" : {
@@ -331,6 +261,27 @@
               "Arrêter de marcher dans ${applicationName}",
               "Terminer la session de promenade dans ${applicationName}",
               "Arrêter le suivi de la promenade dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Update walk quality in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Update walk quality in ${applicationName}",
+              "Rate my walk in ${applicationName}",
+              "Update walk rating in ${applicationName}",
+              "Change walk quality in ${applicationName}",
+              "Rate walk quality in ${applicationName}",
+              "Update walk quality for ${dateSelection} in ${applicationName}",
+              "Rate my ${dateSelection} walk in ${applicationName}",
+              "Update ${dateSelection} walk quality in ${applicationName}",
+              "Change ${dateSelection} walk rating in ${applicationName}"
             ]
           }
         }

@@ -18,8 +18,7 @@ struct AddWalkIntent: AppIntent {
         title: "Duration",
         description: "The number of minutes you want to log"
     )
-    var duration: DurationSelection
-
+    var duration: Int
 
     @Parameter(
         title: "Walk Quality",
@@ -28,11 +27,12 @@ struct AddWalkIntent: AppIntent {
     var walkQuality: WalkQuality
 
     func perform() async throws -> some ProvidesDialog {
-        let minutes = duration.minutes
-        _ = try DataModelHelper.newEntry(durationInMinutes: minutes,
+        let entry = try DataModelHelper.newEntry(durationInMinutes: duration,
                                          walkQuality: walkQuality)
 
-        return .result(dialog: "Added a new walk of \(minutes) minute\(minutes == 1 ? "" : "s").")
+        try? await CSSearchableIndex.default().indexAppEntities([entry.entity])
+
+        return .result(dialog: "Added a new walk of \(duration) minute\(duration == 1 ? "" : "s").")
     }
 }
 
@@ -53,7 +53,13 @@ struct DeleteWalkIntent: AppIntent {
     }
     
     func perform() async throws -> some IntentResult {
-        try await DataModelHelper.deleteWalk(for: walkEntity.id)
+        let shouldDeleteIt = try await $walkEntity.requestConfirmation(
+            for: walkEntity,
+            dialog: "Are you sure you want to delete this walk?"
+        )
+        if shouldDeleteIt {
+            try await DataModelHelper.deleteWalk(for: walkEntity.id)
+        }
 
         return .result()
     }

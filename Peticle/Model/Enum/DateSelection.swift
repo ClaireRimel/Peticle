@@ -15,18 +15,15 @@ enum DateSelection: String, AppEnum {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Date Selection")
 
     static var caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .today: "Today",
-        .yesterday: "Yesterday"
+        .today: DisplayRepresentation(
+            title: LocalizedStringResource( "Today", table: "DateSelection"),
+            image: .init(systemName: "calendar")
+        ),
+        .yesterday: DisplayRepresentation(
+            title: LocalizedStringResource( "Yesterday", table: "DateSelection"),
+            image: .init(systemName: "calendar")
+        )
     ]
-    
-    var displayName: String {
-        switch self {
-        case .today:
-            return "today"
-        case .yesterday:
-            return "yesterday"
-        }
-    }
     
     /// Returns the last walk entry for the selected date
     @MainActor

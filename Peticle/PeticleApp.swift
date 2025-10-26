@@ -17,7 +17,8 @@ struct PeticleApp: App {
         let navigationManager = NavigationManager()
         /// Registration and initialization of an app intent's
         AppDependencyManager.shared.add(dependency: navigationManager)
-    
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+
         self.navigationManager = navigationManager
     }
     

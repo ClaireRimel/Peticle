@@ -13,12 +13,11 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
     /**
      This sample app contains several examples of different intents, but only the intents this array describes make sense as App Shortcuts.
      Put the App Shortcut most people will use as the first item in the array. This first shortcut shouldn't bring the app to the foreground.
-     
+
      Every phrase that people use to invoke an App Shortcut needs to contain the app name, using the `applicationName` placeholder in the provided
      phrase text, as well as any app name synonyms declared in the `INAlternativeAppNames` key of the app's `Info.plist` file. These phrases are localized in a string catalog named `AppShortcuts.xcstrings`.
      */
     static var appShortcuts: [AppShortcut] {
-    
         AppShortcut(
             intent: StartDogWalkIntent(),
             phrases: [
@@ -30,39 +29,9 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Begin a walk session in \(.applicationName)"
             ],
             shortTitle: "Start an activity",
-            systemImageName: "timer"
+            systemImageName: "play.fill"
         )
 
-        AppShortcut(
-            intent: LatestActivityIntent(),
-            phrases: [
-                "Show me the last activity in \(.applicationName)",
-                "Show my last walk in \(.applicationName)",
-                "What was my last walk in \(.applicationName)",
-                "Show recent activity in \(.applicationName)",
-                "Display last walk in \(.applicationName)",
-                "Show me my latest walk in \(.applicationName)"
-            ],
-            shortTitle: "Show the last activity",
-            systemImageName: "eye"
-        )
-        
-        AppShortcut(
-            intent: OpenEditEntryIntent(),
-            phrases: [
-                "Edit walk in \(.applicationName)",
-                "Edit \(\.$target) in \(.applicationName)",
-                "Modify the walk of \(\.$target) in \(.applicationName)",
-                "Modify walk in \(.applicationName)",
-                "Change walk details in \(.applicationName)",
-                "Update walk in \(.applicationName)",
-                "Edit walk entry in \(.applicationName)",
-                "Modify walk entry in \(.applicationName)"
-            ],
-            shortTitle: "Edit activity",
-            systemImageName: "pencil.circle"
-        )
-        
         AppShortcut(
             intent: StopDogWalkIntent(),
             phrases: [
@@ -77,23 +46,55 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Stop walk",
             systemImageName: "stop.circle.fill"
         )
-        
+
         AppShortcut(
-            intent: DeleteWalkIntent(),
+            intent: AddWalkIntent(),
             phrases: [
-                "Delete \(\.$walkEntity) walk in \(.applicationName)",
-                "Remove walk in \(.applicationName)",
-                "Delete walk entry in \(.applicationName)",
-                "Remove walk entry in \(.applicationName)",
-                "Delete walk record in \(.applicationName)",
-                "Remove walk record in \(.applicationName)",
-                "Delete walk data in \(.applicationName)"
+                "Add an activity in \(.applicationName)",
+                "Log a walk in \(.applicationName)",
+                "Record a walk in \(.applicationName)",
+                "Add walk entry in \(.applicationName)",
+                "Log walk activity in \(.applicationName)",
+                "Record walk session in \(.applicationName)",
+                "Add walk record in \(.applicationName)"
             ],
-            shortTitle: "Delete walk",
-            systemImageName: "trash.fill")
-        
+            shortTitle: "Add Activity",
+            systemImageName: "figure.walk"
+        )
+
         AppShortcut(
-            intent: ManageLastWalkEntryIntent(),
+            intent: UpdateWalkQualityIntent(),
+            phrases: [
+                "Update walk quality in \(.applicationName)",
+                "Rate my walk in \(.applicationName)",
+                "Update walk rating in \(.applicationName)",
+                "Change walk quality in \(.applicationName)",
+                "Rate walk quality in \(.applicationName)",
+                "Update walk quality for \(\.$dateSelection) in \(.applicationName)",
+                "Rate my \(\.$dateSelection) walk in \(.applicationName)",
+                "Update \(\.$dateSelection) walk quality in \(.applicationName)",
+                "Change \(\.$dateSelection) walk rating in \(.applicationName)"
+            ],
+            shortTitle: "Update Walk Quality",
+            systemImageName: "arrow.trianglehead.2.clockwise.rotate.90"
+        )
+
+        AppShortcut(
+            intent: SeeLatestActivityIntent(),
+            phrases: [
+                "Show me the last activity in \(.applicationName)",
+                "Show my last walk in \(.applicationName)",
+                "What was my last walk in \(.applicationName)",
+                "Show recent activity in \(.applicationName)",
+                "Display last walk in \(.applicationName)",
+                "Show me my latest walk in \(.applicationName)"
+            ],
+            shortTitle: "Show the last activity",
+            systemImageName: "eye"
+        )
+
+        AppShortcut(
+            intent: ManageLatestWalkEntryIntent(),
             phrases: [
                 "Manage lastest walks in \(.applicationName)",
                 "Manage recent walks in \(.applicationName)",
@@ -106,40 +107,20 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Manage last walks",
             systemImageName: "magnifyingglass")
 
-        
         AppShortcut(
-            intent: AddWalkIntent(),
+            intent: OpenEditEntryIntent(),
             phrases: [
-                "Add an activity in \(.applicationName)",
-                "Add an activity of \(\.$duration) in \(.applicationName)",
-                "Log a walk in \(.applicationName)",
-                "Log a \(\.$walkQuality) walk in \(.applicationName)",
-                "Record a walk in \(.applicationName)",
-                "Add walk entry in \(.applicationName)",
-                "Log walk activity in \(.applicationName)",
-                "Record walk session in \(.applicationName)",
-                "Add walk record in \(.applicationName)"
+                "Edit walk in \(.applicationName)",
+                "Modify walk in \(.applicationName)",
+                "Change walk details in \(.applicationName)",
+                "Update walk in \(.applicationName)",
+                "Edit walk entry in \(.applicationName)",
+                "Modify walk entry in \(.applicationName)"
             ],
-            shortTitle: "Add Activity",
-            systemImageName: "figure.walk"
+            shortTitle: "Edit activity",
+            systemImageName: "pencil.circle"
         )
-        
-        AppShortcut(
-            intent: WalkingRecommendationIntent(),
-            phrases: [
-                "Should I walk my dog today in \(.applicationName)",
-                "Does my dog need a walk today in \(.applicationName)",
-                "Should I take my dog for a walk in \(.applicationName)",
-                "Do I need to walk my dog today in \(.applicationName)",
-                "Is it time to walk my dog in \(.applicationName)",
-                "Should I go for a walk with my dog in \(.applicationName)",
-                "Does my dog need exercise today in \(.applicationName)",
-                "Should I walk my pup today in \(.applicationName)"
-            ],
-            shortTitle: "Dog Walking Recommendation",
-            systemImageName: "pawprint.circle"
-        )
-        
+
         AppShortcut(
             intent: ShowDogIntent(),
             phrases: [
@@ -154,11 +135,11 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Show information about \(\.$dog) in \(.applicationName)"
             ],
             shortTitle: "Show Dogs",
-            systemImageName: "list.bullet.circle"
+            systemImageName: "dog.fill"
         )
     }
-    
+
     static var shortcutTileColor: ShortcutTileColor {
         .grayGreen
-     }
+    }
 }

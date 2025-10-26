@@ -30,44 +30,70 @@ class DataModelHelper {
     static func dogWalkEntries(for identifiers: [UUID]) async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let allEntries = try modelContext.fetch(FetchDescriptor<DogWalkEntry>())
-      
+
         return allEntries.filter { identifiers.contains($0.dogWalkID) }
     }
-    
+
+    static func newEntry(durationInMinutes: Int, walkQuality: WalkQuality) throws -> DogWalkEntry {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let entry = DogWalkEntry(durationInMinutes: durationInMinutes,
+                                 walkQuality: walkQuality)
+        modelContext.insert(entry)
+        try modelContext.save()
+
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+        return entry
+    }
+
+    @MainActor
+    static func modify(entryWalk: DogWalkEntry) async throws -> DogWalkEntry? {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let dogWalkID = entryWalk.dogWalkID
+
+        var descriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.dogWalkID == dogWalkID }
+        )
+        descriptor.fetchLimit = 1
+
+        guard let entry = try modelContext.fetch(descriptor).first else {
+            print("❌ No matching entry found for ID \(entryWalk.dogWalkID)")
+            return nil
+        }
+
+        entry.walkQuality = entryWalk.walkQuality
+        entry.durationInMinutes = entryWalk.durationInMinutes
+
+        try modelContext.save()
+
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+
+        return entry
+    }
+
+    @MainActor
+    static func deleteWalk(for identifier: UUID) async throws {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+
+        var fetchDescriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.dogWalkID == identifier }
+        )
+        fetchDescriptor.fetchLimit = 1
+
+        if let entry = try modelContext.fetch(fetchDescriptor).first {
+            modelContext.delete(entry)
+            try modelContext.save()
+            DogWalkShortcutsProvider.updateAppShortcutParameters()
+
+        } else {
+            throw DataModelHelperError.NoEntryFound(identifier)
+        }
+    }
+
     static func dogWalkEntry(for identifier: UUID) async throws -> DogWalkEntry? {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let entry = try modelContext.fetch(FetchDescriptor<DogWalkEntry>(predicate: #Predicate { identifier == $0.dogWalkID })).first
         
         return entry
-    }
-    
-    static func dogEntries(limit: Int) async throws -> [DogWalkEntry] {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
-        descriptor.fetchLimit = limit
-        let entries = try modelContext.fetch(descriptor)
-        
-        return entries
-    }
-    
-    @MainActor
-    // Set to MainActor, because it is used with OpenIntent
-    static func lastDogEntry() async throws -> DogWalkEntry? {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        var descriptor = FetchDescriptor<DogWalkEntry>(sortBy: [SortDescriptor(\.entryDate, order: .reverse)])
-        descriptor.fetchLimit = 1
-        let entries = try modelContext.fetch(descriptor).first
-        
-        return entries
-    }
-    
-    @MainActor
-    static func allDogEntries() async throws -> [DogWalkEntry] {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
-        let entries = try modelContext.fetch(descriptor)
-        
-        return entries
     }
     
     static func walksTodayCount() async throws -> Int {
@@ -129,36 +155,24 @@ class DataModelHelper {
         let walks = try await walksOfYesterday()
         return walks.sorted(by: { $0.entryDate > $1.entryDate }).first
     }
+    
+    static func dogWalkEntries(limit: Int) async throws -> [DogWalkEntry] {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
+        descriptor.fetchLimit = limit
+        let entries = try modelContext.fetch(descriptor)
 
-    
-    // MARK: - Dog Management
-    
+        return entries
+    }
 
     @MainActor
-    static func dogs(for identifiers: [UUID]) async throws -> [Dog] {
+    static func allDogWalkEntries() async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let allDogs = try modelContext.fetch(FetchDescriptor<Dog>())
-        
-        return allDogs.filter { identifiers.contains($0.dogID) }
+        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
+        let entries = try modelContext.fetch(descriptor)
+
+        return entries
     }
-    
-    @MainActor
-    static func dog(for identifier: UUID) async throws -> Dog? {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let dog = try modelContext.fetch(FetchDescriptor<Dog>(predicate: #Predicate { identifier == $0.dogID })).first
-        
-        return dog
-    }
-    
-    @MainActor
-    static func allDogs() async throws -> [Dog] {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let descriptor = FetchDescriptor<Dog>(predicate: #Predicate { _ in true})
-        let dogs = try modelContext.fetch(descriptor)
-        
-        return dogs
-    }
-    
 
 }
 
