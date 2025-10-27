@@ -35,7 +35,7 @@
       }
     },
     "Edit walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringSet" : {
@@ -94,6 +94,24 @@
               "Voir la gestion des promenades dans ${applicationName}",
               "Gérer les données de promenade dans ${applicationName}",
               "Gérer l'historique des promenades dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
+    "Open walk in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Open walk in ${applicationName}",
+              "Modify walk in ${applicationName}",
+              "Change walk details in ${applicationName}",
+              "Update walk in ${applicationName}",
+              "Edit walk entry in ${applicationName}",
+              "Modify walk entry in ${applicationName}"
             ]
           }
         }

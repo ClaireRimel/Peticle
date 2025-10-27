@@ -61,6 +61,7 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				"Intents/App Intents/DeleteOrAddWalkIntent.swift",
+				"Intents/App Intents/EditIntents.swift",
 				"Intents/App Intents/ManageLatestWalkEntryIntent.swift",
 				"Intents/App Intents/OpenEditEntryIntent.swift",
 				"Intents/App Intents/SeeLatestActivityIntent.swift",

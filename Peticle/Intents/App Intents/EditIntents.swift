@@ -8,10 +8,10 @@
 import AppIntents
 
 struct EditDurationIntent: AppIntent {
-    static var title: LocalizedStringResource = "Update Walk Duration"
-    static var description = IntentDescription("Update the duration of an existing dog walk entry.")
-    
-    @Parameter(title: "Walk Entry", description: "The specific walk entry to update")
+    static var title: LocalizedStringResource = "Edit Walk Duration"
+    static var description = IntentDescription("Edit the duration of an existing dog walk entry.")
+
+    @Parameter(title: "Walk", description: "The specific walk to update")
     var walkEntity: DogWalkEntryEntity
     
     @Parameter(title: "Duration (in minutes)", description: "The updated duration of the walk")
@@ -30,13 +30,13 @@ struct EditDurationIntent: AppIntent {
 }
 
 struct EditWalkQualityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Update Walk Quality"
-    static var description = IntentDescription("Update the walk quality of an existing dog walk entry.")
-    
-    @Parameter(title: "Walk Entry", description: "The specific walk entry to update")
+    static var title: LocalizedStringResource = "Edit Walk Quality"
+    static var description = IntentDescription("Edit the walk quality of an existing dog walk entry.")
+
+    @Parameter(title: "Walk", description: "The specific walk entry to update")
     var walkEntity: DogWalkEntryEntity
     
-    @Parameter(title: LocalizedStringResource("walk Quality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
+    @Parameter(title: LocalizedStringResource("Walk uality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality
     
     func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> {
@@ -53,10 +53,10 @@ struct EditWalkQualityIntent: AppIntent {
 }
 
 struct EditDurationThenQualityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Update Walk Duration"
-    static var description = IntentDescription("Update the duration of an existing dog walk entry.")
+    static var title: LocalizedStringResource = "Edit walk duration then the quality"
+    static var description = IntentDescription("Edit the duration hen the quality of an existing dog walk entry.")
 
-    @Parameter(title: "Walk Entry", description: "The specific walk entry to update")
+    @Parameter(title: "Walk", description: "The specific walk entry to update")
     var walkEntity: DogWalkEntryEntity
 
     @Parameter(title: "Duration (in minutes)", description: "The updated duration of the walk")
@@ -78,3 +78,18 @@ struct EditDurationThenQualityIntent: AppIntent {
     }
 }
 
+// This is a real feature for App Intents
+//struct DogWalkingFocus: SetFocusFilterIntent {
+//    var displayRepresentation: DisplayRepresentation
+//
+//    static var title: LocalizedStringResource = "Dog Walking Focus"
+//
+//    @Parameter(title: "Include urgent alerts only")
+//    var urgentOnly: Bool
+//
+//    func perform() async throws -> some IntentResult {
+//        // Configure focus settings
+//        FocusFilterState.shared.urgentOnly = urgentOnly
+//        return .result()
+//    }
+//}

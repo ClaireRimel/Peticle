@@ -14,7 +14,7 @@ struct OpenEditEntryIntent: OpenIntent {
     static var description = IntentDescription("Open the app to edit the selected dog walk entry.")
     
     
-    @Parameter(title: "Walk Entry", description: "The dog walk entry to edit")
+    @Parameter(title: "Walk", description: "The dog walk entry to edit")
     var target: DogWalkEntryEntity
 
     

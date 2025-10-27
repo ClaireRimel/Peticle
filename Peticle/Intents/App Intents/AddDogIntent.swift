@@ -44,7 +44,7 @@ struct AddDogIntent: AppIntent {
 
 
 struct RemoveDogIntent: AppIntent {
-    static var title: LocalizedStringResource = "Remove Dog"
+    static var title: LocalizedStringResource = "Remove dog"
     static var description = IntentDescription("Remove a dog from your pet collection.")
     static var suggestedInvocationPhrase: String? = "Remove a dog from my pets"
     static var openAppWhenRun: Bool = false

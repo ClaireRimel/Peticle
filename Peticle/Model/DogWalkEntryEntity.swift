@@ -14,8 +14,8 @@ import WidgetKit
 // IndexedEntity: iOS 18*
 struct DogWalkEntryEntity: IndexedEntity, Identifiable, TimelineEntry {
     
-    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "DogWalkEntry Entity")
-    
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Dog walk")
+
     /// The default query used to fetch dog walk entries, for use with App Intents
     static let defaultQuery = DogWalkQuery()
     

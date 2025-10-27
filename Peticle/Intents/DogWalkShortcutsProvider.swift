@@ -110,7 +110,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: OpenEditEntryIntent(),
             phrases: [
-                "Edit walk in \(.applicationName)",
+                "Open walk in \(.applicationName)",
                 "Modify walk in \(.applicationName)",
                 "Change walk details in \(.applicationName)",
                 "Update walk in \(.applicationName)",

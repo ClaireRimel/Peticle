@@ -111,13 +111,16 @@
     "Choose which date to update the walk quality for" : {
 
     },
+    "Date" : {
+
+    },
     "Date Selection" : {
 
     },
-    "Delete Walk" : {
+    "Delete walk" : {
 
     },
-    "Delete Walk Entry" : {
+    "Delete Walk" : {
 
     },
     "Display information about a specific dog or show all your dogs." : {
@@ -129,19 +132,16 @@
     "Dog" : {
 
     },
-    "Dog Entity" : {
-
-    },
     "Dog Information" : {
 
     },
     "Dog Name" : {
 
     },
-    "Dog Walk" : {
+    "Dog walk" : {
 
     },
-    "DogWalkEntry Entity" : {
+    "Dog Walk" : {
 
     },
     "Done" : {
@@ -190,7 +190,25 @@
         }
       }
     },
+    "Edit the duration hen the quality of an existing dog walk entry." : {
+
+    },
+    "Edit the duration of an existing dog walk entry." : {
+
+    },
+    "Edit the walk quality of an existing dog walk entry." : {
+
+    },
     "Edit Walk" : {
+
+    },
+    "Edit Walk Duration" : {
+
+    },
+    "Edit walk duration then the quality" : {
+
+    },
+    "Edit Walk Quality" : {
 
     },
     "Failed to remove the dog: %@" : {
@@ -345,10 +363,10 @@
     "Remove a dog from your pet collection." : {
 
     },
-    "Remove a previously recorded dog walk." : {
+    "Remove a previously recorded walk." : {
 
     },
-    "Remove Dog" : {
+    "Remove dog" : {
 
     },
     "Return the last activity" : {
@@ -358,9 +376,6 @@
 
     },
     "Save" : {
-
-    },
-    "Select Date" : {
 
     },
     "Select Photo" : {
@@ -464,6 +479,9 @@
     "The specific walk entry to update" : {
 
     },
+    "The specific walk to update" : {
+
+    },
     "The updated duration of the walk" : {
 
     },
@@ -492,25 +510,19 @@
     "Unable to analyze your dog's walking history. Please try again later." : {
 
     },
-    "Update the duration of an existing dog walk entry." : {
-
-    },
     "Update the quality rating for your most recent walk from today or yesterday." : {
 
     },
-    "Update the walk quality of an existing dog walk entry." : {
-
-    },
     "Update the walk quality of the last activity" : {
-
-    },
-    "Update Walk Duration" : {
 
     },
     "Update Walk Quality" : {
 
     },
     "Update walk quality for last activity" : {
+
+    },
+    "Walk" : {
 
     },
     "Walk duration and quality updated fails" : {
@@ -520,6 +532,7 @@
 
     },
     "Walk Entry" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -600,6 +613,9 @@
           }
         }
       }
+    },
+    "Walk uality" : {
+      "comment" : "The updated quality of the walk"
     },
     "WHAT?! No Walk Today!!!" : {
       "localizations" : {

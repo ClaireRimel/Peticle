@@ -134,7 +134,7 @@ class StopwatchViewModel: ObservableObject {
     // MARK: - Timer Control
     func start(with goalInMinute: Int) {
         guard !isRunning else { return }
-        
+
         // Validate input
         let safeGoal = max(1, min(goalInMinute, 1440)) // Between 1 minute and 24 hours
         
@@ -182,7 +182,7 @@ class StopwatchViewModel: ObservableObject {
     
     func stop() {
         guard isRunning else { return }
-        
+
         isRunning = false
         timer?.invalidate()
         timer = nil
@@ -194,8 +194,11 @@ class StopwatchViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.reset()
         }
+
+        // Donate intent
+        donateEditQualityIntent()
     }
-    
+
     func saveEntryAndStopActivity() throws {
         guard let startDate else {
             throw IntentError.message("No Activity started yet")
@@ -265,7 +268,22 @@ class StopwatchViewModel: ObservableObject {
     nonisolated private func removeScheduledNotification() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["midGoal", "goalCompletion"])
     }
-    
+
+    private func donateEditQualityIntent() {
+        Task {
+            do {
+                if let lastEntry = try await DataModelHelper.lastDogEntry()?.entity {
+                    let intent = EditWalkQualityIntent()
+                    intent.walkEntity = lastEntry
+                    try await intent.donate()
+                }
+            } catch {
+                // Handle or log the error appropriately
+                print("Failed to donate intent: \(error)")
+            }
+         }
+    }
+
     // MARK: - Public Properties
     var formattedTime: String {
         let hours = timeElapsed / 3600
@@ -283,6 +301,7 @@ class StopwatchViewModel: ObservableObject {
         guard goalInSeconds > 0 else { return 0.0 }
         return min(Double(timeElapsed) / Double(goalInSeconds), 1.0)
     }
+    
 }
 
 

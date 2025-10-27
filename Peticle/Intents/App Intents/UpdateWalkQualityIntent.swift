@@ -13,10 +13,10 @@ struct UpdateWalkQualityIntent: AppIntent {
         "Update the quality rating for your most recent walk from today or yesterday."
     )
 
-    @Parameter(title: "Dog Walk")
+    @Parameter(title: "Walk")
     var dogWalkEntryEntity: DogWalkEntryEntity?
 
-    @Parameter(title: "Select Date", description: "Choose which date to update the walk quality for")
+    @Parameter(title: "Date", description: "Choose which date to update the walk quality for")
     var dateSelection: DateSelection?
 
     @Parameter(title: "Walk Quality", description: "The quality rating for how the walk went")

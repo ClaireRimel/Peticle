@@ -37,11 +37,11 @@ struct AddWalkIntent: AppIntent {
 }
 
 struct DeleteWalkIntent: AppIntent {
-    static var title: LocalizedStringResource = "Delete Walk Entry"
-    static var description = IntentDescription("Remove a previously recorded dog walk.")
+    static var title: LocalizedStringResource = "Delete walk"
+    static var description = IntentDescription("Remove a previously recorded walk.")
     
     @Parameter(
-        title: "Walk Entry",
+        title: "Walk",
         description: "The specific walk entry to delete"
     )
     var walkEntity: DogWalkEntryEntity

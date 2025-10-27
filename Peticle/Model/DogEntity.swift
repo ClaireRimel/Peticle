@@ -13,7 +13,7 @@ import SwiftUI
 /// A SwiftData entity representing a dog, used in app integration and App Intents
 struct DogEntity: IndexedEntity, Identifiable {
     
-    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Dog Entity")
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Dog")
     
     /// The default query used to fetch dogs, for use with App Intents
     static let defaultQuery = DogQuery()
