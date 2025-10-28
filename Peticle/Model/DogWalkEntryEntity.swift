@@ -26,16 +26,25 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable, TimelineEntry {
     
     let id: UUID
     
-    @Property(indexingKey: \.addedDate)
+    @Property(
+        title: LocalizedStringResource("Date of the walk"),
+        indexingKey: \.addedDate
+    )
     var date: Date
 
-    @Property var durationInMinutes: Int
-    @Property var walkQuality: WalkQuality?
+    @Property(
+        identifier: "Duration",
+        title: LocalizedStringResource(" Duration in Minute")
+    )
+    var durationInMinutes: Int
+
+    var walkQuality: WalkQuality?
     
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID
         date = entry.entryDate
         durationInMinutes = entry.durationInMinutes
+
         walkQuality = entry.walkQuality
     }
 }
@@ -66,6 +75,8 @@ struct DogWalkQuery: EntityQuery {
         let entries = try await DataModelHelper.dogEntries(limit: 5)
         return entries.map(\.entity)
     }
+
+    
 }
 
 /// EnumerableEntityQuery:  A specialization that lets the system enumerate all entities

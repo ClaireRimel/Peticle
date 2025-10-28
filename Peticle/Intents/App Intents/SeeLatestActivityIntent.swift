@@ -9,8 +9,8 @@ import AppIntents
 import SwiftUI
 
 struct SeeLatestActivityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Get the last activity"
-    static var description = IntentDescription("Return the last activity")
+    static var title: LocalizedStringResource = "Show the last activity"
+    static var description = IntentDescription("display the last activity")
 
     @MainActor
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity> & ShowsSnippetView {

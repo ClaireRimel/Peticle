@@ -12,12 +12,10 @@ struct OpenEditEntryIntent: OpenIntent {
 
     static var title: LocalizedStringResource = "Edit a Dog Walk Entry"
     static var description = IntentDescription("Open the app to edit the selected dog walk entry.")
-    
-    
+
     @Parameter(title: "Walk", description: "The dog walk entry to edit")
     var target: DogWalkEntryEntity
 
-    
     init() {}
 
     init(target: DogWalkEntryEntity) {

@@ -9,8 +9,8 @@ import Foundation
 import AppIntents
 
 enum DateSelection: String, AppEnum {
-    case today = "today"
-    case yesterday = "yesterday"
+    case today
+    case yesterday
 
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Date Selection")
 

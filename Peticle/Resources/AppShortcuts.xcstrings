@@ -204,7 +204,7 @@
         },
         "fr" : {
           "stringSet" : {
-            "state" : "new",
+            "state" : "needs_review",
             "values" : [
               "Montrer mes chiens dans ${applicationName}",
               "Afficher les informations du chien dans ${applicationName}",

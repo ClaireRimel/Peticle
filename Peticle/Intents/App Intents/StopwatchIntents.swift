@@ -28,7 +28,6 @@ struct StopDogWalkIntent: AppIntent {
     static var description = IntentDescription("Stop the current walk and save the progress")
     
     func perform() async -> some ProvidesDialog {
-        // Save and Stop the activity
         do {
             try await StopwatchViewModel.shared.saveEntryAndStopActivity()
             return .result(dialog: "Your activity was registered")

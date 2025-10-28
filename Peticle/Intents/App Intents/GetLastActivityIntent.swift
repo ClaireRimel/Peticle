@@ -10,11 +10,8 @@ import AppIntents
 struct GetLastActivityIntent: AppIntent {
     static var title: LocalizedStringResource = "Get the last activity"
     static var description = IntentDescription("Return the last activity")
-    
-    static var isDiscoverable: Bool = false
-    
+
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity?> {
-        
         let lastEntry = try await DataModelHelper.lastDogEntry()
         
         return .result(value: lastEntry?.entity)

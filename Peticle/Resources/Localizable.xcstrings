@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " Duration in Minute" : {
+
+    },
     "%@" : {
 
     },
@@ -86,9 +89,6 @@
     "Alfie's Chronicle" : {
 
     },
-    "Are you sure you want to delete this walk?" : {
-
-    },
     "Cancel" : {
       "localizations" : {
         "en" : {
@@ -114,6 +114,9 @@
     "Date" : {
 
     },
+    "Date of the walk" : {
+
+    },
     "Date Selection" : {
 
     },
@@ -124,6 +127,9 @@
 
     },
     "Display information about a specific dog or show all your dogs." : {
+
+    },
+    "display the last activity" : {
 
     },
     "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {

@@ -22,7 +22,6 @@ struct UpdateWalkQualityIntent: AppIntent {
     @Parameter(title: "Walk Quality", description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality?
 
-
     init() {}
 
     func perform() async throws -> some ProvidesDialog {
@@ -70,9 +69,11 @@ struct UpdateWalkQualityIntent: AppIntent {
             )
 
         } else {
-            dogWalkEntryEntity = try await $dogWalkEntryEntity.requestValue(
-                IntentDialog("Which walk would you like to rate?")
-            )
+            if dogWalkEntryEntity == nil {
+                dogWalkEntryEntity = try await $dogWalkEntryEntity.requestValue(
+                    IntentDialog("Which walk would you like to rate?")
+                )
+            }
 
             guard let dogWalkEntryEntity,
                   let dogWalkEntry = try await DataModelHelper.dogWalkEntry(for: dogWalkEntryEntity.id),
