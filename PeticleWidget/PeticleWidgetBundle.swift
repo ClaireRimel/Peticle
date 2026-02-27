@@ -13,5 +13,6 @@ struct peticleWidgetBundle: WidgetBundle {
     var body: some Widget {
         OpenSecretViewControl()
         PeticleWidgetLiveActivity()
+        PeticleQuickActionsWidget()
     }
 }
