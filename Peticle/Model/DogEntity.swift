@@ -81,3 +81,14 @@ extension DogQuery: EnumerableEntityQuery {
         return dogs.map(\.entity)
     }
 }
+
+/// EntityStringQuery: Enables natural language search for dogs by name from Siri and Shortcuts
+extension DogQuery: EntityStringQuery {
+    @MainActor
+    func entities(matching string: String) async throws -> [DogEntity] {
+        let allDogs = try await DataModelHelper.allDogs()
+        return allDogs
+            .filter { $0.name.localizedCaseInsensitiveContains(string) }
+            .map(\.entity)
+    }
+}
