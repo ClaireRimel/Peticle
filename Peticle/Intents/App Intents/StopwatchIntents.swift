@@ -8,22 +8,22 @@
 
 import AppIntents
 
-struct StartDogWalkIntent: AppIntent {
+struct StartDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Start a dog walk activity"
     static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
     
     @Parameter(title: "Goal in minutes")
-    var goaltime: Int
+    var goalTime: Int
     
     func perform() async -> some IntentResult {
         // Start the stopwatch
-        await StopwatchViewModel.shared.start(with: goaltime)
+        await StopwatchViewModel.shared.start(with: goalTime)
 
         return .result()
     }
 }
 
-struct StopDogWalkIntent: AppIntent {
+struct StopDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Stop the current dog walk activity"
     static var description = IntentDescription("Stop the current walk and save the progress")
     
