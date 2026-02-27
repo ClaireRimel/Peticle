@@ -16,8 +16,8 @@
 | `StopDogWalkIntent` | `LiveActivityIntent` | Stop the current walk, save progress |
 | `AddWalkIntent` | `AppIntent` + `PredictableIntent` | Log a walk with duration and quality, with system prediction |
 | `AddDogIntent` | `AppIntent` | Add a new dog to the collection |
-| `RemoveDogIntent` | `AppIntent` | Remove a dog |
-| `DeleteWalkIntent` | `AppIntent` | Delete a walk entry with confirmation dialog |
+| `RemoveDogIntent` | `DeleteIntent` | Remove a dog (batch support) |
+| `DeleteWalkIntent` | `DeleteIntent` | Delete walk entries (batch support) |
 | `UpdateWalkQualityIntent` | `AppIntent` | Update quality with date selection and disambiguation |
 | `EditDurationIntent` | `AppIntent` | Edit walk duration |
 | `EditWalkQualityIntent` | `AppIntent` | Edit walk quality rating |

@@ -7,34 +7,28 @@
 
 import AppIntents
 
-struct DeleteWalkIntent: AppIntent {
+struct DeleteWalkIntent: DeleteIntent {
     static var title: LocalizedStringResource = "Delete walk"
     static var description = IntentDescription("Remove a previously recorded walk.")
 
     @Parameter(
-        title: "Walk",
-        description: "The specific walk entry to delete"
+        title: "Walks",
+        description: "The walk entries to delete"
     )
-    var walkEntity: DogWalkEntryEntity
+    var entities: [DogWalkEntryEntity]
 
     init() {}
 
     init(walkEntity: DogWalkEntryEntity) {
-        self.walkEntity = walkEntity
+        self.entities = [walkEntity]
     }
 
     @MainActor
     func perform() async throws -> some IntentResult {
-        let shouldDeleteIt = try await $walkEntity.requestConfirmation(
-            for: walkEntity,
-            dialog: "Are you sure you want to delete this walk?"
-        )
-
-        if shouldDeleteIt {
-            try await DataModelHelper.deleteWalk(for: walkEntity.id)
+        for entity in entities {
+            try await DataModelHelper.deleteWalk(for: entity.id)
         }
 
         return .result()
     }
 }
-

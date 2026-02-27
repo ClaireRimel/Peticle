@@ -43,21 +43,20 @@ struct AddDogIntent: AppIntent {
 }
 
 
-struct RemoveDogIntent: AppIntent {
+struct RemoveDogIntent: DeleteIntent {
     static var title: LocalizedStringResource = "Remove dog"
     static var description = IntentDescription("Remove a dog from your pet collection.")
     static var suggestedInvocationPhrase: String? = "Remove a dog from my pets"
     static var openAppWhenRun: Bool = false
 
     @Parameter(
-        title: "Dog",
-        description: "Choose the dog to remove"
+        title: "Dogs",
+        description: "Choose the dogs to remove"
     )
-    var dog: DogEntity
+    var entities: [DogEntity]
 
-    // Nice, compact summary shown in Shortcuts / Siri UI
     static var parameterSummary: some ParameterSummary {
-        Summary("Remove \(\.$dog)")
+        Summary("Remove \(\.$entities)")
     }
 
     init() {}
@@ -65,17 +64,16 @@ struct RemoveDogIntent: AppIntent {
     @MainActor
     func perform() async throws -> some ProvidesDialog {
         do {
-            try await DataModelHelper.deleteDog(for: dog.id)
+            for dog in entities {
+                try await DataModelHelper.deleteDog(for: dog.id)
+            }
 
-            let dogName = dog.name
-            let dialog = IntentDialog("Successfully removed \(dogName) from your pet collection.")
+            let names = entities.map(\.name).joined(separator: ", ")
+            let dialog = IntentDialog("Successfully removed \(names) from your pet collection.")
 
             return .result(dialog: dialog)
         } catch {
-            let dialog = IntentDialog("Failed to remove the dog: \(error.localizedDescription)")
-
-            return .result(dialog: dialog)
+            throw IntentError.message("Failed to remove dog: \(error.localizedDescription)")
         }
     }
 }
-
