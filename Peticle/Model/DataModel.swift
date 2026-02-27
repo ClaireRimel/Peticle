@@ -8,25 +8,21 @@
 import Foundation
 import SwiftData
 
-actor DataModel: Sendable {
+final class DataModel: Sendable {
     static let shared = DataModel()
-    private init() {}
-    
-    nonisolated var modelContainer: ModelContainer {
-        let modelContainer: ModelContainer
+    let modelContainer: ModelContainer
+
+    private init() {
         do {
             modelContainer = try ModelContainer(for: DogWalkEntry.self, Dog.self)
         } catch {
             fatalError("Failed to create the model container: \(error)")
         }
-        
-        return modelContainer
     }
 }
 
+@MainActor
 class DataModelHelper {
-    @MainActor
-    // Set to MainActor, because it is used with OpenIntent
     static func dogWalkEntries(for identifiers: [UUID]) async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let allEntries = try modelContext.fetch(FetchDescriptor<DogWalkEntry>())
@@ -45,7 +41,6 @@ class DataModelHelper {
         return entry
     }
 
-    @MainActor
     static func modify(entryWalk: DogWalkEntry) async throws -> DogWalkEntry? {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let dogWalkID = entryWalk.dogWalkID
@@ -70,7 +65,6 @@ class DataModelHelper {
         return entry
     }
 
-    @MainActor
     static func deleteWalk(for identifier: UUID) async throws {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
 
@@ -85,7 +79,7 @@ class DataModelHelper {
             DogWalkShortcutsProvider.updateAppShortcutParameters()
 
         } else {
-            throw DataModelHelperError.NoEntryFound(identifier)
+            throw DataModelHelperError.noEntryFound(identifier)
         }
     }
 
@@ -144,13 +138,11 @@ class DataModelHelper {
         return entries
     }
     
-    @MainActor
     static func lastWalkOfToday() async throws -> DogWalkEntry? {
         let walks = try await walksOfToday()
         return walks.sorted(by: { $0.entryDate > $1.entryDate }).first
     }
     
-    @MainActor
     static func lastWalkOfYesterday() async throws -> DogWalkEntry? {
         let walks = try await walksOfYesterday()
         return walks.sorted(by: { $0.entryDate > $1.entryDate }).first
@@ -160,12 +152,12 @@ class DataModelHelper {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
         descriptor.fetchLimit = limit
+        descriptor.sortBy = [SortDescriptor(\.entryDate, order: .reverse)]
         let entries = try modelContext.fetch(descriptor)
 
         return entries
     }
 
-    @MainActor
     static func allDogWalkEntries() async throws -> [DogWalkEntry] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
@@ -179,13 +171,13 @@ class DataModelHelper {
 // MARK: - Custom Errors
 enum DataModelHelperError: LocalizedError, Error {
     case invalidDuration(Int)
-    case NoEntryFound(_ identifier: UUID)
+    case noEntryFound(_ identifier: UUID)
 
     var errorDescription: String? {
         switch self {
         case .invalidDuration(let duration):
             return "Invalid duration: \(duration) minutes. Duration must be between 0 and 1440 minutes."
-        case .NoEntryFound(let identifier):
+        case .noEntryFound(let identifier):
             return "No entry found for the given identifier:\(identifier)"
         }
     }

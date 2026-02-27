@@ -25,24 +25,4 @@ enum DateSelection: String, AppEnum {
         )
     ]
     
-    /// Returns the last walk entry for the selected date
-    @MainActor
-    func getLastWalk() async throws -> DogWalkEntry? {
-        switch self {
-        case .today:
-            return try await DataModelHelper.lastWalkOfToday()
-        case .yesterday:
-            return try await DataModelHelper.lastWalkOfYesterday()
-        }
-    }
-    
-    /// Returns all walk entries for the selected date
-    func getAllWalks() async throws -> [DogWalkEntry] {
-        switch self {
-        case .today:
-            return try await DataModelHelper.walksOfToday()
-        case .yesterday:
-            return try await DataModelHelper.walksOfYesterday()
-        }
-    }
 }
