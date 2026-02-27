@@ -60,7 +60,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				"Intents/App Intents/DeleteOrAddWalkIntent.swift",
+				"Intents/App Intents/AddWalkIntent.swift",
+				"Intents/App Intents/DeleteWalkIntent.swift",
 				"Intents/App Intents/EditIntents.swift",
 				"Intents/App Intents/ManageLatestWalkEntryIntent.swift",
 				"Intents/App Intents/OpenEditEntryIntent.swift",
@@ -75,17 +76,18 @@
 				Manager/NavigationManager.swift,
 				"Manager/NavigationManager+Extension.swift",
 				Model/DataModel.swift,
-				"Model/DataModel+Exensions.swift",
+				"Model/DataModel+Extensions.swift",
 				Model/Dog.swift,
 				Model/DogEntity.swift,
 				Model/DogWalkEntry.swift,
 				Model/DogWalkEntryEntity.swift,
 				Model/DogWalkLiveActivityAttributes.swift,
 				Model/Enum/DateSelection.swift,
-				Model/Enum/InteractionRating.swift,
-				Model/StopwatchModel.swift,
+				Model/Enum/WalkQuality.swift,
+				Model/StopwatchViewModel.swift,
 				Resources/AppShortcuts.xcstrings,
-				"Utils/InteractionRating+Extentions.swift",
+				"Utils/Dog+Photo.swift",
+				"Utils/WalkQuality+Extensions.swift",
 				View/ManageLastWalkEntrySnippetView.swift,
 			);
 			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;

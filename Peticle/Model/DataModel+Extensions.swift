@@ -20,7 +20,6 @@ extension DataModelHelper {
         return dog
     }
 
-    @MainActor
     static func deleteDog(for identifier: UUID) async throws {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
 
@@ -34,11 +33,10 @@ extension DataModelHelper {
             try modelContext.save()
             DogWalkShortcutsProvider.updateAppShortcutParameters()
         } else {
-            throw DataModelHelperError.NoEntryFound(identifier)
+            throw DataModelHelperError.noEntryFound(identifier)
         }
     }
 
-    @MainActor
     static func dog(for identifier: UUID) async throws -> Dog? {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let dog = try modelContext.fetch(FetchDescriptor<Dog>(predicate: #Predicate { identifier == $0.dogID })).first
@@ -46,7 +44,6 @@ extension DataModelHelper {
         return dog
     }
 
-    @MainActor
     static func dogs(for identifiers: [UUID]) async throws -> [Dog] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let allDogs = try modelContext.fetch(FetchDescriptor<Dog>())
@@ -54,7 +51,6 @@ extension DataModelHelper {
         return allDogs.filter { identifiers.contains($0.dogID) }
     }
 
-    @MainActor
     static func allDogs() async throws -> [Dog] {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let descriptor = FetchDescriptor<Dog>(predicate: #Predicate { _ in true})
@@ -63,19 +59,7 @@ extension DataModelHelper {
         return dogs
     }
 
-    static func dogEntries(limit: Int) async throws -> [DogWalkEntry] {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        var descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
-        descriptor.fetchLimit = limit
-        descriptor.sortBy = [SortDescriptor(\.entryDate, order: .reverse)]
 
-        let entries = try modelContext.fetch(descriptor)
-
-        return entries
-    }
-
-    @MainActor
-    // Set to MainActor, because it is used with OpenIntent
     static func lastDogEntry() async throws -> DogWalkEntry? {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         var descriptor = FetchDescriptor<DogWalkEntry>(sortBy: [SortDescriptor(\.entryDate, order: .reverse)])
@@ -85,12 +69,22 @@ extension DataModelHelper {
         return entries
     }
 
-    @MainActor
-    static func allDogEntries() async throws -> [DogWalkEntry] {
-        let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let descriptor = FetchDescriptor<DogWalkEntry>(predicate: #Predicate { _ in true})
-        let entries = try modelContext.fetch(descriptor)
 
-        return entries
+    static func lastWalk(for dateSelection: DateSelection) async throws -> DogWalkEntry? {
+        switch dateSelection {
+        case .today:
+            return try await lastWalkOfToday()
+        case .yesterday:
+            return try await lastWalkOfYesterday()
+        }
+    }
+
+    static func allWalks(for dateSelection: DateSelection) async throws -> [DogWalkEntry] {
+        switch dateSelection {
+        case .today:
+            return try await walksOfToday()
+        case .yesterday:
+            return try await walksOfYesterday()
+        }
     }
 }
