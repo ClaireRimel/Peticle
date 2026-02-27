@@ -38,6 +38,15 @@ class DataModelHelper {
         try modelContext.save()
 
         DogWalkShortcutsProvider.updateAppShortcutParameters()
+
+        // Donate the intent so the system learns usage patterns (PredictableIntent)
+        let donationIntent = AddWalkIntent()
+        donationIntent.duration = durationInMinutes
+        donationIntent.walkQuality = walkQuality
+        Task {
+            try? await donationIntent.donate()
+        }
+
         return entry
     }
 
