@@ -12,7 +12,7 @@ struct StartDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Start a dog walk activity"
     static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
     
-    @Parameter(title: "Goal in minutes")
+    @Parameter(title: "Goal in minutes", default: 30)
     var goalTime: Int
     
     func perform() async -> some IntentResult {
