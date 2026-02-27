@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Dog: Identifiable, Sendable {
+final class Dog: Identifiable {
     @Attribute(.unique) var dogID: UUID
     var name: String
     var imageData: Data?

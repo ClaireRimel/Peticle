@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class DogWalkEntry: Identifiable, Sendable {
+final class DogWalkEntry: Identifiable {
     @Attribute(.unique) var dogWalkID: UUID
     var entryDate: Date
     var durationInMinutes: Int
