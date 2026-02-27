@@ -77,18 +77,30 @@ struct EditDurationThenQualityIntent: AppIntent {
     }
 }
 
-// This is a real feature for App Intents
-//struct DogWalkingFocus: SetFocusFilterIntent {
-//    var displayRepresentation: DisplayRepresentation
-//
-//    static var title: LocalizedStringResource = "Dog Walking Focus"
-//
-//    @Parameter(title: "Include urgent alerts only")
-//    var urgentOnly: Bool
-//
-//    func perform() async throws -> some IntentResult {
-//        // Configure focus settings
-//        FocusFilterState.shared.urgentOnly = urgentOnly
-//        return .result()
-//    }
-//}
+// MARK: - Focus Filter
+
+/// SetFocusFilterIntent: Adapts the app's behavior when a Focus mode activates.
+/// Users can configure this in Settings > Focus to customize Peticle during dog walks.
+struct DogWalkingFocus: SetFocusFilterIntent {
+    static var title: LocalizedStringResource = "Dog Walking Focus"
+    
+    static var description: IntentDescription? = IntentDescription(
+        "Configure the app\'s behavior during your dog walking Focus."
+    )
+
+    @Parameter(title: "Show only today\'s walks", default: false)
+    var showOnlyTodaysWalks: Bool
+
+    var displayRepresentation: DisplayRepresentation {
+        let subtitle = showOnlyTodaysWalks ? "Showing today\'s walks only" : "Showing all walks"
+        return DisplayRepresentation(
+            title: "Dog Walking Mode",
+            subtitle: "\(subtitle)"
+        )
+    }
+
+    func perform() async throws -> some IntentResult {
+        UserDefaults.standard.set(showOnlyTodaysWalks, forKey: "focusFilter_showOnlyTodaysWalks")
+        return .result()
+    }
+}
