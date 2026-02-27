@@ -1,13 +1,13 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Add an activity in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+  "sourceLanguage": "en",
+  "strings": {
+    "Add an activity in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Add an activity in ${applicationName}",
               "Log a walk in ${applicationName}",
               "Record a walk in ${applicationName}",
@@ -18,10 +18,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "needs_review",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "needs_review",
+            "values": [
               "Ajouter une activité dans ${applicationName}",
               "Enregistrer une promenade dans ${applicationName}",
               "Noter une promenade dans ${applicationName}",
@@ -34,78 +34,13 @@
         }
       }
     },
-    "Edit walk in ${applicationName}" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Edit walk in ${applicationName}",
-              "Modify walk in ${applicationName}",
-              "Change walk details in ${applicationName}",
-              "Update walk in ${applicationName}",
-              "Edit walk entry in ${applicationName}",
-              "Modify walk entry in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "needs_review",
-            "values" : [
-              "Modifier la promenade dans ${applicationName}",
-              "Modifier ${target} dans ${applicationName}",
-              "Éditer la promenade dans ${applicationName}",
-              "Changer les détails de la promenade dans ${applicationName}",
-              "Mettre à jour la promenade dans ${applicationName}",
-              "Modifier l'entrée de promenade dans ${applicationName}",
-              "Éditer l'entrée de promenade dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Manage lastest walks in ${applicationName}" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Manage lastest walks in ${applicationName}",
-              "Manage recent walks in ${applicationName}",
-              "Manage walk entries in ${applicationName}",
-              "Manage walk records in ${applicationName}",
-              "View walk management in ${applicationName}",
-              "Manage walk data in ${applicationName}",
-              "Manage walk history in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Gérer les dernières promenades dans ${applicationName}",
-              "Gérer les promenades récentes dans ${applicationName}",
-              "Gérer les entrées de promenade dans ${applicationName}",
-              "Gérer les enregistrements de promenade dans ${applicationName}",
-              "Voir la gestion des promenades dans ${applicationName}",
-              "Gérer les données de promenade dans ${applicationName}",
-              "Gérer l'historique des promenades dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Manage latest walks in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Manage latest walks in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Manage latest walks in ${applicationName}",
               "Manage recent walks in ${applicationName}",
               "Manage walk entries in ${applicationName}",
@@ -118,13 +53,13 @@
         }
       }
     },
-    "Open walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Open walk in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Open walk in ${applicationName}",
               "Change walk details in ${applicationName}",
               "Edit walk entry in ${applicationName}"
@@ -133,48 +68,13 @@
         }
       }
     },
-    "Should I walk my dog today in ${applicationName}" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Should I walk my dog today in ${applicationName}",
-              "Does my dog need a walk today in ${applicationName}",
-              "Should I take my dog for a walk in ${applicationName}",
-              "Do I need to walk my dog today in ${applicationName}",
-              "Is it time to walk my dog in ${applicationName}",
-              "Should I go for a walk with my dog in ${applicationName}",
-              "Does my dog need exercise today in ${applicationName}",
-              "Should I walk my pup today in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Devrais-je promener mon chien aujourd'hui dans ${applicationName}",
-              "Mon chien a-t-il besoin d'une promenade aujourd'hui dans ${applicationName}",
-              "Devrais-je sortir mon chien en promenade dans ${applicationName}",
-              "Dois-je promener mon chien aujourd'hui dans ${applicationName}",
-              "Est-il temps de promener mon chien dans ${applicationName}",
-              "Devrais-je faire une promenade avec mon chien dans ${applicationName}",
-              "Mon chien a-t-il besoin d'exercice aujourd'hui dans ${applicationName}",
-              "Devrais-je promener mon toutou aujourd'hui dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Show me the last activity in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Show me the last activity in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Show me the last activity in ${applicationName}",
               "Show my last walk in ${applicationName}",
               "What was my last walk in ${applicationName}",
@@ -184,10 +84,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Montre-moi la dernière activité dans ${applicationName}",
               "Montre ma dernière promenade dans ${applicationName}",
               "Quelle était ma dernière promenade dans ${applicationName}",
@@ -199,13 +99,13 @@
         }
       }
     },
-    "Show my dogs in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Show my dogs in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Show my dogs in ${applicationName}",
               "Show dog information in ${applicationName}",
               "Display my dogs in ${applicationName}",
@@ -218,10 +118,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "needs_review",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "needs_review",
+            "values": [
               "Montrer mes chiens dans ${applicationName}",
               "Afficher les informations du chien dans ${applicationName}",
               "Afficher mes chiens dans ${applicationName}",
@@ -236,13 +136,13 @@
         }
       }
     },
-    "Start a walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Start a walk in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Start a walk in ${applicationName}",
               "Start an activity in ${applicationName}",
               "Begin walking in ${applicationName}",
@@ -252,10 +152,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Commencer une promenade dans ${applicationName}",
               "Commencer une activité dans ${applicationName}",
               "Démarrer la marche dans ${applicationName}",
@@ -267,13 +167,13 @@
         }
       }
     },
-    "Stop a walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Stop a walk in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Stop a walk in ${applicationName}",
               "Stop the activity ${applicationName}",
               "End walk in ${applicationName}",
@@ -284,10 +184,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Arrêter une promenade dans ${applicationName}",
               "Arrêter l'activité ${applicationName}",
               "Terminer la promenade dans ${applicationName}",
@@ -300,13 +200,13 @@
         }
       }
     },
-    "Update walk quality in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
+    "Update walk quality in ${applicationName}": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringSet": {
+            "state": "new",
+            "values": [
               "Update walk quality in ${applicationName}",
               "Rate my walk in ${applicationName}",
               "Update walk rating in ${applicationName}",
@@ -319,10 +219,10 @@
             ]
           }
         },
-        "fr" : {
-          "stringSet" : {
-            "state" : "translated",
-            "values" : [
+        "fr": {
+          "stringSet": {
+            "state": "translated",
+            "values": [
               "Mets à jour la promenade  ${dateSelection} dans ${applicationName}",
               "Change la qualité de la promenade  ${dateSelection}dans ${applicationName}"
             ]
@@ -331,5 +231,5 @@
       }
     }
   },
-  "version" : "1.1"
+  "version": "1.1"
 }
