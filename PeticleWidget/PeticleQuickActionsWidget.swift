@@ -8,7 +8,6 @@
 import WidgetKit
 import SwiftUI
 import AppIntents
-import ActivityKit
 
 // MARK: - Timeline Provider
 
@@ -24,7 +23,8 @@ struct QuickActionsProvider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<QuickActionsEntry>) -> Void) {
         Task { @MainActor in
             let count = (try? await DataModelHelper.walksTodayCount()) ?? 0
-            let isWalking = !Activity<PeticleWidgetAttributes>.activities.isEmpty
+            let sharedDefaults = UserDefaults(suiteName: "group.com.Yo.Peticle")
+            let isWalking = sharedDefaults?.bool(forKey: "isWalking") ?? false
             let entry = QuickActionsEntry(date: .now, walkCount: count, isWalking: isWalking)
             let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: .now)!
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))

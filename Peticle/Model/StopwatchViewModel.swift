@@ -30,6 +30,9 @@ final class StopwatchViewModel {
         static let goalInSeconds = "stopwatch_goalInSeconds"
     }
 
+    /// Shared UserDefaults accessible by both the app and the widget extension.
+    static let sharedDefaults = UserDefaults(suiteName: "group.com.Yo.Peticle")
+
     init() {
         requestNotificationPermission()
         restoreState()
@@ -84,6 +87,26 @@ final class StopwatchViewModel {
         return ActivityAuthorizationInfo().areActivitiesEnabled
     }
 
+    private func endOrphanedActivities() {
+        let orphans = Activity<PeticleWidgetAttributes>.activities
+        guard !orphans.isEmpty else { return }
+        
+        Task {
+            for activity in orphans {
+                let contentState = PeticleWidgetAttributes.ContentState(
+                    startDate: .now,
+                    goalTime: 0,
+                    isActive: false
+                )
+                await activity.end(
+                    .init(state: contentState, staleDate: nil),
+                    dismissalPolicy: .immediate
+                )
+            }
+            print("✅ Ended \(orphans.count) orphaned Live Activities")
+        }
+    }
+
     private func startLiveActivity() {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("\u{26a0}\u{fe0f} Live Activities are not enabled in Settings")
@@ -135,6 +158,10 @@ final class StopwatchViewModel {
     private func endLiveActivity() {
         guard let activity = currentActivity else { return }
 
+        // Clear reference immediately to avoid race conditions
+        // when start() is called again before the Task completes
+        currentActivity = nil
+
         let contentState = PeticleWidgetAttributes.ContentState(
             startDate: startDate ?? .now,
             goalTime: goalInSeconds,
@@ -146,7 +173,13 @@ final class StopwatchViewModel {
                 .init(state: contentState, staleDate: nil),
                 dismissalPolicy: .immediate
             )
-            currentActivity = nil
+            // Also end any orphaned activities from previous sessions
+            for orphan in Activity<PeticleWidgetAttributes>.activities {
+                await orphan.end(
+                    .init(state: contentState, staleDate: nil),
+                    dismissalPolicy: .immediate
+                )
+            }
             print("\u{2705} Live Activity ended")
         }
     }
@@ -175,8 +208,10 @@ final class StopwatchViewModel {
             clearPersistedState()
             startDate = nil
             timeElapsed = 0
-            currentActivity = nil
         }
+        
+        // End any orphaned Live Activities from previous sessions
+        endOrphanedActivities()
 
         let safeGoal = max(1, min(goalInMinute, 1440))
 
@@ -192,6 +227,7 @@ final class StopwatchViewModel {
         scheduleCompletionNotification()
         startLiveActivity()
         startTimer()
+        Self.sharedDefaults?.set(true, forKey: "isWalking")
         WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
     }
 
@@ -234,6 +270,7 @@ final class StopwatchViewModel {
             self.reset()
         }
 
+        Self.sharedDefaults?.set(false, forKey: "isWalking")
         donateEditQualityIntent()
         WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
     }
