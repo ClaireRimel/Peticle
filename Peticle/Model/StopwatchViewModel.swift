@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 import UserNotifications
 import CoreSpotlight
 import ActivityKit
@@ -191,6 +192,7 @@ final class StopwatchViewModel {
         scheduleCompletionNotification()
         startLiveActivity()
         startTimer()
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
     }
 
     private func startTimer() {
@@ -233,6 +235,7 @@ final class StopwatchViewModel {
         }
 
         donateEditQualityIntent()
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
     }
 
     func saveEntryAndStopActivity() throws {

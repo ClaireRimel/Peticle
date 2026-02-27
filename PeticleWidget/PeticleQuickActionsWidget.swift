@@ -8,23 +8,25 @@
 import WidgetKit
 import SwiftUI
 import AppIntents
+import ActivityKit
 
 // MARK: - Timeline Provider
 
 struct QuickActionsProvider: TimelineProvider {
     func placeholder(in context: Context) -> QuickActionsEntry {
-        QuickActionsEntry(date: .now, walkCount: 0)
+        QuickActionsEntry(date: .now, walkCount: 0, isWalking: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (QuickActionsEntry) -> Void) {
-        completion(QuickActionsEntry(date: .now, walkCount: 0))
+        completion(QuickActionsEntry(date: .now, walkCount: 0, isWalking: false))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<QuickActionsEntry>) -> Void) {
         Task { @MainActor in
             let count = (try? await DataModelHelper.walksTodayCount()) ?? 0
-            let entry = QuickActionsEntry(date: .now, walkCount: count)
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: .now)!
+            let isWalking = !Activity<PeticleWidgetAttributes>.activities.isEmpty
+            let entry = QuickActionsEntry(date: .now, walkCount: count, isWalking: isWalking)
+            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: .now)!
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
             completion(timeline)
         }
@@ -36,12 +38,13 @@ struct QuickActionsProvider: TimelineProvider {
 struct QuickActionsEntry: TimelineEntry {
     let date: Date
     let walkCount: Int
+    let isWalking: Bool
 }
 
 // MARK: - Widget View
 
-/// An interactive widget with a "Start Walk" button powered by App Intents.
-/// Button(intent:) allows the widget to trigger intents without opening the app.
+/// An interactive widget with a Start/Stop button powered by App Intents.
+/// The button toggles based on whether a Live Activity is running.
 struct QuickActionsWidgetView: View {
     var entry: QuickActionsEntry
 
@@ -66,12 +69,21 @@ struct QuickActionsWidgetView: View {
 
             Spacer()
 
-            Button(intent: StartDogWalkIntent()) {
-                Label("Start Walk", systemImage: "play.fill")
-                    .font(.caption.weight(.semibold))
-                    .frame(maxWidth: .infinity)
+            if entry.isWalking {
+                Button(intent: StopDogWalkIntent()) {
+                    Label("Stop Walk", systemImage: "stop.fill")
+                        .font(.caption.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                }
+                .tint(.red)
+            } else {
+                Button(intent: StartDogWalkIntent()) {
+                    Label("Start Walk", systemImage: "play.fill")
+                        .font(.caption.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                }
+                .tint(.indigo)
             }
-            .tint(.indigo)
         }
         .containerBackground(.fill.tertiary, for: .widget)
     }
@@ -87,7 +99,7 @@ struct PeticleQuickActionsWidget: Widget {
             QuickActionsWidgetView(entry: entry)
         }
         .configurationDisplayName("Quick Actions")
-        .description("See today\'s walk count and quickly start a walk.")
+        .description("See today\'s walk count and quickly start or stop a walk.")
         .supportedFamilies([.systemSmall])
     }
 }
