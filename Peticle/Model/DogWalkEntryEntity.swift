@@ -77,6 +77,14 @@ extension DogWalkEntryEntity: URLRepresentableEntity {
     }
 }
 
+// MARK: - Comparator Mapping for EntityPropertyQuery
+
+/// Custom comparator type used by EntityPropertyQuery to filter dog walk entries.
+/// Each comparator captures a closure that tests whether an entity matches the filter criteria.
+struct DogWalkComparator {
+    let matches: (DogWalkEntryEntity) -> Bool
+}
+
 // MARK: - Entity Query
 
 /// A query that supports App Intents like Siri and Shortcuts, used to fetch or suggest dog walk entries
@@ -100,6 +108,7 @@ struct DogWalkQuery: EntityQuery {
 // MARK: - EntityPropertyQuery — "Find Dog Walks" in Shortcuts
 
 extension DogWalkQuery: EntityPropertyQuery {
+    typealias ComparatorMappingType = DogWalkComparator
 
     static var findIntentDescription: IntentDescription? {
         IntentDescription("Search for dog walks matching specific criteria.",
@@ -110,17 +119,31 @@ extension DogWalkQuery: EntityPropertyQuery {
 
     static var properties = QueryProperties {
         Property(\DogWalkEntryEntity.$date) {
-            EqualToComparator { $0 }
-            GreaterThanComparator { $0 }
-            LessThanComparator { $0 }
+            EqualToComparator { date in
+                DogWalkComparator { $0.date == date }
+            }
+            GreaterThanComparator { date in
+                DogWalkComparator { $0.date > date }
+            }
+            LessThanComparator { date in
+                DogWalkComparator { $0.date < date }
+            }
         }
         Property(\DogWalkEntryEntity.$durationInMinutes) {
-            EqualToComparator { $0 }
-            GreaterThanComparator { $0 }
-            LessThanComparator { $0 }
+            EqualToComparator { duration in
+                DogWalkComparator { $0.durationInMinutes == duration }
+            }
+            GreaterThanComparator { duration in
+                DogWalkComparator { $0.durationInMinutes > duration }
+            }
+            LessThanComparator { duration in
+                DogWalkComparator { $0.durationInMinutes < duration }
+            }
         }
         Property(\DogWalkEntryEntity.$walkQuality) {
-            EqualToComparator { $0 }
+            EqualToComparator { quality in
+                DogWalkComparator { $0.walkQuality == quality }
+            }
         }
     }
 
@@ -131,7 +154,7 @@ extension DogWalkQuery: EntityPropertyQuery {
 
     @MainActor
     func entities(
-        matching comparators: [EntityComparatorMapping<DogWalkEntryEntity>],
+        matching comparators: [DogWalkComparator],
         mode: ComparatorMode,
         sortedBy: [EntityQuerySort<DogWalkEntryEntity>],
         limit: Int?

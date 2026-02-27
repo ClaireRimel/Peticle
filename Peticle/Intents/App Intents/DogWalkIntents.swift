@@ -12,6 +12,10 @@ import CoreSpotlight
 /// Users with existing Shortcuts using this intent will be guided to migrate.
 struct CreateNewDogWalkIntent: AppIntent, DeprecatedAppIntent {
     typealias ReplacementIntent = AddWalkIntent
+
+    static var deprecation = IntentDeprecation<AddWalkIntent>(
+        replacedBy: AddWalkIntent.self
+    )
     static var title: LocalizedStringResource = "Log a New Dog Walk"
     static var description = IntentDescription("Register manually a new dog walk with interaction")
     
