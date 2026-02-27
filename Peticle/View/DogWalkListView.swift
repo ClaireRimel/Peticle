@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 import SwiftData
 import CoreSpotlight
 import Collections
@@ -171,6 +172,8 @@ struct FilteredDogWalkListView: View {
         Task {
             try? await CSSearchableIndex.default().deleteAppEntities(identifiedBy: ids, ofType: DogWalkEntryEntity.self)
         }
+
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
 
         if let count = try? modelContext.fetchCount(FetchDescriptor<DogWalkEntry>()),
            count == 0 {

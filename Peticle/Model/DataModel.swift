@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import WidgetKit
 
 final class DataModel: Sendable {
     static let shared = DataModel()
@@ -86,6 +87,7 @@ class DataModelHelper {
             modelContext.delete(entry)
             try modelContext.save()
             DogWalkShortcutsProvider.updateAppShortcutParameters()
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
 
         } else {
             throw DataModelHelperError.noEntryFound(identifier)
