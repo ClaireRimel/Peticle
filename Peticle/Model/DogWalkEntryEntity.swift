@@ -33,33 +33,54 @@ struct DogWalkEntryEntity: IndexedEntity, Identifiable, TimelineEntry {
 
     @Property(
         identifier: "Duration",
-        title: LocalizedStringResource(" Duration in Minute")
+        title: LocalizedStringResource("Duration in Minutes")
     )
     var durationInMinutes: Int
 
+    @Property(title: "Walk Quality")
     var walkQuality: WalkQuality?
-    
+
+    // MARK: - Computed Properties for Spotlight
+
+    @ComputedProperty(title: "Time Ago")
+    var timeAgo: String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: date, relativeTo: .now)
+    }
+
     init(_ entry: DogWalkEntry) {
         id = entry.dogWalkID
         date = entry.entryDate
         durationInMinutes = entry.durationInMinutes
-
         walkQuality = entry.walkQuality
     }
 }
+
+// MARK: - Spotlight Indexing
 
 extension DogWalkEntryEntity {
     /// A Spotlight compatible attribute set used for indexing this entry
     var attributeSet: CSSearchableItemAttributeSet {
         let attributeSet = defaultAttributeSet
         attributeSet.title = String(describing: durationInMinutes)
-    
+        attributeSet.contentDescription = timeAgo
         return attributeSet
     }
 }
 
+// MARK: - URLRepresentableEntity
+
+extension DogWalkEntryEntity: URLRepresentableEntity {
+    static var urlRepresentation: URLRepresentation {
+        "https://peticle.example.com/walk/\(.id)"
+    }
+}
+
+// MARK: - Entity Query
+
 /// A query that supports App Intents like Siri and Shortcuts, used to fetch or suggest dog walk entries
-/// EntityQuery:  protocol for defining how to fetch entities, either by ID or suggestion.
+/// EntityPropertyQuery: Advanced query with filterable properties and sorting — auto-generates "Find Dog Walks" in Shortcuts
 struct DogWalkQuery: EntityQuery {
     @MainActor
     /// Returns the list of dog walk entries matching the given identifiers
@@ -74,15 +95,83 @@ struct DogWalkQuery: EntityQuery {
         let entries = try await DataModelHelper.dogWalkEntries(limit: 5)
         return entries.map(\.entity)
     }
-
-    
 }
 
-/// EnumerableEntityQuery:  A specialization that lets the system enumerate all entities
-/// useful when you want the full list (like showing all playlists, contacts, devices…).
-extension DogWalkQuery: EnumerableEntityQuery {
-    func allEntities() async throws -> [DogWalkEntryEntity] {
-        let walks = try await DataModelHelper.allDogWalkEntries()
-        return walks.map(\.entity)
+// MARK: - EntityPropertyQuery — "Find Dog Walks" in Shortcuts
+
+extension DogWalkQuery: EntityPropertyQuery {
+
+    static var findIntentDescription: IntentDescription? {
+        IntentDescription("Search for dog walks matching specific criteria.",
+                          categoryName: "Walks",
+                          searchKeywords: ["walk", "dog", "duration", "quality"],
+                          resultValueName: "Dog Walks")
+    }
+
+    static var properties = QueryProperties {
+        Property(\DogWalkEntryEntity.$date) {
+            EqualToComparator { $0 }
+            GreaterThanComparator { $0 }
+            LessThanComparator { $0 }
+        }
+        Property(\DogWalkEntryEntity.$durationInMinutes) {
+            EqualToComparator { $0 }
+            GreaterThanComparator { $0 }
+            LessThanComparator { $0 }
+        }
+        Property(\DogWalkEntryEntity.$walkQuality) {
+            EqualToComparator { $0 }
+        }
+    }
+
+    static var sortingOptions = SortingOptions {
+        SortableBy(\DogWalkEntryEntity.$date)
+        SortableBy(\DogWalkEntryEntity.$durationInMinutes)
+    }
+
+    @MainActor
+    func entities(
+        matching comparators: [EntityComparatorMapping<DogWalkEntryEntity>],
+        mode: ComparatorMode,
+        sortedBy: [EntityQuerySort<DogWalkEntryEntity>],
+        limit: Int?
+    ) async throws -> [DogWalkEntryEntity] {
+        // Fetch all entries and filter in memory
+        let allEntries = try await DataModelHelper.allDogWalkEntries()
+        var results = allEntries.map(\.entity)
+
+        // Apply comparators
+        results = results.filter { entity in
+            if mode == .and {
+                return comparators.allSatisfy { $0.matches(entity) }
+            } else {
+                return comparators.isEmpty || comparators.contains { $0.matches(entity) }
+            }
+        }
+
+        // Apply sorting
+        for sortOption in sortedBy.reversed() {
+            switch sortOption.by {
+            case \.$date:
+                results.sort {
+                    sortOption.order == .ascending ? $0.date < $1.date : $0.date > $1.date
+                }
+            case \.$durationInMinutes:
+                results.sort {
+                    sortOption.order == .ascending
+                        ? $0.durationInMinutes < $1.durationInMinutes
+                        : $0.durationInMinutes > $1.durationInMinutes
+                }
+            default:
+                break
+            }
+        }
+
+        // Apply limit
+        if let limit {
+            results = Array(results.prefix(limit))
+        }
+
+        return results
     }
 }
