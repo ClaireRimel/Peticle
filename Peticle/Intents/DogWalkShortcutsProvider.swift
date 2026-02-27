@@ -96,7 +96,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
         AppShortcut(
             intent: ManageLatestWalkEntryIntent(),
             phrases: [
-                "Manage lastest walks in \(.applicationName)",
+                "Manage latest walks in \(.applicationName)",
                 "Manage recent walks in \(.applicationName)",
                 "Manage walk entries in \(.applicationName)",
                 "Manage walk records in \(.applicationName)",
@@ -111,11 +111,8 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             intent: OpenEditEntryIntent(),
             phrases: [
                 "Open walk in \(.applicationName)",
-                "Modify walk in \(.applicationName)",
                 "Change walk details in \(.applicationName)",
-                "Update walk in \(.applicationName)",
                 "Edit walk entry in \(.applicationName)",
-                "Modify walk entry in \(.applicationName)"
             ],
             shortTitle: "Edit activity",
             systemImageName: "pencil.circle"

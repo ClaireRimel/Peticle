@@ -17,12 +17,13 @@ struct EditDurationIntent: AppIntent {
     @Parameter(title: "Duration (in minutes)", description: "The updated duration of the walk")
     var duration: Int
     
+    @MainActor
     func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity>  {
         
         if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
                                                                                 durationInMinutes: duration,
                                                                                 walkQuality: walkEntity.walkQuality ?? .ok)) {
-            return .result(value: entry.entity, dialog: "The durationhas been updated to \(duration) minutes")
+            return .result(value: entry.entity, dialog: "The duration has been updated to \(duration) minutes")
         } else {
             throw IntentError.noEntity
         }
@@ -36,9 +37,10 @@ struct EditWalkQualityIntent: AppIntent {
     @Parameter(title: "Walk", description: "The specific walk entry to update")
     var walkEntity: DogWalkEntryEntity
     
-    @Parameter(title: LocalizedStringResource("Walk uality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
+    @Parameter(title: LocalizedStringResource("Walk Quality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality
     
+    @MainActor
     func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> {
         if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
                                                                                 durationInMinutes: walkEntity.durationInMinutes,
@@ -54,7 +56,7 @@ struct EditWalkQualityIntent: AppIntent {
 
 struct EditDurationThenQualityIntent: AppIntent {
     static var title: LocalizedStringResource = "Edit walk duration then the quality"
-    static var description = IntentDescription("Edit the duration hen the quality of an existing dog walk entry.")
+    static var description = IntentDescription("Edit the duration then the quality of an existing dog walk entry.")
 
     @Parameter(title: "Walk", description: "The specific walk entry to update")
     var walkEntity: DogWalkEntryEntity
@@ -62,19 +64,16 @@ struct EditDurationThenQualityIntent: AppIntent {
     @Parameter(title: "Duration (in minutes)", description: "The updated duration of the walk")
     var duration: Int
 
-    @Parameter(title: LocalizedStringResource("walk Quality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
+    @Parameter(title: LocalizedStringResource("Walk Quality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality
 
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
-        do {
-            let _ = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
-                                                                             durationInMinutes: duration,
-                                                                             walkQuality: walkQuality))
+        let _ = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
+                                                                         durationInMinutes: duration,
+                                                                         walkQuality: walkQuality))
 
-            return .result(dialog: "Walk duration and quality updated successfully")
-        } catch {
-            return .result(dialog: "Walk duration and quality updated fails")
-        }
+        return .result(dialog: "Walk duration and quality updated successfully")
     }
 }
 

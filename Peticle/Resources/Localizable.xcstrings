@@ -89,6 +89,9 @@
     "Alfie's Chronicle" : {
 
     },
+    "Are you sure you want to delete this walk?" : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "en" : {
@@ -196,10 +199,10 @@
         }
       }
     },
-    "Edit the duration hen the quality of an existing dog walk entry." : {
+    "Edit the duration of an existing dog walk entry." : {
 
     },
-    "Edit the duration of an existing dog walk entry." : {
+    "Edit the duration then the quality of an existing dog walk entry." : {
 
     },
     "Edit the walk quality of an existing dog walk entry." : {
@@ -467,7 +470,7 @@
     "The dog walk entry to edit" : {
 
     },
-    "The durationhas been updated to %lld minutes" : {
+    "The duration has been updated to %lld minutes" : {
 
     },
     "The name of your dog" : {
@@ -494,7 +497,7 @@
     "The walk quality has been updated to %@." : {
 
     },
-    "There’s no walk %@ 😱😱😱" : {
+    "There's no walk %@ 😱😱😱" : {
 
     },
     "time in minutes" : {
@@ -523,15 +526,25 @@
 
     },
     "Update Walk Quality" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Walk Quality"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à jour la qualité de la promenade"
+          }
+        }
+      }
     },
     "Update walk quality for last activity" : {
 
     },
     "Walk" : {
-
-    },
-    "Walk duration and quality updated fails" : {
 
     },
     "Walk duration and quality updated successfully" : {
@@ -554,11 +567,8 @@
         }
       }
     },
-    "walk Quality" : {
-      "comment" : "The updated quality of the walk"
-    },
     "Walk Quality" : {
-      "comment" : "Parameter title for walk quality rating",
+      "comment" : "The updated quality of the walk",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -619,9 +629,6 @@
           }
         }
       }
-    },
-    "Walk uality" : {
-      "comment" : "The updated quality of the walk"
     },
     "WHAT?! No Walk Today!!!" : {
       "localizations" : {

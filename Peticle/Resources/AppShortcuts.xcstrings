@@ -35,7 +35,7 @@
       }
     },
     "Edit walk in ${applicationName}" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringSet" : {
@@ -67,7 +67,7 @@
       }
     },
     "Manage lastest walks in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringSet" : {
@@ -99,6 +99,25 @@
         }
       }
     },
+    "Manage latest walks in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Manage latest walks in ${applicationName}",
+              "Manage recent walks in ${applicationName}",
+              "Manage walk entries in ${applicationName}",
+              "Manage walk records in ${applicationName}",
+              "View walk management in ${applicationName}",
+              "Manage walk data in ${applicationName}",
+              "Manage walk history in ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Open walk in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -107,11 +126,8 @@
             "state" : "new",
             "values" : [
               "Open walk in ${applicationName}",
-              "Modify walk in ${applicationName}",
               "Change walk details in ${applicationName}",
-              "Update walk in ${applicationName}",
-              "Edit walk entry in ${applicationName}",
-              "Modify walk entry in ${applicationName}"
+              "Edit walk entry in ${applicationName}"
             ]
           }
         }
@@ -300,6 +316,15 @@
               "Rate my ${dateSelection} walk in ${applicationName}",
               "Update ${dateSelection} walk quality in ${applicationName}",
               "Change ${dateSelection} walk rating in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [
+              "Mets à jour la promenade  ${dateSelection} dans ${applicationName}",
+              "Change la qualité de la promenade  ${dateSelection}dans ${applicationName}"
             ]
           }
         }

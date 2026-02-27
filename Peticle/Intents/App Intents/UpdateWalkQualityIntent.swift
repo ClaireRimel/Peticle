@@ -8,7 +8,7 @@
 import AppIntents
 
 struct UpdateWalkQualityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Update Walk Quality"
+    static var title: LocalizedStringResource = LocalizedStringResource("Update Walk Quality")
     static var description = IntentDescription(
         "Update the quality rating for your most recent walk from today or yesterday."
     )
@@ -24,38 +24,32 @@ struct UpdateWalkQualityIntent: AppIntent {
 
     init() {}
 
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
-        if dateSelection != nil {
+        if let dateSelection {
             let dateText = dateSelection == .today ? "today" : "yesterday"
+            let allWalks = try await DataModelHelper.allWalks(for: dateSelection)
 
-            var walk: DogWalkEntry
-            let allWalks = try await dateSelection?.getAllWalks()
+            guard !allWalks.isEmpty else {
+                return .result(dialog: "There's no walk \(dateText) 😱😱😱")
+            }
 
-            if let allWalks, !allWalks.isEmpty {
+            let walk: DogWalkEntry
 
-                if allWalks.count == 1,
-                   let firstWalk =  allWalks.first {
-                    walk = firstWalk
-                    
-                } else {
-                    dogWalkEntryEntity = try await $dogWalkEntryEntity
-                        .requestDisambiguation(among: allWalks.map( {$0.entity}),
-                                               dialog: IntentDialog("Which walk would you like to rate?"))
-                    
-                    guard let dogWalkEntryEntity,
-                          let walkEntry = try await DataModelHelper.dogWalkEntry(for: dogWalkEntryEntity.id) else {
-                        return .result(
-                            dialog: "There’s no walk \(dateText) 😱😱😱"
-                        )
-                    }
+            if allWalks.count == 1, let firstWalk = allWalks.first {
+                walk = firstWalk
+            } else {
+                dogWalkEntryEntity = try await $dogWalkEntryEntity.requestDisambiguation(
+                    among: allWalks.map { $0.entity },
+                    dialog: IntentDialog("Which walk would you like to rate?")
+                )
 
-                    walk =  walkEntry
+                guard let dogWalkEntryEntity,
+                      let walkEntry = try await DataModelHelper.dogWalkEntry(for: dogWalkEntryEntity.id) else {
+                    return .result(dialog: "There's no walk \(dateText) 😱😱😱")
                 }
 
-            } else {
-                return .result(
-                    dialog: "There’s no walk \(dateText) 😱😱😱"
-                )
+                walk = walkEntry
             }
 
             guard let walkQuality = try await getWalkQuality() else {
@@ -67,7 +61,6 @@ struct UpdateWalkQualityIntent: AppIntent {
             return .result(
                 dialog: "Walk quality updated to \(walkQuality.localizedName()) for your \(dateText) walk."
             )
-
         } else {
             if dogWalkEntryEntity == nil {
                 dogWalkEntryEntity = try await $dogWalkEntryEntity.requestValue(
@@ -97,18 +90,16 @@ struct UpdateWalkQualityIntent: AppIntent {
             walkQuality: walkQuality
         )
 
-        _ =  try await DataModelHelper.modify(entryWalk: updatedWalk)
+        _ = try await DataModelHelper.modify(entryWalk: updatedWalk)
     }
 
     private func getWalkQuality() async throws -> WalkQuality? {
         if let walkQuality {
             return walkQuality
-
         } else {
             walkQuality = try await $walkQuality.requestValue(
                 IntentDialog("Which value would you like to apply?")
             )
-
             return walkQuality
         }
     }

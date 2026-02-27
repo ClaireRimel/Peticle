@@ -2,10 +2,24 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Today" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aujourd’hui"
+          }
+        }
+      }
     },
     "Yesterday" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

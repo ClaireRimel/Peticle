@@ -7,9 +7,8 @@
 
 import AppIntents
 import CoreSpotlight
-import SwiftUI
 
-struct CreateNewDogWalkIIntent: AppIntent {
+struct CreateNewDogWalkIntent: AppIntent {
     static var title: LocalizedStringResource = "Log a New Dog Walk"
     static var description = IntentDescription("Register manually a new dog walk with interaction")
     
@@ -18,8 +17,10 @@ struct CreateNewDogWalkIIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult {
-       _ = try DataModelHelper.newEntry(durationInMinutes: target.durationInMinutes,
-                                     walkQuality: target.walkQuality ?? .ok)
+        _ = try DataModelHelper.newEntry(
+            durationInMinutes: target.durationInMinutes,
+            walkQuality: target.walkQuality ?? .ok
+        )
         return .result()
     }
 }
@@ -28,6 +29,7 @@ struct WalksTodayCountIntent: AppIntent {
     static var title: LocalizedStringResource = "How many walks have you done today?"
     static var description = IntentDescription("Return the number of walks completed today")
     
+    @MainActor
     func perform() async throws -> some ReturnsValue<Int> {
         let walksTodayCount = try await DataModelHelper.walksTodayCount()
         
