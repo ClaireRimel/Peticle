@@ -8,7 +8,10 @@
 import AppIntents
 import CoreSpotlight
 
-struct CreateNewDogWalkIntent: AppIntent {
+/// DeprecatedAppIntent: Marks this intent as deprecated in favor of AddWalkIntent.
+/// Users with existing Shortcuts using this intent will be guided to migrate.
+struct CreateNewDogWalkIntent: AppIntent, DeprecatedAppIntent {
+    typealias ReplacementIntent = AddWalkIntent
     static var title: LocalizedStringResource = "Log a New Dog Walk"
     static var description = IntentDescription("Register manually a new dog walk with interaction")
     
