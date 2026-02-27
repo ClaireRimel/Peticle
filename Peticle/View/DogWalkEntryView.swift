@@ -115,7 +115,7 @@ struct DogWalkEntryView: View {
             modelContext.insert(dogWalkEntry)
         } else {
             do {
-                try await DataModelHelper.modify(entryWalk: dogWalkEntry)
+               _ = try await DataModelHelper.modify(entryWalk: dogWalkEntry)
             } catch {
                 print("❌ \(error.localizedDescription)")
             }
