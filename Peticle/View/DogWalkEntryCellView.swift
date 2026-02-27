@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DogWalkEntryCellView: View {
     var dogWalkEntry: DogWalkEntry
-    @Environment(NavigationManager.self) private var navigation
 
     var body: some View {
         HStack {

@@ -23,6 +23,7 @@ struct DeleteWalkIntent: AppIntent {
         self.walkEntity = walkEntity
     }
 
+    @MainActor
     func perform() async throws -> some IntentResult {
         let shouldDeleteIt = try await $walkEntity.requestConfirmation(
             for: walkEntity,

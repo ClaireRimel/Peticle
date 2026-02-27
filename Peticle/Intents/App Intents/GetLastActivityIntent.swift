@@ -11,6 +11,7 @@ struct GetLastActivityIntent: AppIntent {
     static var title: LocalizedStringResource = "Get the last activity"
     static var description = IntentDescription("Return the last activity")
 
+    @MainActor
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity?> {
         let lastEntry = try await DataModelHelper.lastDogEntry()
         
@@ -28,6 +29,7 @@ struct AddWalkQualityLatestActivityIntent: AppIntent {
                description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality
     
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
         
         if let lastEntity = try await DataModelHelper.lastDogEntry()?.entity {

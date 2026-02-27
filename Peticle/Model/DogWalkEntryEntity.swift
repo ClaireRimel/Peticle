@@ -6,7 +6,6 @@
 //
 
 import AppIntents
-import CoreLocation
 import CoreSpotlight
 import WidgetKit
 
@@ -72,7 +71,7 @@ struct DogWalkQuery: EntityQuery {
     @MainActor
     /// Returns a list of suggested dog walk entries, limited to recent items
     func suggestedEntities() async throws -> [DogWalkEntryEntity] {
-        let entries = try await DataModelHelper.dogEntries(limit: 5)
+        let entries = try await DataModelHelper.dogWalkEntries(limit: 5)
         return entries.map(\.entity)
     }
 
@@ -83,7 +82,7 @@ struct DogWalkQuery: EntityQuery {
 /// useful when you want the full list (like showing all playlists, contacts, devices…).
 extension DogWalkQuery: EnumerableEntityQuery {
     func allEntities() async throws -> [DogWalkEntryEntity] {
-        let walks = try await DataModelHelper.allDogEntries()
+        let walks = try await DataModelHelper.allDogWalkEntries()
         return walks.map(\.entity)
     }
 }

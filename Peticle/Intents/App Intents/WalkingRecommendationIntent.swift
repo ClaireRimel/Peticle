@@ -12,6 +12,7 @@ struct WalkingRecommendationIntent: AppIntent {
     static var title: LocalizedStringResource = "Should I walk my dog today based on our history?"
     static var description = IntentDescription("Get a personalized walking recommendation for your dog's health based on your walking history and patterns.")
 
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
         do {
             let recommendation = try await generateWalkingRecommendation()

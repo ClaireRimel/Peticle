@@ -8,7 +8,6 @@
 import AppIntents
 import Foundation
 import CoreSpotlight
-import SwiftData
 
 struct AddWalkIntent: AppIntent {
     static var title: LocalizedStringResource = "Log a Quick Dog Walk"
@@ -26,6 +25,7 @@ struct AddWalkIntent: AppIntent {
     )
     var walkQuality: WalkQuality
 
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
         let entry = try DataModelHelper.newEntry(durationInMinutes: duration,
                                          walkQuality: walkQuality)

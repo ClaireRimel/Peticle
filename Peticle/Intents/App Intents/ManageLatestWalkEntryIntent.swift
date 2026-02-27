@@ -15,6 +15,7 @@ struct ManageLatestWalkEntryIntent: SnippetIntent {
     )
 
     
+    @MainActor
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity?> & ShowsSnippetView {
         let walkEntity = try await DataModelHelper.walksOfToday().compactMap { entry in
             DogWalkEntryEntity(entry)

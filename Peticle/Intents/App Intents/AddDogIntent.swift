@@ -7,7 +7,6 @@
 
 import AppIntents
 import CoreSpotlight
-import SwiftUI
 
 struct AddDogIntent: AppIntent {
     static var title: LocalizedStringResource = "Add a New Dog"
@@ -24,6 +23,7 @@ struct AddDogIntent: AppIntent {
 
     init() {}
 
+    @MainActor
     func perform() async throws -> some ReturnsValue<DogEntity> & ProvidesDialog {
         do {
             let dog = try DataModelHelper.addDog(name: name, imageData: nil, age: age)
@@ -62,6 +62,7 @@ struct RemoveDogIntent: AppIntent {
 
     init() {}
 
+    @MainActor
     func perform() async throws -> some ProvidesDialog {
         do {
             try await DataModelHelper.deleteDog(for: dog.id)
