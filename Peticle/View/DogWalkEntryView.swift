@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppIntents
 import CoreSpotlight
 import SwiftData
 
@@ -39,6 +40,9 @@ struct DogWalkEntryView: View {
     @State private var durationInMinute: String = ""
 
     @State private var textEditorPadding: CGFloat = 0
+
+    /// A binding to a user preference indicating whether they hide the Siri tip.
+    @AppStorage("displayQualitySiriTip") private var displayQualitySiriTip: Bool = true
 
     init(dogWalkEntry: DogWalkEntry, mode: DogWalkEntryViewMode = .create) {
         self.dogWalkEntry = dogWalkEntry
@@ -75,6 +79,10 @@ struct DogWalkEntryView: View {
                     }
                 }
                 
+                // SiriTipView: Shows the Siri phrase for updating walk quality
+                Section {
+                    SiriTipView(intent: UpdateWalkQualityIntent(), isVisible: $displayQualitySiriTip)
+                }
             }
             .navigationTitle(mode.navigationTitle())
             .onAppear {

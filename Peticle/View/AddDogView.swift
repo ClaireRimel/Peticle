@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import AppIntents
 
 struct AddDogView: View {
     @Environment(\.dismiss) private var dismiss
@@ -17,6 +18,9 @@ struct AddDogView: View {
     @State private var showingImagePicker = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
+
+    /// A binding to a user preference indicating whether they hide the Siri tip.
+    @AppStorage("displayAddDogSiriTip") private var displaySiriTip: Bool = true
     
     var body: some View {
         NavigationStack {
@@ -48,6 +52,11 @@ struct AddDogView: View {
                             }
                         }
                     }
+                }
+
+                // SiriTipView: Shows the Siri phrase for adding a dog, helping users discover the voice shortcut
+                Section {
+                    SiriTipView(intent: AddDogIntent(), isVisible: $displaySiriTip)
                 }
             }
             .navigationTitle("Add New Dog")
@@ -99,7 +108,3 @@ struct AddDogView: View {
 #Preview {
     AddDogView()
 }
-
-
-
-
