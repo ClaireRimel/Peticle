@@ -85,14 +85,14 @@ struct DogWalkingFocus: SetFocusFilterIntent {
     static var title: LocalizedStringResource = "Dog Walking Focus"
     
     static var description: IntentDescription? = IntentDescription(
-        "Configure the app\'s behavior during your dog walking Focus."
+        "Configure the app's behavior during your dog walking Focus."
     )
 
-    @Parameter(title: "Show only today\'s walks", default: false)
+    @Parameter(title: "Show only today's walks", default: false)
     var showOnlyTodaysWalks: Bool
 
     var displayRepresentation: DisplayRepresentation {
-        let subtitle = showOnlyTodaysWalks ? "Showing today\'s walks only" : "Showing all walks"
+        let subtitle = showOnlyTodaysWalks ? "Showing today's walks only" : "Showing all walks"
         return DisplayRepresentation(
             title: "Dog Walking Mode",
             subtitle: "\(subtitle)"

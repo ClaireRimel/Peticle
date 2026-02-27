@@ -20,7 +20,7 @@ struct DogWalkListView: View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
-            .navigationTitle("Alfie's Chronicle")
+            .navigationTitle("Alfie\'s Chronicle")
             .onShake {
                 showingHiddenView = true
             }
@@ -69,7 +69,18 @@ struct FilteredDogWalkListView: View {
     /// A binding to a user preference indicating whether they hide the Siri tip.
     @AppStorage("displaySiriTip") private var displaySiriTip: Bool = true
 
+    /// Read the Focus filter state set by DogWalkingFocus (SetFocusFilterIntent).
+    /// When a Focus mode activates with this filter, only today\'s walks are shown.
+    @AppStorage("focusFilter_showOnlyTodaysWalks") private var showOnlyTodaysWalks: Bool = false
+
     @Environment(\.dismissSearch) private var dismissSearch
+
+    /// The entries to display, filtered by Focus mode if active.
+    private var displayedEntries: [DogWalkEntry] {
+        guard showOnlyTodaysWalks else { return dogWalkEntries }
+        let calendar = Calendar.current
+        return dogWalkEntries.filter { calendar.isDateInToday($0.entryDate) }
+    }
 
     init(searchTerm: String) {
         if !searchTerm.isEmpty {
@@ -90,11 +101,21 @@ struct FilteredDogWalkListView: View {
 
     var body: some View {
         let calendar = Calendar.current
-        let groupedEntries = OrderedDictionary(grouping: dogWalkEntries, by: { entry in
+        let groupedEntries = OrderedDictionary(grouping: displayedEntries, by: { entry in
             if calendar.isDateInToday(entry.entryDate) { return Self.todayString }
             else { return calendar.startOfDay(for: entry.entryDate).formatted(.relative(presentation: .named)) as String }
         })
         List {
+            // Focus filter active banner
+            if showOnlyTodaysWalks {
+                Section {
+                    Label("Focus filter active — showing today only", systemImage: "moon.fill")
+                        .font(.caption)
+                        .foregroundStyle(.indigo)
+                        .listRowBackground(Color.indigo.opacity(0.1))
+                }
+            }
+
             ForEach(Array(groupedEntries.keys), id: \.self) { group in
                 Section(header: Text(group)) {
                     ForEach(groupedEntries[group] ?? []) { entry in
@@ -110,7 +131,7 @@ struct FilteredDogWalkListView: View {
             }
         }
         .overlay {
-            if dogWalkEntries.isEmpty {
+            if displayedEntries.isEmpty {
                 if isInSearchMode {
                     ContentUnavailableView.search
                 }

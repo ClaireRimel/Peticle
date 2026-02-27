@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    " Duration in Minute" : {
-
-    },
     "%@" : {
 
     },
@@ -114,6 +111,9 @@
     "Choose which date to update the walk quality for" : {
 
     },
+    "Configure the app's behavior during your dog walking Focus." : {
+
+    },
     "Date" : {
 
     },
@@ -138,6 +138,9 @@
     "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {
 
     },
+    "dog" : {
+
+    },
     "Dog" : {
 
     },
@@ -151,6 +154,15 @@
 
     },
     "Dog Walk" : {
+
+    },
+    "Dog Walking Focus" : {
+
+    },
+    "Dog Walking Mode" : {
+
+    },
+    "Dog Walks" : {
 
     },
     "Done" : {
@@ -170,10 +182,16 @@
         }
       }
     },
+    "duration" : {
+
+    },
     "Duration" : {
 
     },
     "Duration (in minutes)" : {
+
+    },
+    "Duration in Minutes" : {
 
     },
     "Edit a Dog Walk Entry" : {
@@ -221,6 +239,9 @@
 
     },
     "Failed to remove the dog: %@" : {
+
+    },
+    "Focus filter active — showing today only" : {
 
     },
     "Get a personalized walking recommendation for your dog's health based on your walking history and patterns." : {
@@ -274,6 +295,9 @@
       }
     },
     "Last Walk Entry" : {
+
+    },
+    "Log a %lld-minute walk" : {
 
     },
     "Log a New Dog Walk" : {
@@ -340,6 +364,12 @@
     "Photo" : {
 
     },
+    "quality" : {
+
+    },
+    "Quality: %@" : {
+
+    },
     "Quickly register a new dog walk with a given duration." : {
 
     },
@@ -387,6 +417,9 @@
     "Save" : {
 
     },
+    "Search for dog walks matching specific criteria." : {
+
+    },
     "Select Photo" : {
 
     },
@@ -400,6 +433,9 @@
 
     },
     "Show Dogs" : {
+
+    },
+    "Show only today's walks" : {
 
     },
     "Show the last activity" : {
@@ -500,6 +536,9 @@
     "There's no walk %@ 😱😱😱" : {
 
     },
+    "Time Ago" : {
+
+    },
     "time in minutes" : {
       "localizations" : {
         "en" : {
@@ -542,6 +581,9 @@
       }
     },
     "Update walk quality for last activity" : {
+
+    },
+    "walk" : {
 
     },
     "Walk" : {
@@ -629,6 +671,9 @@
           }
         }
       }
+    },
+    "Walks" : {
+
     },
     "WHAT?! No Walk Today!!!" : {
       "localizations" : {
