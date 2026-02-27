@@ -7,7 +7,9 @@
 
 import AppIntents
 
-struct OpenEditEntryIntent: OpenIntent {
+/// URLRepresentableIntent: Makes this intent shareable as a deep link URL.
+/// Combined with URLRepresentableEntity on DogWalkEntryEntity, walk entries can be opened via URLs.
+struct OpenEditEntryIntent: OpenIntent, URLRepresentableIntent {
     typealias Value = DogWalkEntryEntity
 
     static var title: LocalizedStringResource = "Edit a Dog Walk Entry"
