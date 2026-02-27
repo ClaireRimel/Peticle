@@ -139,7 +139,11 @@ struct FilteredDogWalkListView: View {
     private func deleteEntries(entries: [DogWalkEntry]) {
         withAnimation {
             entries.forEach { modelContext.delete($0) }
-            try? modelContext.save()
+            do {
+                try modelContext.save()
+            } catch {
+                print("Failed to save after deletion: \(error)")
+            }
         }
         let ids = entries.map(\.dogWalkID)
     

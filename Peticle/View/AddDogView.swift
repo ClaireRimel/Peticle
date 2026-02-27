@@ -19,7 +19,7 @@ struct AddDogView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Dog Information") {
                     TextField("Dog Name", text: $dogName)
@@ -99,5 +99,7 @@ struct AddDogView: View {
 #Preview {
     AddDogView()
 }
+
+
 
 
