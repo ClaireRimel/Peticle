@@ -7,7 +7,14 @@
 
 import Foundation
 
-enum IntentError: Error {
+enum IntentError: LocalizedError {
     case noEntity
     case message(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .noEntity: return "No matching entry found."
+        case .message(let msg): return msg
+        }
+    }
 }
