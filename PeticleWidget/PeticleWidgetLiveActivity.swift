@@ -15,27 +15,27 @@ struct PeticleWidgetLiveActivity: Widget {
             let goalEnd = context.state.startDate.addingTimeInterval(Double(context.state.goalTime))
 
             // Lock screen / banner UI
-            VStack {
-                HStack {
-                    Spacer()
+            HStack(spacing: 16) {
+                // Left: icon + label
+                VStack(spacing: 4) {
                     Image(systemName: "dog.fill")
-                        .font(.title3)
+                        .font(.title2)
                         .foregroundStyle(.indigo)
 
-                    Text("Dog Walk")
-                        .font(.headline)
+                    Text("Walk")
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.secondary)
+                }
+                .frame(width: 44)
 
-                    Spacer()
-
+                // Center: timer + progress
+                VStack(spacing: 6) {
                     Text(context.state.startDate, style: .timer)
                         .font(.system(.title, design: .rounded, weight: .bold))
                         .monospacedDigit()
                         .foregroundStyle(.indigo)
                         .contentTransition(.numericText())
-                    Spacer()
-                }
 
-                VStack(spacing: 6) {
                     ProgressView(
                         timerInterval: context.state.startDate...goalEnd,
                         countsDown: false
@@ -43,17 +43,19 @@ struct PeticleWidgetLiveActivity: Widget {
                         // empty label
                     }
                     .tint(.indigo)
-
-//                    HStack {
-//                        Text("0:00")
-//                            .font(.caption2)
-//                            .foregroundStyle(.secondary)
-//                        Spacer()
-//                        Text("Goal: \(formatTime(context.state.goalTime))")
-//                            .font(.caption2)
-//                            .foregroundStyle(.secondary)
-//                    }
                 }
+
+                // Right: goal
+                VStack(spacing: 4) {
+                    Text("Goal")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    
+                    Text(formatTime(context.state.goalTime))
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.primary)
+                }
+                .frame(width: 50)
             }
             .padding()
             .activityBackgroundTint(Color(.systemBackground))
@@ -65,25 +67,29 @@ struct PeticleWidgetLiveActivity: Widget {
             return DynamicIsland {
                 // MARK: - Expanded View
                 DynamicIslandExpandedRegion(.leading) {
-                    Image(systemName: "dog.fill")
-                        .font(.title2)
-                        .foregroundStyle(.indigo)
-                        .padding(.leading, 2)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Image(systemName: "dog.fill")
+                            .font(.title2)
+                            .foregroundStyle(.indigo)
+
+                        Text("Dog Walk")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(context.state.startDate, style: .timer)
-                        .font(.system(.title2, design: .rounded, weight: .bold))
-                        .monospacedDigit()
-                        .foregroundStyle(.indigo)
-                        .contentTransition(.numericText())
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                }
+                    VStack(alignment: .trailing, spacing: 4) {
+                        Text(context.state.startDate, style: .timer)
+                            .font(.system(.title2, design: .rounded, weight: .bold))
+                            .monospacedDigit()
+                            .foregroundStyle(.indigo)
+                            .contentTransition(.numericText())
 
-                DynamicIslandExpandedRegion(.center) {
-                    Text("Goal: \(formatTime(context.state.goalTime))")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        Text("Goal: \(formatTime(context.state.goalTime))")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
