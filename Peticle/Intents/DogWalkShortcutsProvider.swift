@@ -136,6 +136,20 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
         )
     }
 
+    // MARK: - Negative Phrases
+    
+    /// NegativeAppShortcutPhrases: Phrases that should NOT trigger this app.
+    /// This trains Siri to avoid false positives from similar-sounding commands.
+    static var negativeShortcuts: [NegativeAppShortcutPhrases] {
+        NegativeAppShortcutPhrases {
+            "Walk me through"
+            "Start walking me through"
+            "Show me the dog days"
+            "Walk through the steps"
+            "Walking directions"
+        }
+    }
+
     static var shortcutTileColor: ShortcutTileColor {
         .grayGreen
     }
