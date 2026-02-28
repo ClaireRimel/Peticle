@@ -134,6 +134,19 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Show Dogs",
             systemImageName: "dog.fill"
         )
+
+        AppShortcut(
+            intent: SetDailyWalkGoalIntent(),
+            phrases: [
+                "Set walk goal in \(.applicationName)",
+                "Set daily walk goal in \(.applicationName)",
+                "Change walk goal in \(.applicationName)"
+            ],
+            shortTitle: "Set Walk Goal",
+            systemImageName: "target"
+        )
+
+
     }
 
     // MARK: - Negative Phrases

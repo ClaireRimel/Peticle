@@ -8,7 +8,7 @@
 
 ## App Intents Showcase
 
-### Intents (21 total)
+### Intents (24 total)
 
 | Intent | Type | Description |
 |--------|------|-------------|
@@ -17,6 +17,7 @@
 | `AddWalkIntent` | `AppIntent` + `PredictableIntent` | Log a walk with duration and quality, with system prediction |
 | `AddDogIntent` | `AppIntent` | Add a new dog to the collection |
 | `RemoveDogIntent` | `DeleteIntent` | Remove a dog (batch support) |
+| `SetDailyWalkGoalIntent` | `SetValueIntent` | Set persistent daily walk goal in minutes |
 | `DeleteWalkIntent` | `DeleteIntent` | Delete walk entries (batch support) |
 | `UpdateWalkQualityIntent` | `AppIntent` | Update quality with date selection and disambiguation |
 | `EditDurationIntent` | `AppIntent` | Edit walk duration |
@@ -25,7 +26,9 @@
 | `WalksTodayCountIntent` | `AppIntent` | Returns today's walk count |
 | `GetLastActivityIntent` | `AppIntent` | Returns the most recent walk entry |
 | `AddWalkQualityLatestActivityIntent` | `AppIntent` | Quick quality update for latest walk |
-| `WalkingRecommendationIntent` | `AppIntent` | Personalized walking recommendation |
+| `WalkingRecommendationIntent` | `AppIntent` + `ProgressReportingIntent` | Multi-step walk analysis with progress bar |
+| `SearchWalksIntent` | `ShowInAppSearchResultsIntent` + `@AppIntent(schema: .system.search)` | Open app with search results via Apple Intelligence (no predefined phrases) |
+| `TakeDogPhotoIntent` | `CameraCaptureIntent` | Camera quick action to capture dog photo |
 | `SeeLatestActivityIntent` | `AppIntent` + `ShowsSnippetView` | Display last walk in a Snippet UI |
 | `ManageLatestWalkEntryIntent` | `SnippetIntent` | Manage last walk in a Snippet view (iOS 26) |
 | `ShowDogIntent` | `AppIntent` + `ShowsSnippetView` | Show dog info with photo in Snippet |
@@ -90,12 +93,17 @@ The interactive widget uses **App Group** shared `UserDefaults` (`group.com.Yo.P
 
 ### AppShortcutsProvider
 
-8 registered App Shortcuts with localized phrases covering:
+10 registered App Shortcuts with localized phrases covering:
 - Start/Stop walks
 - Add and manage walk entries
 - Update walk quality
 - View latest activity
 - Show dog information
+- Set walk goal, take dog photo
+
+### App Intent Domains
+
+`SearchWalksIntent` uses `@AppIntent(schema: .system.search)` for Apple Intelligence integration — invocable via natural language without predefined Siri phrases.
 
 ### Negative Phrases
 
@@ -123,12 +131,16 @@ Contextual Siri tips displayed in `AddDogView`, `DogWalkListView`, and `DogWalkE
 | **NegativeAppShortcutPhrases** | Prevents false Siri triggers |
 | **SnippetIntent** | `ManageLatestWalkEntryIntent` with custom SwiftUI snippet view (iOS 26) |
 | **Spotlight Indexing** | Both entities indexed via `CSSearchableIndex` with rich attributes |
+| **SetValueIntent** | `SetDailyWalkGoalIntent` persists walk goal, consumed by `StartDogWalkIntent` |
+| **ProgressReportingIntent** | `WalkingRecommendationIntent` reports 4-step analysis progress to system |
+| **ShowInAppSearchResultsIntent** | `SearchWalksIntent` with `@AppIntent(schema: .system.search)` — invocable via Apple Intelligence without predefined phrases |
+| **CameraCaptureIntent** | `TakeDogPhotoIntent` with `AppContext` for Camera quick action |
 
 ---
 
 ## Architecture
 
-- **SwiftData** for persistence (`Dog`, `DogWalkEntry` models with `Sendable`)
+- **SwiftData** for persistence (`Dog`, `DogWalkEntry` models)
 - **@Observable** view models (`StopwatchViewModel`, `NavigationManager`)
 - **AppDependencyManager** for type-safe dependency injection across intents
 - **App Group** (`group.com.Yo.Peticle`) for app-widget communication

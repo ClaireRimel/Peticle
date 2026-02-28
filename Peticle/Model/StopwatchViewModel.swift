@@ -33,6 +33,13 @@ final class StopwatchViewModel {
     /// Shared UserDefaults accessible by both the app and the widget extension.
     static let sharedDefaults = UserDefaults(suiteName: "group.com.Yo.Peticle")
 
+    /// The persisted daily walk goal (in minutes), defaulting to 30 if not set.
+    /// Set via SetDailyWalkGoalIntent (SetValueIntent).
+    nonisolated static var defaultGoalInMinutes: Int {
+        let stored = UserDefaults.standard.integer(forKey: "dailyWalkGoalMinutes")
+        return stored > 0 ? stored : 30
+    }
+
     init() {
         requestNotificationPermission()
         restoreState()
