@@ -205,16 +205,21 @@ final class StopwatchViewModel {
 
     // MARK: - Timer Control
     func start(with goalInMinute: Int) {
-        // Stop any previous activity before starting a new one
-        if isRunning || startDate != nil {
-            isRunning = false
-            timer?.invalidate()
-            timer = nil
-            removeScheduledNotification()
-            endLiveActivity()
-            clearPersistedState()
-            startDate = nil
-            timeElapsed = 0
+        // If a walk is already in progress, save it before starting a new one
+        if isRunning || startDate != nil || UserDefaults.standard.object(forKey: Keys.startDate) != nil {
+            do {
+                try saveEntryAndStopActivity()
+            } catch {
+                // No valid walk to save, just clean up
+                isRunning = false
+                timer?.invalidate()
+                timer = nil
+                removeScheduledNotification()
+                endLiveActivity()
+                clearPersistedState()
+                startDate = nil
+                timeElapsed = 0
+            }
         }
         
         // End any orphaned Live Activities from previous sessions
