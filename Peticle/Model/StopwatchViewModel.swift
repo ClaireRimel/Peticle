@@ -283,21 +283,31 @@ final class StopwatchViewModel {
     }
 
     func saveEntryAndStopActivity() throws {
-        // Try in-memory state first, fall back to persisted state
+        // Use persisted startDate as source of truth (survives app kill)
         let walkStartDate: Date
-        if let startDate {
-            walkStartDate = startDate
-        } else if let saved = UserDefaults.standard.object(forKey: Keys.startDate) as? Date {
+        if let saved = UserDefaults.standard.object(forKey: Keys.startDate) as? Date {
             walkStartDate = saved
-            // Restore goal too if needed
-            if goalInSeconds == 0 {
-                goalInSeconds = UserDefaults.standard.integer(forKey: Keys.goalInSeconds)
-            }
+        } else if let startDate {
+            walkStartDate = startDate
         } else {
             throw IntentError.message("No Activity started yet")
         }
 
-        let minutesPassed = Calendar.current.dateComponents([.minute], from: walkStartDate, to: .now).minute ?? 0
+        // Restore goal if needed
+        if goalInSeconds == 0 {
+            goalInSeconds = UserDefaults.standard.integer(forKey: Keys.goalInSeconds)
+        }
+
+        // Calculate from persisted start date for accurate duration
+        let minutesPassed = max(
+            Int(Date.now.timeIntervalSince(walkStartDate)) / 60,
+            timeElapsed / 60
+        )
+
+        guard minutesPassed > 0 else {
+            stop()
+            return
+        }
 
         _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
                                          walkQuality: .ok)
