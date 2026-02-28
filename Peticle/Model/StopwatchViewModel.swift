@@ -276,11 +276,7 @@ final class StopwatchViewModel {
         timer = nil
         removeScheduledNotification()
         endLiveActivity()
-
-        Task {
-            try? await Task.sleep(for: .seconds(1))
-            self.reset()
-        }
+        reset()
 
         Self.sharedDefaults?.set(false, forKey: "isWalking")
         donateEditQualityIntent()

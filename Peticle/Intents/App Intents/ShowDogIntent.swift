@@ -15,7 +15,6 @@ struct ShowDogIntent: AppIntent {
     @Parameter(title: "Dog", description: "The dog to show information for")
     var dog: DogEntity?
 
-
     init() {}
 
     init(dog: DogEntity) {
@@ -26,25 +25,26 @@ struct ShowDogIntent: AppIntent {
     func perform() async throws -> some ProvidesDialog & ShowsSnippetView {
         if let selectedDog = dog,
            let dogEntry = try await DataModelHelper.dog(for: selectedDog.id) {
-            // Show specific dog information
-            let dialog = IntentDialog("🐕 Here is \(selectedDog.name)")
+            let photo = dogEntry.photo
+            let dialog = IntentDialog("Here is \(selectedDog.name)")
             return .result(
                 dialog: dialog,
-                view: PictureView(dogPicture: dogEntry.photo)
+                view: PictureView(dogPicture: photo)
             )
-        } else  {
+        } else {
             let dogs = try await DataModelHelper.allDogs()
             if dogs.isEmpty {
-                let dialog = IntentDialog("You don't have any dogs registered yet. Are you a cat lover ? ")
+                let dialog = IntentDialog("You don't have any dogs registered yet. Are you a cat lover?")
                 return .result(
                     dialog: dialog,
                     view: ShowCatView()
                 )
-            } else  {
-                let dialog = IntentDialog("🐕 Here all your dogs")
+            } else {
+                let photos = dogs.map { (name: $0.name, photo: $0.photo) }
+                let dialog = IntentDialog("Here are all your dogs")
                 return .result(
                     dialog: dialog,
-                    view: ShowDogsView(dogs: dogs)
+                    view: ShowDogsView(dogs: photos)
                 )
             }
         }
@@ -62,11 +62,11 @@ private struct ShowCatView: View {
 }
 
 private struct ShowDogsView: View {
-    let dogs: [Dog]
+    let dogs: [(name: String, photo: UIImage?)]
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(dogs, id: \.id) { dog in
+            ForEach(dogs, id: \.name) { dog in
                 PictureView(dogPicture: dog.photo)
                     .aspectRatio(contentMode: .fit)
             }
@@ -79,7 +79,7 @@ private struct PictureView: View {
     let dogPicture: UIImage?
 
     var body: some View {
-        if let dogPicture = dogPicture {
+        if let dogPicture {
             Image(uiImage: dogPicture)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -97,4 +97,3 @@ private struct PictureView: View {
         }
     }
 }
-

@@ -15,6 +15,8 @@ struct OpenEditEntryIntent: OpenIntent, URLRepresentableIntent {
     static var title: LocalizedStringResource = "Edit a Dog Walk Entry"
     static var description = IntentDescription("Open the app to edit the selected dog walk entry.")
 
+    static var openAppWhenRun: Bool = true
+
     @Parameter(title: "Walk", description: "The dog walk entry to edit")
     var target: DogWalkEntryEntity
 

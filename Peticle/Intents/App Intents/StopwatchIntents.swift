@@ -12,12 +12,11 @@ struct StartDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Start a dog walk activity"
     static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
     
-    @Parameter(title: "Goal in minutes")
-    var goalTime: Int?
+    @Parameter(title: "Goal in minutes", requestValueDialog: "How many minutes would you like to walk?")
+    var goalTime: Int
     
     func perform() async -> some IntentResult {
-        let goal = goalTime ?? StopwatchViewModel.defaultGoalInMinutes
-        await StopwatchViewModel.shared.start(with: goal)
+        await StopwatchViewModel.shared.start(with: goalTime)
 
         return .result()
     }

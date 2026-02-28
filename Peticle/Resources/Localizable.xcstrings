@@ -10,12 +10,6 @@
     "%lld mins" : {
 
     },
-    "🐕 Here all your dogs" : {
-
-    },
-    "🐕 Here is %@" : {
-
-    },
     "Add" : {
       "comment" : "Button title when done creating a new dog walk entry",
       "localizations" : {
@@ -86,9 +80,6 @@
     "Alfie's Chronicle" : {
 
     },
-    "Are you sure you want to delete this walk?" : {
-
-    },
     "Cancel" : {
       "localizations" : {
         "en" : {
@@ -105,7 +96,10 @@
         }
       }
     },
-    "Choose the dog to remove" : {
+    "Capture a photo of your dog from the Camera quick action." : {
+
+    },
+    "Choose the dogs to remove" : {
 
     },
     "Choose which date to update the walk quality for" : {
@@ -163,6 +157,9 @@
 
     },
     "Dog Walks" : {
+
+    },
+    "Dogs" : {
 
     },
     "Done" : {
@@ -238,13 +235,10 @@
     "Edit Walk Quality" : {
 
     },
-    "Failed to remove the dog: %@" : {
-
-    },
     "Focus filter active — showing today only" : {
 
     },
-    "Get a personalized walking recommendation for your dog's health based on your walking history and patterns." : {
+    "Get a personalized walking recommendation based on multi-day analysis of your walking history, patterns, and quality trends." : {
 
     },
     "Get the last activity" : {
@@ -254,6 +248,18 @@
 
     },
     "Goal in minutes" : {
+
+    },
+    "Goal in Minutes" : {
+
+    },
+    "Here are all your dogs" : {
+
+    },
+    "Here is %@" : {
+
+    },
+    "How many minutes would you like to walk?" : {
 
     },
     "How many walks have you done today?" : {
@@ -396,7 +402,7 @@
     "Register manually a new dog walk with interaction" : {
 
     },
-    "Remove ${dog}" : {
+    "Remove ${entities}" : {
 
     },
     "Remove a dog from your pet collection." : {
@@ -417,10 +423,31 @@
     "Save" : {
 
     },
+    "Search Dog Walks" : {
+
+    },
     "Search for dog walks matching specific criteria." : {
 
     },
+    "Search term" : {
+
+    },
+    "Search your dog walk history and show matching results in the app." : {
+
+    },
     "Select Photo" : {
+
+    },
+    "Set Daily Walk Goal" : {
+
+    },
+    "Set daily walk goal to ${value} minutes" : {
+
+    },
+    "Set Walk Goal" : {
+
+    },
+    "Set your daily walk goal in minutes. This becomes the default goal when you start a new walk." : {
 
     },
     "Set your goal, and a notification will pop up when it's time to go back" : {
@@ -497,6 +524,9 @@
     "Successfully removed %@ from your pet collection." : {
 
     },
+    "Take Dog Photo" : {
+
+    },
     "The age of your dog in years" : {
 
     },
@@ -518,9 +548,6 @@
     "The quality rating for how the walk went" : {
 
     },
-    "The specific walk entry to delete" : {
-
-    },
     "The specific walk entry to update" : {
 
     },
@@ -528,6 +555,9 @@
 
     },
     "The updated duration of the walk" : {
+
+    },
+    "The walk entries to delete" : {
 
     },
     "The walk quality has been updated to %@." : {
@@ -555,7 +585,7 @@
         }
       }
     },
-    "Unable to analyze your dog's walking history. Please try again later." : {
+    "Unable to analyze your walking history. Please try again later." : {
 
     },
     "Update the quality rating for your most recent walk from today or yesterday." : {
@@ -697,13 +727,26 @@
     "Which walk would you like to rate?" : {
 
     },
-    "You don't have any dogs registered yet. Are you a cat lover ? " : {
+    "You don't have any dogs registered yet. Are you a cat lover?" : {
 
     },
     "You found me!" : {
 
     },
     "Your activity was registered" : {
+
+    },
+    "Your daily walk goal has been set to %lld minute%@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your daily walk goal has been set to %1$lld minute%2$@."
+          }
+        }
+      }
+    },
+    "Your daily walk goal in minutes" : {
 
     }
   },
