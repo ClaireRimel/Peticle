@@ -9,19 +9,12 @@ import SwiftUI
 import PhotosUI
 import AppIntents
 
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
-
 struct AddDogView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var dogName: String = ""
     @State private var dogAge: Int = 0
     @State private var selectedImage: PhotosPickerItem?
     @State private var selectedImageData: Data?
-    @State private var showingImagePicker = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
 
@@ -30,42 +23,34 @@ struct AddDogView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Dog Information") {
-                    TextField("Dog Name", text: $dogName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+            ScrollView {
+                VStack(spacing: PeticleTheme.Spacing.xl) {
+                    photoPicker
 
-                    Stepper("Age: \(dogAge) years", value: $dogAge, in: 0...30)
-                }
+                    GlassSection("Dog Information") {
+                        VStack(spacing: 0) {
+                            TextField("Dog Name", text: $dogName)
+                                .font(.body)
+                                .padding(PeticleTheme.Spacing.lg)
 
-                Section("Photo") {
-                    if let selectedImageData = selectedImageData,
-                       let image = platformImage(from: selectedImageData) {
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxHeight: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
+                            Divider()
+                                .padding(.leading, PeticleTheme.Spacing.lg)
 
-                    PhotosPicker(selection: $selectedImage, matching: .images) {
-                        Label("Select Photo", systemImage: "photo")
-                    }
-                    .onChange(of: selectedImage) { _, newValue in
-                        Task {
-                            if let data = try? await newValue?.loadTransferable(type: Data.self) {
-                                selectedImageData = data
+                            Stepper(value: $dogAge, in: 0...30) {
+                                Text("Age: \(dogAge) years")
+                                    .font(.body)
                             }
+                            .padding(PeticleTheme.Spacing.lg)
                         }
                     }
-                }
 
-                #if os(iOS)
-                // SiriTipView: Shows the Siri phrase for adding a dog, helping users discover the voice shortcut
-                Section {
+                    #if os(iOS)
+                    // SiriTipView: Shows the Siri phrase for adding a dog, helping users discover the voice shortcut
                     SiriTipView(intent: TakeDogPhotoIntent(), isVisible: $displaySiriTip)
+                    #endif
                 }
-                #endif
+                .padding(.horizontal, PeticleTheme.Spacing.lg)
+                .padding(.vertical, PeticleTheme.Spacing.lg)
             }
             .navigationTitle("Add New Dog")
             #if os(iOS)
@@ -97,14 +82,44 @@ struct AddDogView: View {
         }
     }
 
-    private func platformImage(from data: Data) -> Image? {
-        #if canImport(UIKit)
-        guard let uiImage = UIImage(data: data) else { return nil }
-        return Image(uiImage: uiImage)
-        #elseif canImport(AppKit)
-        guard let nsImage = NSImage(data: data) else { return nil }
-        return Image(nsImage: nsImage)
-        #endif
+    private var photoPicker: some View {
+        PhotosPicker(selection: $selectedImage, matching: .images) {
+            VStack(spacing: PeticleTheme.Spacing.sm) {
+                ZStack {
+                    if let selectedImageData, let image = Image(imageData: selectedImageData) {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        LinearGradient(
+                            colors: [.peticleChocolate, .peticleCaramel],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        Image(systemName: "camera.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.white)
+                    }
+                }
+                .frame(width: 120, height: 120)
+                .clipShape(Circle())
+                .overlay {
+                    Circle().strokeBorder(.white.opacity(0.2), lineWidth: 1)
+                }
+
+                Label("Select Photo", systemImage: "photo")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.tint)
+            }
+        }
+        .buttonStyle(.plain)
+        .onChange(of: selectedImage) { _, newValue in
+            Task {
+                if let data = try? await newValue?.loadTransferable(type: Data.self) {
+                    selectedImageData = data
+                }
+            }
+        }
     }
 
     private func saveDog() {

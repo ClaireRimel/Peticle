@@ -411,6 +411,10 @@ final class StopwatchViewModel {
         }
     }
 
+    var goalInMinutes: Int {
+        goalInSeconds / 60
+    }
+
     var progress: Double {
         guard goalInSeconds > 0 else { return 0.0 }
         return min(Double(timeElapsed) / Double(goalInSeconds), 1.0)

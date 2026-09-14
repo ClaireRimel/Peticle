@@ -11,32 +11,27 @@ struct HiddenView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        Text("You found me!")
-            .font(.title)
-            .fontWeight(.semibold)
-        
-        Image("Lindo Alfie")
-                     .resizable()
-                     .scaledToFit()
-                     .clipShape(RoundedRectangle(cornerRadius: 16))
-                     .shadow(radius: 10)
-                     .padding()
-        
-        Text("I'm not a bug, I'm a feature ✨")
-            .font(.body)
-        
-        Button(action: {
-            dismiss()
-        }) {
-            Text("Go Back")
-                .fontWeight(.medium)
-                .padding()
+        VStack(spacing: PeticleTheme.Spacing.lg) {
+            GlassCard(cornerRadius: PeticleTheme.Radius.xlarge) {
+                VStack(spacing: PeticleTheme.Spacing.md) {
+                    Text("You found me!")
+                        .font(.title.weight(.semibold))
+
+                    Image("Lindo Alfie")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: PeticleTheme.Radius.large, style: .continuous))
+
+                    Text("I'm not a bug, I'm a feature ✨")
+                        .font(.body)
+                }
                 .frame(maxWidth: .infinity)
-                .background(Color.accentColor)
-                .foregroundColor(.white)
-                .cornerRadius(12)
+            }
+
+            GlassPrimaryButton("Go Back") {
+                dismiss()
+            }
         }
-        .padding(.horizontal)
+        .padding(PeticleTheme.Spacing.lg)
     }
 }
-

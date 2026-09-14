@@ -29,17 +29,15 @@ struct DogWalkEntryView: View {
             }
         }
     }
-    
+
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-   
+
     @Query private var entries: [DogWalkEntry]
     @Bindable var dogWalkEntry: DogWalkEntry
     var mode: DogWalkEntryViewMode
 
     @State private var durationInMinute: String = ""
-
-    @State private var textEditorPadding: CGFloat = 0
 
     /// A binding to a user preference indicating whether they hide the Siri tip.
     @AppStorage("displayQualitySiriTip") private var displayQualitySiriTip: Bool = true
@@ -48,45 +46,46 @@ struct DogWalkEntryView: View {
         self.dogWalkEntry = dogWalkEntry
         self.mode = mode
     }
-    
+
     init(entry: DogWalkEntry, mode: DogWalkEntryViewMode = .edit) {
         // Create a temporary entry that will be replaced in onAppear
         self.dogWalkEntry = entry
         self.mode = mode
     }
-    
+
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    Picker("How will you rate the walk quality?",
-                           selection: $dogWalkEntry.walkQuality) {
-                        ForEach(WalkQuality.allCases) { rate in
-                            Text(rate.localizedName()).tag(rate)
-                        }
+            ScrollView {
+                VStack(alignment: .leading, spacing: PeticleTheme.Spacing.xl) {
+                    VStack(alignment: .leading, spacing: PeticleTheme.Spacing.sm) {
+                        Text("How will you rate the walk quality?")
+                            .font(.headline.weight(.semibold))
+                        WalkQualityPicker(selection: $dogWalkEntry.walkQuality)
                     }
-                }
-                .pickerStyle(.menu)
 
-                Section {
-                    HStack {
-                        TextField("time in minutes",
-                                  text: $durationInMinute)
-                        .font(.headline)
-                        #if os(iOS)
-                        .keyboardType(.numberPad)
-                        #endif
-                        
-                        Text("min")
+                    GlassSection("Duration") {
+                        HStack {
+                            TextField("time in minutes",
+                                      text: $durationInMinute)
+                            .font(.title3.weight(.semibold))
+                            #if os(iOS)
+                            .keyboardType(.numberPad)
+                            #endif
+
+                            Text("min")
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(PeticleTheme.Spacing.lg)
                     }
-                }
-                
-                #if os(iOS)
-                // SiriTipView: Shows the Siri phrase for updating walk quality
-                Section {
+
+                    #if os(iOS)
+                    // SiriTipView: Shows the Siri phrase for updating walk quality
                     SiriTipView(intent: UpdateWalkQualityIntent(), isVisible: $displayQualitySiriTip)
+                    #endif
                 }
-                #endif
+                .padding(.horizontal, PeticleTheme.Spacing.lg)
+                .padding(.vertical, PeticleTheme.Spacing.lg)
             }
             .navigationTitle(mode.navigationTitle())
             .onAppear {
@@ -111,8 +110,9 @@ struct DogWalkEntryView: View {
                 }
             }
         }
+        .presentationDetents([.medium, .large])
     }
-    
+
     @MainActor
     private func save() async {
         dogWalkEntry.durationInMinutes = Int(String(durationInMinute)) ?? 0
@@ -127,6 +127,6 @@ struct DogWalkEntryView: View {
             }
         }
         try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
-        
+
     }
 }

@@ -12,7 +12,7 @@ import AppIntents
 struct PeticleApp: App {
     let modelContainer = DataModel.shared.modelContainer
     let navigationManager: NavigationManager
-    
+
     init() {
         let navigationManager = NavigationManager()
         /// Registration and initialization of an app intent's
@@ -21,10 +21,11 @@ struct PeticleApp: App {
 
         self.navigationManager = navigationManager
     }
-    
+
     var body: some Scene {
         WindowGroup {
             DogWalkListView()
+                .tint(.peticleBrand)
         }
         .modelContainer(modelContainer)
         .environment(navigationManager)

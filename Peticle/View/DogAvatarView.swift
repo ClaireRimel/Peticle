@@ -1,0 +1,57 @@
+//
+//  DogAvatarView.swift
+//  Peticle
+//
+
+import SwiftUI
+
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+/// Round dog avatar. Falls back to a chocolate gradient with the dog's
+/// initial when no photo has been set yet.
+struct DogAvatarView: View {
+    let dog: Dog
+    var diameter: CGFloat = 56
+
+    var body: some View {
+        ZStack {
+            if let imageData = dog.imageData, let image = Image(imageData: imageData) {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                LinearGradient(
+                    colors: [.peticleChocolate, .peticleCaramel],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                Text(String(dog.name.prefix(1)).uppercased())
+                    .font(.title3.weight(.bold))
+                    .foregroundStyle(.white)
+            }
+        }
+        .frame(width: diameter, height: diameter)
+        .clipShape(Circle())
+        .overlay {
+            Circle().strokeBorder(.white.opacity(0.2), lineWidth: 1)
+        }
+        .accessibilityHidden(true)
+    }
+}
+
+extension Image {
+    /// Builds an image from raw photo data on any platform.
+    init?(imageData: Data) {
+        #if canImport(UIKit)
+        guard let uiImage = UIImage(data: imageData) else { return nil }
+        self.init(uiImage: uiImage)
+        #elseif canImport(AppKit)
+        guard let nsImage = NSImage(data: imageData) else { return nil }
+        self.init(nsImage: nsImage)
+        #endif
+    }
+}
