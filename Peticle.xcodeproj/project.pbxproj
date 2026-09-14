@@ -60,6 +60,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
+				DesignSystem/PeticleTheme.swift,
 				"Intents/App Intents/AddWalkIntent.swift",
 				"Intents/App Intents/DeleteWalkIntent.swift",
 				"Intents/App Intents/EditIntents.swift",

@@ -9,12 +9,6 @@ import AppIntents
 import SwiftUI
 import SwiftData
 
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
-
 struct ShowDogIntent: AppIntent {
     static var title: LocalizedStringResource = "Show Dog Information"
     static var description = IntentDescription("Display information about a specific dog or show all your dogs.")
@@ -31,11 +25,17 @@ struct ShowDogIntent: AppIntent {
     @MainActor
     func perform() async throws -> some ProvidesDialog & ShowsSnippetView {
         if let selectedDog = dog {
-            let imageData = selectedDog.imageData
             let dialog = IntentDialog("Here is \(selectedDog.name)")
             return .result(
                 dialog: dialog,
-                view: PictureView(imageData: imageData)
+                view: DogPortraitView(
+                    name: selectedDog.name,
+                    subtitle: "\(selectedDog.age) years old",
+                    imageData: selectedDog.imageData,
+                    diameter: 160
+                )
+                .frame(maxWidth: .infinity)
+                .padding()
             )
         } else {
             // Fetch dogs and extract data in the same ModelContext scope
@@ -68,7 +68,8 @@ private struct ShowCatView: View {
         Image("love cat")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .cornerRadius(10)
+            .clipShape(RoundedRectangle(cornerRadius: PeticleTheme.Radius.large, style: .continuous))
+            .padding()
     }
 }
 
@@ -76,47 +77,56 @@ private struct ShowDogsView: View {
     let dogs: [(name: String, imageData: Data?)]
 
     var body: some View {
-        HStack(spacing: 8) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: PeticleTheme.Spacing.md)],
+                  spacing: PeticleTheme.Spacing.lg) {
             ForEach(dogs, id: \.name) { dog in
-                PictureView(imageData: dog.imageData)
-                    .aspectRatio(contentMode: .fit)
+                DogPortraitView(name: dog.name, subtitle: nil, imageData: dog.imageData, diameter: 88)
             }
         }
-        .padding(.horizontal, 8)
+        .padding()
     }
 }
 
-private struct PictureView: View {
+/// Round portrait with the dog's name, like the avatars in the app.
+private struct DogPortraitView: View {
+    let name: String
+    let subtitle: String?
     let imageData: Data?
+    let diameter: CGFloat
 
     var body: some View {
-        if let imageData, let image = platformImage(from: imageData) {
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 120, height: 120)
-                .clipped()
-                .cornerRadius(10)
-        } else {
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 120, height: 120)
-                .overlay(
-                    Image(systemName: "camera")
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
-                )
-                .cornerRadius(10)
-        }
-    }
+        VStack(spacing: PeticleTheme.Spacing.sm) {
+            ZStack {
+                if let imageData, let image = Image(imageData: imageData) {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    LinearGradient(
+                        colors: [.peticleChocolate, .peticleCaramel],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    Text(String(name.prefix(1)).uppercased())
+                        .font(.system(size: diameter * 0.4, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+            }
+            .frame(width: diameter, height: diameter)
+            .clipShape(Circle())
+            .overlay {
+                Circle().strokeBorder(Color.peticleBrand.opacity(0.4), lineWidth: 2)
+            }
+            .accessibilityHidden(true)
 
-    private func platformImage(from data: Data) -> Image? {
-        #if canImport(UIKit)
-        guard let uiImage = UIImage(data: data) else { return nil }
-        return Image(uiImage: uiImage)
-        #elseif canImport(AppKit)
-        guard let nsImage = NSImage(data: data) else { return nil }
-        return Image(nsImage: nsImage)
-        #endif
+            Text(name)
+                .font(.headline)
+            if let subtitle {
+                Text(subtitle)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }

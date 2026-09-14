@@ -77,6 +77,69 @@ struct EditDurationThenQualityIntent: AppIntent {
     }
 }
 
+/// Control intent behind the quality buttons of the latest walk snippet.
+/// It only does the mutation and returns: the system then re-runs
+/// `LatestWalkSnippetIntent` and redraws the card in place.
+struct RateWalkIntent: AppIntent {
+    static var title: LocalizedStringResource = "Rate Walk"
+    static let isDiscoverable = false
+
+    @Parameter(title: "Walk")
+    var walkEntity: DogWalkEntryEntity
+
+    @Parameter(title: "Walk Quality")
+    var walkQuality: WalkQuality
+
+    init() {}
+
+    init(walkEntity: DogWalkEntryEntity, walkQuality: WalkQuality) {
+        self.walkEntity = walkEntity
+        self.walkQuality = walkQuality
+    }
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        // Read the stored entry so a duration changed from the same snippet isn't overwritten
+        guard let entry = try await DataModelHelper.dogWalkEntry(for: walkEntity.id) else {
+            throw IntentError.noEntity
+        }
+        _ = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: entry.dogWalkID,
+                                                                     durationInMinutes: entry.durationInMinutes,
+                                                                     walkQuality: walkQuality))
+        return .result()
+    }
+}
+
+/// Control intent behind the −1 / +1 min buttons of the latest walk snippet.
+struct AdjustWalkDurationIntent: AppIntent {
+    static var title: LocalizedStringResource = "Adjust Walk Duration"
+    static let isDiscoverable = false
+
+    @Parameter(title: "Walk")
+    var walkEntity: DogWalkEntryEntity
+
+    @Parameter(title: "Minutes to add")
+    var minutes: Int
+
+    init() {}
+
+    init(walkEntity: DogWalkEntryEntity, minutes: Int) {
+        self.walkEntity = walkEntity
+        self.minutes = minutes
+    }
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        guard let entry = try await DataModelHelper.dogWalkEntry(for: walkEntity.id) else {
+            throw IntentError.noEntity
+        }
+        _ = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: entry.dogWalkID,
+                                                                     durationInMinutes: max(0, entry.durationInMinutes + minutes),
+                                                                     walkQuality: entry.walkQuality))
+        return .result()
+    }
+}
+
 // MARK: - Focus Filter
 
 /// SetFocusFilterIntent: Adapts the app's behavior when a Focus mode activates.

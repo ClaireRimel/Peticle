@@ -48,8 +48,9 @@ struct ActiveWalkCard: View {
         let remainingMinutes = Int((Double(remainingSeconds) / 60).rounded(.up))
 
         return VStack(alignment: .leading, spacing: PeticleTheme.Spacing.xs) {
+            // Adaptive brand tint: deep chocolate disappears on the dark glass.
             ProgressView(value: stopwatch.progress)
-                .tint(.peticleChocolate)
+                .tint(.peticleBrand)
 
             HStack {
                 Text("Goal \(goalMinutes) min")

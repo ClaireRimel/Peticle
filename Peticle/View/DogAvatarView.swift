@@ -5,12 +5,6 @@
 
 import SwiftUI
 
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
-
 /// Round dog avatar. Falls back to a chocolate gradient with the dog's
 /// initial when no photo has been set yet.
 struct DogAvatarView: View {
@@ -40,18 +34,5 @@ struct DogAvatarView: View {
             Circle().strokeBorder(.white.opacity(0.2), lineWidth: 1)
         }
         .accessibilityHidden(true)
-    }
-}
-
-extension Image {
-    /// Builds an image from raw photo data on any platform.
-    init?(imageData: Data) {
-        #if canImport(UIKit)
-        guard let uiImage = UIImage(data: imageData) else { return nil }
-        self.init(uiImage: uiImage)
-        #elseif canImport(AppKit)
-        guard let nsImage = NSImage(data: imageData) else { return nil }
-        self.init(nsImage: nsImage)
-        #endif
     }
 }

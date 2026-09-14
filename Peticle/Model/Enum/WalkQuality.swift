@@ -16,22 +16,24 @@ enum WalkQuality: String, Codable, CaseIterable, Identifiable, AppEnum, Hashable
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Rate the walk quality")
 
     /// A mapping of each enum case to a localized display representation.
+    /// Images are the Habanera (light) / Alfie (dark) illustrations, so Siri and
+    /// Shortcuts show the same faces as the app.
     static var caseDisplayRepresentations: [WalkQuality: DisplayRepresentation] = [
         .ok: DisplayRepresentation(
             title: LocalizedStringResource("ok", table: "WalkQualityRates"),
-            image: .init(systemName: "moon.zzz.fill")
+            image: .init(named: "QualityOk")
         ),
         .bad: DisplayRepresentation(
             title: LocalizedStringResource("bad", table: "WalkQualityRates"),
-            image: .init(systemName:"cloud.bolt.rain.fill")
+            image: .init(named: "QualityBad")
         ),
         .good: DisplayRepresentation(
             title: LocalizedStringResource("good", table: "WalkQualityRates"),
-            image: .init(systemName: "sun.max.fill")
+            image: .init(named: "QualityGood")
         ),
         .wonderful: DisplayRepresentation(
             title: LocalizedStringResource("wonderful", table: "WalkQualityRates"),
-            image: .init(systemName: "rainbow")
+            image: .init(named: "QualityWonderful")
         )
     ]
 

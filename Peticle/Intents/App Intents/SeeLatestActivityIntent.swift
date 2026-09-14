@@ -25,51 +25,33 @@ struct SeeLatestActivityIntent: AppIntent {
     }
 }
 
+/// Static snippet: a one-time snapshot, no buttons.
 private struct LatestActivitySnippetView: View {
     let entry: DogWalkEntry
 
     var body: some View {
-        VStack(alignment: .center) {
-            EntryDateView(date: entry.entryDate)
-            DurationView(minutes: entry.durationInMinutes)
-            WeatherIconView(icon: entry.walkQuality.getWeatherIcon())
+        HStack(spacing: PeticleTheme.Spacing.lg) {
+            Image(entry.walkQuality.imageAssetName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 72, height: 72)
+                .clipShape(Circle())
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: PeticleTheme.Spacing.xs) {
+                Text(entry.entryDate.formatted(date: .long, time: .shortened))
+                    .font(.headline)
+                Label("\(entry.durationInMinutes) min", systemImage: "clock")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(entry.walkQuality.label)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Color.peticleBrand)
+            }
+
+            Spacer(minLength: 0)
         }
-        .padding(24)
-        .background(
-            .indigo.opacity(0.3),
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-        )
-    }
-}
-
-private struct EntryDateView: View {
-    let date: Date
-
-    var body: some View {
-        Text("\(date.formatted(date: .long, time: .omitted))")
-            .font(.system(size: 32))
-            .foregroundStyle(.white)
-    }
-}
-
-private struct DurationView: View {
-    let minutes: Int
-
-    var body: some View {
-        Text("\(minutes) mins")
-            .font(.system(size: 22))
-            .foregroundStyle(.white)
-    }
-}
-
-private struct WeatherIconView: View {
-    let icon: Image
-
-    var body: some View {
-        icon
-            .resizable()
-            .scaledToFill()
-            .frame(width: 32, height: 32)
-            .symbolRenderingMode(.multicolor)
+        .padding()
+        .accessibilityElement(children: .combine)
     }
 }

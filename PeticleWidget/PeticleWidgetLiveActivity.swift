@@ -8,155 +8,174 @@
 import ActivityKit
 import WidgetKit
 import SwiftUI
+import AppIntents
 
+/// Live Activity for an in-progress walk, styled after Habanera.
+/// Elapsed time and progress derive from `startDate` through
+/// `Text(_, style: .timer)` and `ProgressView(timerInterval:)`, so no
+/// content updates are needed while walking.
 struct PeticleWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: PeticleWidgetAttributes.self) { context in
-            let goalEnd = context.state.startDate.addingTimeInterval(Double(context.state.goalTime))
-
             // Lock screen / banner UI
-            HStack(spacing: 16) {
-                // Left: icon + label
-                VStack(spacing: 4) {
-                    Image(systemName: "dog.fill")
-                        .font(.title2)
-                        .foregroundStyle(.indigo)
-
-                    Text("Walk")
-                        .font(.caption2.weight(.medium))
-                        .foregroundStyle(.secondary)
-                }
-                .frame(width: 44)
-
-                // Center: timer + progress
-                VStack(spacing: 6) {
-                    Text(context.state.startDate, style: .timer)
-                        .font(.system(.title, design: .rounded, weight: .bold))
-                        .monospacedDigit()
-                        .foregroundStyle(.indigo)
-                        .contentTransition(.numericText())
-
-                    ProgressView(
-                        timerInterval: context.state.startDate...goalEnd,
-                        countsDown: false
-                    ) {
-                        // empty label
-                    }
-                    .tint(.indigo)
-                }
-
-                // Right: goal
-                VStack(spacing: 4) {
-                    Text("Goal")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    
-                    Text(formatTime(context.state.goalTime))
-                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.primary)
-                }
-                .frame(width: 50)
-            }
-            .padding()
-            .activityBackgroundTint(Color(.systemBackground))
-            .activitySystemActionForegroundColor(Color.primary)
+            LockScreenView(state: context.state)
 
         } dynamicIsland: { context in
-            let goalEnd = context.state.startDate.addingTimeInterval(Double(context.state.goalTime))
+            let state = context.state
 
             return DynamicIsland {
                 // MARK: - Expanded View
                 DynamicIslandExpandedRegion(.leading) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Image(systemName: "dog.fill")
-                            .font(.title2)
-                            .foregroundStyle(.indigo)
-
-                        Text("Dog Walk")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                    }
+                    Label("Walk", systemImage: "figure.walk.motion")
+                        .font(.caption)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Color.peticleCaramel)
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(alignment: .trailing, spacing: 4) {
-                        Text(context.state.startDate, style: .timer)
-                            .font(.system(.title2, design: .rounded, weight: .bold))
-                            .monospacedDigit()
-                            .foregroundStyle(.indigo)
-                            .contentTransition(.numericText())
+                    WalkFaceView(diameter: 32)
+                }
 
-                        Text("Goal: \(formatTime(context.state.goalTime))")
-                            .font(.caption)
+                DynamicIslandExpandedRegion(.center) {
+                    VStack(spacing: 2) {
+                        Text(state.startDate, style: .timer)
+                            .font(.title.weight(.semibold))
+                            .monospacedDigit()
+                            .multilineTextAlignment(.center)
+                            .lineLimit(1)
+                        Text(state.captionText)
+                            .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
-                    ProgressView(
-                        timerInterval: context.state.startDate...goalEnd,
-                        countsDown: false
-                    ) {
-                        // empty label
+                    VStack(spacing: PeticleTheme.Spacing.sm) {
+                        WalkProgressView(state: state)
+                        StopWalkButton()
                     }
-                    .tint(.indigo)
-                    .padding(.top, 4)
                 }
 
             } compactLeading: {
-                Image(systemName: "dog.fill")
-                    .foregroundStyle(.indigo)
+                WalkFaceView(diameter: 22)
 
             } compactTrailing: {
-                // Circular progress around the timer digits
-                ZStack {
-                    ProgressView(
-                        timerInterval: context.state.startDate...goalEnd,
-                        countsDown: false
-                    ) {
-                        // empty label
-                    }
-                    .progressViewStyle(.circular)
-                    .tint(.indigo)
-
-                    Text(context.state.startDate, style: .timer)
-                        .font(.system(size: 10, weight: .semibold))
+                if state.goalTime > 0 {
+                    WalkProgressView(state: state)
+                        .progressViewStyle(.circular)
+                } else {
+                    Text(state.startDate, style: .timer)
+                        .font(.caption2)
                         .monospacedDigit()
-                        .foregroundStyle(.indigo)
+                        .frame(maxWidth: 60)
                 }
-                .frame(width: 26, height: 26)
 
             } minimal: {
-                ZStack {
-                    ProgressView(
-                        timerInterval: context.state.startDate...goalEnd,
-                        countsDown: false
-                    ) {
-                        // empty label
-                    }
-                    .progressViewStyle(.circular)
-                    .tint(.indigo)
-
-                    Image(systemName: "dog.fill")
-                        .font(.system(size: 8))
-                        .foregroundStyle(.indigo)
+                if state.goalTime > 0 {
+                    WalkProgressView(state: state)
+                        .progressViewStyle(.circular)
+                } else {
+                    Image(systemName: "figure.walk.motion")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Color.peticleCaramel)
                 }
             }
             .widgetURL(URL(string: "peticle://dogwalk"))
-            .keylineTint(.indigo)
+            .keylineTint(Color.peticleCaramel)
         }
     }
+}
 
-    private func formatTime(_ seconds: Int) -> String {
-        let hours = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        let secs = seconds % 60
+// MARK: - Subviews
 
-        if hours > 0 {
-            return String(format: "%d:%02d:%02d", hours, minutes, secs)
-        } else {
-            return String(format: "%d:%02d", minutes, secs)
+private struct LockScreenView: View {
+    let state: PeticleWidgetAttributes.ContentState
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: PeticleTheme.Spacing.md) {
+            HStack(spacing: PeticleTheme.Spacing.md) {
+                WalkFaceView(diameter: 44)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Walk in progress")
+                        .font(.headline)
+                        .lineLimit(1)
+                    Text(state.captionText)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: PeticleTheme.Spacing.sm)
+
+                Text(state.startDate, style: .timer)
+                    .font(.title2.weight(.semibold))
+                    .monospacedDigit()
+                    .multilineTextAlignment(.trailing)
+                    .lineLimit(1)
+                    .frame(minWidth: 72, alignment: .trailing)
+            }
+
+            WalkProgressView(state: state)
+
+            // Stop without opening the app: StopDogWalkIntent is a LiveActivityIntent
+            StopWalkButton()
         }
+        .padding()
+        // Caramel tint, like Habanera: chocolate got lost in the wallpaper.
+        .activityBackgroundTint(Color.peticleCaramel.opacity(0.35))
+        .activitySystemActionForegroundColor(Color.peticleBrand)
+    }
+}
+
+/// Habanera's face in light mode, Alfie's in dark mode.
+private struct WalkFaceView: View {
+    let diameter: CGFloat
+
+    var body: some View {
+        Image("QualityGood")
+            .resizable()
+            .scaledToFit()
+            .frame(width: diameter, height: diameter)
+            .clipShape(Circle())
+            .accessibilityHidden(true)
+    }
+}
+
+private struct WalkProgressView: View {
+    let state: PeticleWidgetAttributes.ContentState
+
+    var body: some View {
+        if state.goalTime > 0 {
+            ProgressView(timerInterval: state.startDate...state.goalEndDate, countsDown: false) {
+                EmptyView()
+            } currentValueLabel: {
+                EmptyView()
+            }
+            .tint(Color.peticleCaramel)
+        }
+    }
+}
+
+private struct StopWalkButton: View {
+    var body: some View {
+        Button(intent: StopDogWalkIntent()) {
+            Label("Stop the walk", systemImage: "stop.fill")
+                .font(.subheadline.weight(.semibold))
+                .frame(maxWidth: .infinity)
+        }
+        .tint(Color.peticleChocolate)
+    }
+}
+
+private extension PeticleWidgetAttributes.ContentState {
+    var goalEndDate: Date {
+        startDate.addingTimeInterval(Double(goalTime))
+    }
+
+    var captionText: String {
+        guard goalTime > 0 else { return String(localized: "Walking") }
+        return String(localized: "Walking · goal \(goalTime / 60) min")
     }
 }
 
@@ -172,4 +191,16 @@ public extension PeticleWidgetAttributes.ContentState {
     static var preview: PeticleWidgetAttributes.ContentState {
         .init(startDate: .now.addingTimeInterval(-1800), goalTime: 3600, isActive: true)
     }
+}
+
+#Preview("Lock Screen", as: .content, using: PeticleWidgetAttributes.preview) {
+    PeticleWidgetLiveActivity()
+} contentStates: {
+    PeticleWidgetAttributes.ContentState.preview
+}
+
+#Preview("Dynamic Island", as: .dynamicIsland(.expanded), using: PeticleWidgetAttributes.preview) {
+    PeticleWidgetLiveActivity()
+} contentStates: {
+    PeticleWidgetAttributes.ContentState.preview
 }
