@@ -215,6 +215,21 @@
         }
       }
     },
+    "Take a dog photo in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Take a dog photo in ${applicationName}",
+              "Capture dog photo in ${applicationName}",
+              "Take a photo of my dog in ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Update walk quality in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {

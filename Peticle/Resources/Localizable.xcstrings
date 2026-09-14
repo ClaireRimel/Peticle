@@ -99,6 +99,12 @@
     "Capture a photo of your dog from the Camera quick action." : {
 
     },
+    "Check Daily Walk Goal" : {
+
+    },
+    "Check if you've reached your daily walk goal based on today's walks." : {
+
+    },
     "Choose the dogs to remove" : {
 
     },
@@ -253,6 +259,19 @@
     "Goal in Minutes" : {
 
     },
+    "Goal reached! You've walked %lld minutes today, that's %lld minutes over your %lld-minute goal." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Goal reached! You've walked %1$lld minutes today, that's %2$lld minutes over your %3$lld-minute goal."
+          }
+        }
+      }
+    },
+    "Goal reached! You've walked exactly %lld minutes today." : {
+
+    },
     "Here are all your dogs" : {
 
     },
@@ -354,6 +373,16 @@
     },
     "No last entry found" : {
 
+    },
+    "Not yet — you've walked %lld minutes out of %lld. %lld more minute%@ to go!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Not yet — you've walked %1$lld minutes out of %2$lld. %3$lld more minute%4$@ to go!"
+          }
+        }
+      }
     },
     "OK" : {
 
@@ -731,6 +760,9 @@
 
     },
     "You found me!" : {
+
+    },
+    "You haven't walked yet today. Your goal is %lld minutes — time to get moving!" : {
 
     },
     "Your activity was registered" : {

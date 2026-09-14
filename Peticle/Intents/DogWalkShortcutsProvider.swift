@@ -18,6 +18,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
      phrase text, as well as any app name synonyms declared in the `INAlternativeAppNames` key of the app's `Info.plist` file. These phrases are localized in a string catalog named `AppShortcuts.xcstrings`.
      */
     static var appShortcuts: [AppShortcut] {
+        #if os(iOS)
         AppShortcut(
             intent: StartDogWalkIntent(),
             phrases: [
@@ -46,6 +47,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Stop walk",
             systemImageName: "stop.circle.fill"
         )
+        #endif
 
         AppShortcut(
             intent: AddWalkIntent(),
@@ -146,11 +148,23 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             systemImageName: "target"
         )
 
+        #if os(iOS)
+        AppShortcut(
+            intent: TakeDogPhotoIntent(),
+            phrases: [
+                "Take a dog photo in \(.applicationName)",
+                "Capture dog photo in \(.applicationName)",
+                "Take a photo of my dog in \(.applicationName)"
+            ],
+            shortTitle: "Take Dog Photo",
+            systemImageName: "camera.fill"
+        )
+        #endif
 
     }
 
     // MARK: - Negative Phrases
-    
+
     /// NegativeAppShortcutPhrases: Phrases that should NOT trigger this app.
     /// This trains Siri to avoid false positives from similar-sounding commands.
     static var negativeShortcuts: [NegativeAppShortcutPhrases] {

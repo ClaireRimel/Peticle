@@ -73,24 +73,30 @@ struct DogWalkEntryView: View {
                         TextField("time in minutes",
                                   text: $durationInMinute)
                         .font(.headline)
+                        #if os(iOS)
                         .keyboardType(.numberPad)
+                        #endif
                         
                         Text("min")
                     }
                 }
                 
+                #if os(iOS)
                 // SiriTipView: Shows the Siri phrase for updating walk quality
                 Section {
                     SiriTipView(intent: UpdateWalkQualityIntent(), isVisible: $displayQualitySiriTip)
                 }
+                #endif
             }
             .navigationTitle(mode.navigationTitle())
             .onAppear {
                 durationInMinute = dogWalkEntry.durationInMinutes.description
             }
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button(mode.buttonTitle()) {
                         Task {
                             await save()
@@ -98,7 +104,7 @@ struct DogWalkEntryView: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()
                     }

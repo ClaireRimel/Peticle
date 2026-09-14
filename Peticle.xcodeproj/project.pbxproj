@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		7E5DF8702DD0B8400080618C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5DF86F2DD0B8400080618C /* WidgetKit.framework */; };
 		7E5DF8722DD0B8400080618C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5DF8712DD0B8400080618C /* SwiftUI.framework */; };
-		7E5DF8832DD0B8420080618C /* peticleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7E5DF8832DD0B8420080618C /* peticleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E5DF86D2DD0B8400080618C /* peticleWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7E5DF8932DD0BFDC0080618C /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8922DD0BFDC0080618C /* BitCollections */; };
 		7E5DF8952DD0BFDC0080618C /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8942DD0BFDC0080618C /* Collections */; };
 		7E5DF8972DD0BFDC0080618C /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5DF8962DD0BFDC0080618C /* DequeModule */; };
@@ -65,9 +65,12 @@
 				"Intents/App Intents/EditIntents.swift",
 				"Intents/App Intents/ManageLatestWalkEntryIntent.swift",
 				"Intents/App Intents/OpenEditEntryIntent.swift",
+				"Intents/App Intents/SearchWalksIntent.swift",
 				"Intents/App Intents/SeeLatestActivityIntent.swift",
+				"Intents/App Intents/SetDailyWalkGoalIntent.swift",
 				"Intents/App Intents/ShowDogIntent.swift",
 				"Intents/App Intents/StopwatchIntents.swift",
+				"Intents/App Intents/TakeDogPhotoIntent.swift",
 				"Intents/App Intents/UpdateWalkQualityIntent.swift",
 				Intents/DogWalkShortcutsProvider.swift,
 				Intents/Enums/IntentError.swift,
@@ -307,6 +310,7 @@
 /* Begin PBXTargetDependency section */
 		7E5DF8822DD0B8420080618C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 7E5DF86C2DD0B8400080618C /* peticleWidgetExtension */;
 			targetProxy = 7E5DF8812DD0B8420080618C /* PBXContainerItemProxy */;
 		};
@@ -470,13 +474,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Yo.Peticle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -518,13 +522,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Yo.Peticle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

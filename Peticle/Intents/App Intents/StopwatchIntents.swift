@@ -5,16 +5,16 @@
 //  Created by Claire on 20/05/2025.
 //
 
-
+#if os(iOS)
 import AppIntents
 
 struct StartDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Start a dog walk activity"
     static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
-    
+
     @Parameter(title: "Goal in minutes", requestValueDialog: "How many minutes would you like to walk?")
     var goalTime: Int
-    
+
     func perform() async -> some IntentResult {
         await StopwatchViewModel.shared.start(with: goalTime)
 
@@ -25,7 +25,7 @@ struct StartDogWalkIntent: LiveActivityIntent {
 struct StopDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Stop the current dog walk activity"
     static var description = IntentDescription("Stop the current walk and save the progress")
-    
+
     func perform() async -> some ProvidesDialog {
         do {
             try await StopwatchViewModel.shared.saveEntryAndStopActivity()
@@ -43,7 +43,8 @@ struct StopDogWalkIntent: LiveActivityIntent {
             } else {
                 return .result(dialog: "Something bad happened: \(error.localizedDescription)")
             }
-            
+
         }
     }
 }
+#endif

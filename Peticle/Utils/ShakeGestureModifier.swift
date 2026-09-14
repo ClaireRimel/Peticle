@@ -5,13 +5,14 @@
 //  Created by Claire on 07/09/2025.
 //
 
+#if os(iOS)
 import SwiftUI
 import UIKit
 
 // MARK: - Shake Gesture Detection
 struct ShakeGestureModifier: ViewModifier {
     let action: () -> Void
-    
+
     func body(content: Content) -> some View {
         content
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.deviceDidShakeNotification)) { _ in
@@ -38,7 +39,12 @@ extension UIWindow {
         }
     }
 }
+#else
+import SwiftUI
 
-
-
-
+extension View {
+    func onShake(perform action: @escaping () -> Void) -> some View {
+        self
+    }
+}
+#endif

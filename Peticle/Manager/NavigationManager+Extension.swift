@@ -12,6 +12,7 @@ extension NavigationManager {
         modifyEntry = try await DataModelHelper.dogWalkEntry(for: id)
     }
 
+  
     func openLastDogWalk() async throws {
         guard let latestEntry = try await DataModelHelper.lastDogEntry() else {
             return

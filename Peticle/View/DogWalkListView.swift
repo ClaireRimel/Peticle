@@ -148,7 +148,9 @@ struct FilteredDogWalkListView: View {
                          App Shortcut so that people learn they can view their favorite trails quickly by speaking the phrase to Siri with no
                          additional setup. The `isVisible` parameter is optional, but recommended to enable people to hide the view.
                          */
+                        #if os(iOS)
                         SiriTipView(intent: StartDogWalkIntent(), isVisible: $displaySiriTip)
+                        #endif
                     }
                 }
             }

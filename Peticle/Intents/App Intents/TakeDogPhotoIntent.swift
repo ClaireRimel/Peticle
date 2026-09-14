@@ -5,6 +5,7 @@
 //  Created by Claire on 28/02/2026.
 //
 
+#if os(iOS)
 import AppIntents
 import Foundation
 
@@ -32,7 +33,7 @@ struct TakeDogPhotoIntent: CameraCaptureIntent {
         }
     }
 
-    static var openAppWhenRun: Bool = true
+    static let supportedModes: IntentModes = [.foreground(.immediate)]
 
     @MainActor
     func perform() async throws -> some IntentResult {
@@ -58,3 +59,4 @@ struct DogPhotoContext: Codable, Sendable {
         self.timestamp = .now
     }
 }
+#endif

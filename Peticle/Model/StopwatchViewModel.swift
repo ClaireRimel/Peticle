@@ -9,7 +9,10 @@ import Foundation
 import WidgetKit
 import UserNotifications
 import CoreSpotlight
+
+#if os(iOS)
 import ActivityKit
+#endif
 
 @MainActor
 @Observable
@@ -22,7 +25,10 @@ final class StopwatchViewModel {
     private var midGoalInSeconds: Int = 0
     private var timer: Timer?
     private var startDate: Date?
+
+    #if os(iOS)
     private var currentActivity: Activity<PeticleWidgetAttributes>?
+    #endif
 
     // MARK: - Persistence Keys
     private enum Keys {
@@ -76,10 +82,12 @@ final class StopwatchViewModel {
         let elapsed = Int(Date.now.timeIntervalSince(savedStartDate))
         timeElapsed = elapsed
 
+        #if os(iOS)
         // Reconnect to existing Live Activity if any
         if let existing = Activity<PeticleWidgetAttributes>.activities.first {
             currentActivity = existing
         }
+        #endif
 
         // If goal not yet reached, resume the timer
         if elapsed < goalInSeconds {
@@ -90,6 +98,7 @@ final class StopwatchViewModel {
 
     // MARK: - Live Activity Management
 
+    #if os(iOS)
     func isLiveActivityAvailable() -> Bool {
         return ActivityAuthorizationInfo().areActivitiesEnabled
     }
@@ -97,7 +106,7 @@ final class StopwatchViewModel {
     private func endOrphanedActivities() {
         let orphans = Activity<PeticleWidgetAttributes>.activities
         guard !orphans.isEmpty else { return }
-        
+
         Task {
             for activity in orphans {
                 let contentState = PeticleWidgetAttributes.ContentState(
@@ -190,6 +199,13 @@ final class StopwatchViewModel {
             print("\u{2705} Live Activity ended")
         }
     }
+    #else
+    func isLiveActivityAvailable() -> Bool { false }
+    private func endOrphanedActivities() {}
+    private func startLiveActivity() {}
+    private func updateLiveActivity() {}
+    private func endLiveActivity() {}
+    #endif
 
     // MARK: - Notification Permission
     private func requestNotificationPermission() {
@@ -221,7 +237,7 @@ final class StopwatchViewModel {
                 timeElapsed = 0
             }
         }
-        
+
         // End any orphaned Live Activities from previous sessions
         endOrphanedActivities()
 

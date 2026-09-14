@@ -5,6 +5,7 @@
 //  Created by Claire on 11/05/2025.
 //
 
+#if os(iOS)
 import Foundation
 import ActivityKit
 
@@ -21,3 +22,4 @@ public struct PeticleWidgetAttributes: ActivityAttributes {
         self.walkName = walkName
     }
 }
+#endif
