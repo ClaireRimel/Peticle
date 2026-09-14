@@ -79,6 +79,8 @@ struct DogWalkEntryView: View {
                         .padding(PeticleTheme.Spacing.lg)
                     }
 
+                    WalkNotesSection(walkID: dogWalkEntry.dogWalkID)
+
                     #if os(iOS)
                     // SiriTipView: Shows the Siri phrase for updating walk quality
                     SiriTipView(intent: UpdateWalkQualityIntent(), isVisible: $displayQualitySiriTip)

@@ -1,13 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " " : {
+
+    },
     "%@" : {
 
     },
     "%lld min" : {
 
     },
-    "%lld mins" : {
+    "%lld min remaining" : {
+
+    },
+    "%lld walks today, well done!" : {
+
+    },
+    "+%lld" : {
 
     },
     "Add" : {
@@ -27,10 +36,19 @@
         }
       }
     },
+    "Add 1 minute" : {
+
+    },
+    "Add a dog" : {
+
+    },
     "Add a New Dog" : {
 
     },
     "Add a new dog to your pet collection." : {
+
+    },
+    "Add a walk" : {
 
     },
     "Add Activity" : {
@@ -71,6 +89,9 @@
         }
       }
     },
+    "Adjust Walk Duration" : {
+
+    },
     "Age" : {
 
     },
@@ -78,6 +99,9 @@
 
     },
     "Alfie's Chronicle" : {
+
+    },
+    "Bad" : {
 
     },
     "Cancel" : {
@@ -123,10 +147,10 @@
     "Date Selection" : {
 
     },
-    "Delete walk" : {
+    "Delete" : {
 
     },
-    "Delete Walk" : {
+    "Delete walk" : {
 
     },
     "Display information about a specific dog or show all your dogs." : {
@@ -229,9 +253,6 @@
     "Edit the walk quality of an existing dog walk entry." : {
 
     },
-    "Edit Walk" : {
-
-    },
     "Edit Walk Duration" : {
 
     },
@@ -239,6 +260,9 @@
 
     },
     "Edit Walk Quality" : {
+
+    },
+    "First walk of the day done ✓" : {
 
     },
     "Focus filter active — showing today only" : {
@@ -253,10 +277,16 @@
     "Go Back" : {
 
     },
+    "Goal %lld min" : {
+
+    },
     "Goal in minutes" : {
 
     },
     "Goal in Minutes" : {
+
+    },
+    "Goal reached 🎉" : {
 
     },
     "Goal reached! You've walked %lld minutes today, that's %lld minutes over your %lld-minute goal." : {
@@ -272,10 +302,28 @@
     "Goal reached! You've walked exactly %lld minutes today." : {
 
     },
+    "Goal: %lld'" : {
+
+    },
+    "Good" : {
+
+    },
+    "Good evening %@" : {
+
+    },
+    "Good morning %@" : {
+
+    },
     "Here are all your dogs" : {
 
     },
     "Here is %@" : {
+
+    },
+    "Here is your latest walk. How did it go?" : {
+
+    },
+    "Hi %@" : {
 
     },
     "How many minutes would you like to walk?" : {
@@ -322,6 +370,9 @@
     "Last Walk Entry" : {
 
     },
+    "Latest Walk Snippet" : {
+
+    },
     "Log a %lld-minute walk" : {
 
     },
@@ -335,6 +386,12 @@
 
     },
     "min" : {
+
+    },
+    "Minutes to add" : {
+
+    },
+    "More" : {
 
     },
     "New Dog Walk Entry" : {
@@ -374,6 +431,18 @@
     "No last entry found" : {
 
     },
+    "No results" : {
+
+    },
+    "No walk today yet!" : {
+
+    },
+    "No walk yet. Just say it to Siri!" : {
+
+    },
+    "Not too late for one last walk." : {
+
+    },
     "Not yet — you've walked %lld minutes out of %lld. %lld more minute%@ to go!" : {
       "localizations" : {
         "en" : {
@@ -383,6 +452,9 @@
           }
         }
       }
+    },
+    "Notes" : {
+
     },
     "OK" : {
 
@@ -396,7 +468,7 @@
     "Open the app to edit the selected dog walk entry." : {
 
     },
-    "Photo" : {
+    "Pinned" : {
 
     },
     "quality" : {
@@ -428,10 +500,16 @@
     "Rate the walk quality" : {
 
     },
+    "Rate Walk" : {
+
+    },
     "Register manually a new dog walk with interaction" : {
 
     },
     "Remove ${entities}" : {
+
+    },
+    "Remove 1 minute" : {
 
     },
     "Remove a dog from your pet collection." : {
@@ -506,6 +584,9 @@
     "Start a dog walk activity" : {
 
     },
+    "Start a walk" : {
+
+    },
     "Start an activity" : {
       "localizations" : {
         "en" : {
@@ -529,6 +610,9 @@
 
     },
     "Stop the current walk and save the progress" : {
+
+    },
+    "Stop the walk" : {
 
     },
     "Stop walk" : {
@@ -614,6 +698,12 @@
         }
       }
     },
+    "Total time" : {
+
+    },
+    "Try another date." : {
+
+    },
     "Unable to analyze your walking history. Please try again later." : {
 
     },
@@ -642,6 +732,9 @@
     "Update walk quality for last activity" : {
 
     },
+    "Waiting for the morning walk." : {
+
+    },
     "walk" : {
 
     },
@@ -667,6 +760,9 @@
           }
         }
       }
+    },
+    "Walk in progress" : {
+
     },
     "Walk Quality" : {
       "comment" : "The updated quality of the walk",
@@ -734,6 +830,9 @@
     "Walks" : {
 
     },
+    "Walks today" : {
+
+    },
     "WHAT?! No Walk Today!!!" : {
       "localizations" : {
         "en" : {
@@ -754,6 +853,9 @@
 
     },
     "Which walk would you like to rate?" : {
+
+    },
+    "Wonderful" : {
 
     },
     "You don't have any dogs registered yet. Are you a cat lover?" : {

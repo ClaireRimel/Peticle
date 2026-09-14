@@ -9,7 +9,8 @@ import AppIntents
 
 /// ShowInAppSearchResultsIntent: Opens the app and navigates to search results for dog walks.
 /// The system understands this is a search action and can route search queries to this intent.
-@AppIntent(schema: .system.search)
+/// `.system.searchInApp` (iOS 27) replaces the deprecated `.system.search`, same shape.
+@AppIntent(schema: .system.searchInApp)
 struct SearchWalksIntent: ShowInAppSearchResultsIntent {
     static var title: LocalizedStringResource = "Search Dog Walks"
     static var description = IntentDescription(

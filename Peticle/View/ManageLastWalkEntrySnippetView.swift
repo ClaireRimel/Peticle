@@ -33,10 +33,6 @@ struct ManageLastWalkEntrySnippetView: View {
                 .transition(.scale(scale: 0.6).combined(with: .opacity))
                 .accessibilityHidden(true)
 
-            Text(walkEntity.date, format: .dateTime.hour().minute())
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
             durationStepper(for: walkEntity)
 
             // Quality buttons: each tap runs RateWalkIntent, then the snippet redraws.

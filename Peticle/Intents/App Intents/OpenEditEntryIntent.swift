@@ -9,6 +9,8 @@ import AppIntents
 
 /// URLRepresentableIntent: Makes this intent shareable as a deep link URL.
 /// Combined with URLRepresentableEntity on DogWalkEntryEntity, walk entries can be opened via URLs.
+/// `.system.open` (iOS 27): Siri and Apple Intelligence understand "open my walk" without any phrase.
+@AppIntent(schema: .system.open)
 struct OpenEditEntryIntent: OpenIntent, URLRepresentableIntent {
     typealias Value = DogWalkEntryEntity
 

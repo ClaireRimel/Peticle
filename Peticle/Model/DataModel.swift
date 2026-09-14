@@ -15,7 +15,7 @@ final class DataModel: Sendable {
 
     private init() {
         do {
-            modelContainer = try ModelContainer(for: DogWalkEntry.self, Dog.self)
+            modelContainer = try ModelContainer(for: DogWalkEntry.self, Dog.self, WalkNote.self)
         } catch {
             fatalError("Failed to create the model container: \(error)")
         }
