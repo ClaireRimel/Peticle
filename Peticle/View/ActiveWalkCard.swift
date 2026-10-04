@@ -18,9 +18,13 @@ struct ActiveWalkCard: View {
         GlassCard {
             VStack(alignment: .leading, spacing: PeticleTheme.Spacing.md) {
                 HStack(spacing: PeticleTheme.Spacing.sm) {
-                    Image(systemName: "figure.walk.motion")
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(.tint)
+                    // Happy while walking, wonderful once the goal is reached.
+                    // Habanera in light mode, Alfie in dark.
+                    Image((stopwatch.isGoalReached ? WalkQuality.wonderful : .good).imageAssetName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
                         .accessibilityHidden(true)
                     Text("Walk in progress")
                         .font(.headline.weight(.semibold))
@@ -39,35 +43,42 @@ struct ActiveWalkCard: View {
                     .padding(.top, PeticleTheme.Spacing.xs)
             }
         }
-        .sensoryFeedback(.success, trigger: stopwatch.progress >= 1)
+        .sensoryFeedback(.success, trigger: stopwatch.isGoalReached)
     }
 
     private var progressBlock: some View {
         let goalMinutes = stopwatch.goalInMinutes
-        let remainingSeconds = max(0, goalMinutes * 60 - stopwatch.timeElapsed)
-        let remainingMinutes = Int((Double(remainingSeconds) / 60).rounded(.up))
+        // Brand while walking towards the goal, green once it's reached.
+        let tint = stopwatch.isGoalReached ? Color.green : Color.peticleBrand
 
         return VStack(alignment: .leading, spacing: PeticleTheme.Spacing.xs) {
-            // Adaptive brand tint: deep chocolate disappears on the dark glass.
             ProgressView(value: stopwatch.progress)
-                .tint(.peticleBrand)
+                .tint(tint)
 
             HStack {
                 Text("Goal \(goalMinutes) min")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
-                if stopwatch.progress >= 1 {
-                    Text("Goal reached 🎉")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(Color.peticleBrand)
-                } else {
-                    Text("\(remainingMinutes) min remaining")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .numericContentTransition()
+                // No "remaining" label: the timer and the goal already say it.
+                // Past the goal, the overtime is new information.
+                Group {
+                    if !stopwatch.isGoalReached {
+                        EmptyView()
+                    } else if stopwatch.overtimeMinutes == 0 {
+                        Text("Goal reached 🎉")
+                            .fontWeight(.semibold)
+                            .foregroundStyle(tint)
+                    } else {
+                        Text("+\(stopwatch.overtimeMinutes) min")
+                            .fontWeight(.semibold)
+                            .foregroundStyle(tint)
+                    }
                 }
+                .font(.caption)
+                .numericContentTransition()
             }
         }
+        .animation(.default, value: stopwatch.isGoalReached)
     }
 }

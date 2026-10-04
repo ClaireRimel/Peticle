@@ -13,27 +13,22 @@ import AppIntents
 /// Live Activity for an in-progress walk, styled after Habanera.
 /// Elapsed time and progress derive from `startDate` through
 /// `Text(_, style: .timer)` and `ProgressView(timerInterval:)`, so no
-/// content updates are needed while walking.
+/// content updates are needed while walking. The content goes stale when
+/// the goal is reached, which re-renders it in green with the overtime.
 struct PeticleWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: PeticleWidgetAttributes.self) { context in
             // Lock screen / banner UI
-            LockScreenView(state: context.state)
+            LockScreenView(state: context.state, isGoalReached: context.isGoalReached)
 
         } dynamicIsland: { context in
             let state = context.state
+            let isGoalReached = context.isGoalReached
 
             return DynamicIsland {
                 // MARK: - Expanded View
-                DynamicIslandExpandedRegion(.leading) {
-                    Label("Walk", systemImage: "figure.walk.motion")
-                        .font(.caption)
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(Color.peticleCaramel)
-                }
-
                 DynamicIslandExpandedRegion(.trailing) {
-                    WalkFaceView(diameter: 32)
+                    WalkFaceView(diameter: 32, isGoalReached: isGoalReached)
                 }
 
                 DynamicIslandExpandedRegion(.center) {
@@ -50,18 +45,19 @@ struct PeticleWidgetLiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
+                    // Kept minimal so the Stop button fits in the island.
                     VStack(spacing: PeticleTheme.Spacing.sm) {
-                        WalkProgressView(state: state)
+                        WalkProgressView(state: state, isGoalReached: isGoalReached)
                         StopWalkButton()
                     }
                 }
 
             } compactLeading: {
-                WalkFaceView(diameter: 22)
+                WalkFaceView(diameter: 22, isGoalReached: isGoalReached)
 
             } compactTrailing: {
                 if state.goalTime > 0 {
-                    WalkProgressView(state: state)
+                    WalkProgressView(state: state, isGoalReached: isGoalReached)
                         .progressViewStyle(.circular)
                 } else {
                     Text(state.startDate, style: .timer)
@@ -72,7 +68,7 @@ struct PeticleWidgetLiveActivity: Widget {
 
             } minimal: {
                 if state.goalTime > 0 {
-                    WalkProgressView(state: state)
+                    WalkProgressView(state: state, isGoalReached: isGoalReached)
                         .progressViewStyle(.circular)
                 } else {
                     Image(systemName: "figure.walk.motion")
@@ -90,11 +86,12 @@ struct PeticleWidgetLiveActivity: Widget {
 
 private struct LockScreenView: View {
     let state: PeticleWidgetAttributes.ContentState
+    let isGoalReached: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: PeticleTheme.Spacing.md) {
             HStack(spacing: PeticleTheme.Spacing.md) {
-                WalkFaceView(diameter: 44)
+                WalkFaceView(diameter: 44, isGoalReached: isGoalReached)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Walk in progress")
@@ -116,7 +113,10 @@ private struct LockScreenView: View {
                     .frame(minWidth: 72, alignment: .trailing)
             }
 
-            WalkProgressView(state: state)
+            VStack(alignment: .trailing, spacing: PeticleTheme.Spacing.xs) {
+                WalkProgressView(state: state, isGoalReached: isGoalReached)
+                GoalStatusText(state: state, isGoalReached: isGoalReached)
+            }
 
             // Stop without opening the app: StopDogWalkIntent is a LiveActivityIntent
             StopWalkButton()
@@ -128,12 +128,14 @@ private struct LockScreenView: View {
     }
 }
 
-/// Habanera's face in light mode, Alfie's in dark mode.
+/// Habanera's face in light mode, Alfie's in dark mode:
+/// happy while walking, wonderful once the goal is reached.
 private struct WalkFaceView: View {
     let diameter: CGFloat
+    let isGoalReached: Bool
 
     var body: some View {
-        Image("QualityGood")
+        Image((isGoalReached ? WalkQuality.wonderful : .good).imageAssetName)
             .resizable()
             .scaledToFit()
             .frame(width: diameter, height: diameter)
@@ -144,6 +146,7 @@ private struct WalkFaceView: View {
 
 private struct WalkProgressView: View {
     let state: PeticleWidgetAttributes.ContentState
+    let isGoalReached: Bool
 
     var body: some View {
         if state.goalTime > 0 {
@@ -152,7 +155,27 @@ private struct WalkProgressView: View {
             } currentValueLabel: {
                 EmptyView()
             }
-            .tint(Color.peticleCaramel)
+            // Caramel while walking towards the goal, green once it's reached.
+            .tint(isGoalReached ? Color.green : Color.peticleCaramel)
+        }
+    }
+}
+
+/// The time walked past the goal. Nothing before it: the timer and the
+/// goal in the caption already tell how much is left.
+private struct GoalStatusText: View {
+    let state: PeticleWidgetAttributes.ContentState
+    let isGoalReached: Bool
+
+    var body: some View {
+        if state.goalTime > 0, isGoalReached {
+            // Counts up from the goal: the walk keeps going past it.
+            Text("+\(Text(timerInterval: state.goalEndDate...Date.distantFuture, countsDown: false))")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.green)
+                .monospacedDigit()
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 }
@@ -163,8 +186,20 @@ private struct StopWalkButton: View {
             Label("Stop the walk", systemImage: "stop.fill")
                 .font(.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity)
+                .foregroundStyle(Color.peticleOnBrand)
         }
-        .tint(Color.peticleChocolate)
+        // Filled like the app's button: the default style came out see-through.
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
+        .tint(Color.peticleBrand)
+    }
+}
+
+private extension ActivityViewContext<PeticleWidgetAttributes> {
+    /// The activity goes stale at the goal; the date check covers renders
+    /// that happen before the system flags it.
+    var isGoalReached: Bool {
+        state.goalTime > 0 && (isStale || Date.now >= state.goalEndDate)
     }
 }
 

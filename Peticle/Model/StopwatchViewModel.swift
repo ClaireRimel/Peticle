@@ -89,11 +89,9 @@ final class StopwatchViewModel {
         }
         #endif
 
-        // If goal not yet reached, resume the timer
-        if elapsed < goalInSeconds {
-            isRunning = true
-            startTimer()
-        }
+        // The walk keeps going past the goal, so always resume
+        isRunning = true
+        startTimer()
     }
 
     // MARK: - Live Activity Management
@@ -146,7 +144,7 @@ final class StopwatchViewModel {
         do {
             currentActivity = try Activity.request(
                 attributes: attributes,
-                content: .init(state: contentState, staleDate: nil),
+                content: .init(state: contentState, staleDate: goalEndDate),
                 pushType: nil
             )
             print("\u{2705} Live Activity started successfully")
@@ -166,7 +164,7 @@ final class StopwatchViewModel {
 
         Task {
             await activity.update(
-                ActivityContent(state: contentState, staleDate: nil)
+                ActivityContent(state: contentState, staleDate: goalEndDate)
             )
         }
     }
@@ -270,14 +268,6 @@ final class StopwatchViewModel {
     private func updateTimer() {
         guard isRunning else { return }
         timeElapsed += 1
-
-        if timeElapsed >= goalInSeconds {
-            do {
-                try saveEntryAndStopActivity()
-            } catch {
-                stop()
-            }
-        }
     }
 
     private func reset() {
@@ -295,11 +285,13 @@ final class StopwatchViewModel {
         reset()
 
         Self.sharedDefaults?.set(false, forKey: "isWalking")
-        donateEditQualityIntent()
         WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
     }
 
-    func saveEntryAndStopActivity() throws {
+    /// Saves the walk and stops everything. Returns the saved walk, or nil
+    /// when it was too short to keep (under a minute).
+    @discardableResult
+    func saveEntryAndStopActivity() throws -> DogWalkEntry? {
         // Use persisted startDate as source of truth (survives app kill)
         let walkStartDate: Date
         if let saved = UserDefaults.standard.object(forKey: Keys.startDate) as? Date {
@@ -323,12 +315,13 @@ final class StopwatchViewModel {
 
         guard minutesPassed > 0 else {
             stop()
-            return
+            return nil
         }
 
-        _ = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
-                                         walkQuality: .ok)
+        let entry = try DataModelHelper.newEntry(durationInMinutes: minutesPassed,
+                                                 walkQuality: .ok)
         stop()
+        return entry
     }
 
     func pause() {
@@ -384,20 +377,6 @@ final class StopwatchViewModel {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["midGoal", "goalCompletion"])
     }
 
-    private func donateEditQualityIntent() {
-        Task {
-            do {
-                if let lastEntry = try await DataModelHelper.lastDogEntry()?.entity {
-                    let intent = EditWalkQualityIntent()
-                    intent.walkEntity = lastEntry
-                    try await intent.donate()
-                }
-            } catch {
-                print("Failed to donate intent: \(error)")
-            }
-        }
-    }
-
     // MARK: - Public Properties
     var formattedTime: String {
         let hours = timeElapsed / 3600
@@ -413,6 +392,21 @@ final class StopwatchViewModel {
 
     var goalInMinutes: Int {
         goalInSeconds / 60
+    }
+
+    var isGoalReached: Bool {
+        goalInSeconds > 0 && timeElapsed >= goalInSeconds
+    }
+
+    /// Whole minutes walked past the goal.
+    var overtimeMinutes: Int {
+        max(0, timeElapsed - goalInSeconds) / 60
+    }
+
+    /// When the goal is reached. The Live Activity goes stale then, which
+    /// re-renders it in its "goal reached" state without the app running.
+    private var goalEndDate: Date? {
+        startDate?.addingTimeInterval(Double(goalInSeconds))
     }
 
     var progress: Double {
