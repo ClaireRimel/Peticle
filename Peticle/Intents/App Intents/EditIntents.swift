@@ -30,33 +30,12 @@ struct EditDurationIntent: AppIntent {
     }
 }
 
-struct EditWalkQualityIntent: AppIntent {
-    static var title: LocalizedStringResource = "Edit Walk Quality"
-    static var description = IntentDescription("Edit the walk quality of an existing dog walk entry.")
-
-    @Parameter(title: "Walk", description: "The specific walk entry to update")
-    var walkEntity: DogWalkEntryEntity
-    
-    @Parameter(title: LocalizedStringResource("Walk Quality", comment: "The updated quality of the walk"), description: "The quality rating for how the walk went")
-    var walkQuality: WalkQuality
-    
-    @MainActor
-    func perform() async throws -> some ProvidesDialog & ReturnsValue<DogWalkEntryEntity> {
-        if let entry = try await DataModelHelper.modify(entryWalk: DogWalkEntry(dogWalkID: walkEntity.id,
-                                                                                durationInMinutes: walkEntity.durationInMinutes,
-                                                                                walkQuality: walkQuality)) {
-            
-            return .result(value: entry.entity, dialog: "The walk quality has been updated to \(walkQuality.localizedName()).")
-            
-        } else {
-            throw IntentError.noEntity
-        }
-    }
-}
-
 struct EditDurationThenQualityIntent: AppIntent {
     static var title: LocalizedStringResource = "Edit walk duration then the quality"
     static var description = IntentDescription("Edit the duration then the quality of an existing dog walk entry.")
+    /// Overlaps UpdateWalkQualityIntent and asks for a duration: hidden so
+    /// Siri doesn't pick it for "update walk quality".
+    static let isDiscoverable = false
 
     @Parameter(title: "Walk", description: "The specific walk entry to update")
     var walkEntity: DogWalkEntryEntity

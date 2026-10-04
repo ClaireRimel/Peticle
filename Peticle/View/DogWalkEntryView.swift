@@ -127,6 +127,12 @@ struct DogWalkEntryView: View {
             } catch {
                 print("❌ \(error.localizedDescription)")
             }
+            // A real UI action: rating a walk by hand. Siri already knows
+            // what people do through Siri and Shortcuts, so only UI
+            // interactions are donated.
+            let donation = UpdateWalkQualityIntent(walk: dogWalkEntry.entity)
+            donation.walkQuality = dogWalkEntry.walkQuality
+            try? await donation.donate()
         }
         try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
 

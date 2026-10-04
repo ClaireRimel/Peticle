@@ -61,6 +61,7 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				DesignSystem/PeticleTheme.swift,
+				"Intents/App Intents/AddDogIntent.swift",
 				"Intents/App Intents/AddWalkIntent.swift",
 				"Intents/App Intents/DeleteWalkIntent.swift",
 				"Intents/App Intents/EditIntents.swift",
@@ -87,7 +88,10 @@
 				Model/DogWalkEntryEntity.swift,
 				Model/DogWalkLiveActivityAttributes.swift,
 				Model/Enum/DateSelection.swift,
+				Model/Enum/DogOrWalk.swift,
 				Model/Enum/WalkQuality.swift,
+				Model/Species.swift,
+				Model/SpeciesEntity.swift,
 				Model/StopwatchViewModel.swift,
 				Model/WalkNote.swift,
 				Resources/AppShortcuts.xcstrings,

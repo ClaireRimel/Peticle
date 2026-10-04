@@ -10,28 +10,36 @@ import AppIntents
 struct UpdateWalkQualityIntent: AppIntent {
     static var title: LocalizedStringResource = LocalizedStringResource("Update Walk Quality")
     static var description = IntentDescription(
-        "Update the quality rating for your most recent walk from today or yesterday."
+        "Rate, update or change how an existing walk went (its quality), for today's or yesterday's walk. Doesn't create a walk."
     )
 
     @Parameter(title: "Walk")
     var dogWalkEntryEntity: DogWalkEntryEntity?
 
-    @Parameter(title: "Date", description: "Choose which date to update the walk quality for")
-    var dateSelection: DateSelection?
+    /// A real date (date only, no time): any day in Shortcuts, and Siri AI
+    /// can fill "yesterday" or "last Monday". No today/yesterday enum: App
+    /// Shortcut phrases can't carry a Date, so this one has no day phrase.
+    @Parameter(title: "Day", description: "The day of the walk to rate", kind: .date)
+    var day: Date?
 
     @Parameter(title: "Walk Quality", description: "The quality rating for how the walk went")
     var walkQuality: WalkQuality?
 
     init() {}
 
+    /// Rates a known walk, e.g. the one StopAndRateWalkIntent just saved.
+    init(walk: DogWalkEntryEntity) {
+        self.dogWalkEntryEntity = walk
+    }
+
     @MainActor
     func perform() async throws -> some ProvidesDialog {
-        if let dateSelection {
-            let dateText = dateSelection == .today ? "today" : "yesterday"
-            let allWalks = try await DataModelHelper.allWalks(for: dateSelection)
+        if let day {
+            let dateText = day.formatted(date: .abbreviated, time: .omitted)
+            let allWalks = try await DataModelHelper.walks(on: day)
 
             guard !allWalks.isEmpty else {
-                return .result(dialog: "There's no walk \(dateText) 😱😱😱")
+                return .result(dialog: "There's no walk on \(dateText) 😱😱😱")
             }
 
             let walk: DogWalkEntry
@@ -46,7 +54,7 @@ struct UpdateWalkQualityIntent: AppIntent {
 
                 guard let dogWalkEntryEntity,
                       let walkEntry = try await DataModelHelper.dogWalkEntry(for: dogWalkEntryEntity.id) else {
-                    return .result(dialog: "There's no walk \(dateText) 😱😱😱")
+                    return .result(dialog: "There's no walk on \(dateText) 😱😱😱")
                 }
 
                 walk = walkEntry
@@ -59,7 +67,7 @@ struct UpdateWalkQualityIntent: AppIntent {
             try await update(walk, with: walkQuality)
 
             return .result(
-                dialog: "Walk quality updated to \(walkQuality.localizedName()) for your \(dateText) walk."
+                dialog: "Walk quality updated to \(walkQuality.localizedName()) for your walk of \(dateText)."
             )
         } else {
             if dogWalkEntryEntity == nil {

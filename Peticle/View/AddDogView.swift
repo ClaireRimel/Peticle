@@ -8,11 +8,15 @@
 import SwiftUI
 import PhotosUI
 import AppIntents
+import SwiftData
 
 struct AddDogView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var dogName: String = ""
     @State private var dogAge: Int = 0
+    @State private var speciesID: UUID?
+    @State private var showingNewSpecies = false
+    @Query(sort: \Species.name) private var allSpecies: [Species]
     @State private var selectedImage: PhotosPickerItem?
     @State private var selectedImageData: Data?
     @State private var showingAlert = false
@@ -41,6 +45,27 @@ struct AddDogView: View {
                                     .font(.body)
                             }
                             .padding(PeticleTheme.Spacing.lg)
+
+                            Divider()
+                                .padding(.leading, PeticleTheme.Spacing.lg)
+
+                            Picker("Species", selection: $speciesID) {
+                                Text("None").tag(UUID?.none)
+                                ForEach(allSpecies) { species in
+                                    Label(species.name, systemImage: species.symbolName)
+                                        .tag(UUID?.some(species.speciesID))
+                                }
+                            }
+                            .padding(PeticleTheme.Spacing.lg)
+
+                            Divider()
+                                .padding(.leading, PeticleTheme.Spacing.lg)
+
+                            Button("New species…", systemImage: "plus.circle") {
+                                showingNewSpecies = true
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(PeticleTheme.Spacing.lg)
                         }
                     }
 
@@ -68,6 +93,11 @@ struct AddDogView: View {
                         saveDog()
                     }
                     .disabled(dogName.isEmpty)
+                }
+            }
+            .sheet(isPresented: $showingNewSpecies) {
+                AddSpeciesSheet { created in
+                    speciesID = created.id
                 }
             }
             .alert("Add Dog", isPresented: $showingAlert) {
@@ -129,7 +159,8 @@ struct AddDogView: View {
             _ = try DataModelHelper.addDog(
                 name: dogName,
                 imageData: selectedImageData,
-                age: dogAge
+                age: dogAge,
+                speciesID: speciesID
             )
             alertMessage = "Successfully added \(dogName) to your pet collection!"
             showingAlert = true

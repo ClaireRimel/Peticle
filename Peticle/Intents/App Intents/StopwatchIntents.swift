@@ -12,11 +12,34 @@ struct StartDogWalkIntent: LiveActivityIntent {
     static var title: LocalizedStringResource = "Start a dog walk activity"
     static var description = IntentDescription("Set your goal, and a notification will pop up when it's time to go back")
 
-    @Parameter(title: "Goal in minutes", requestValueDialog: "How many minutes would you like to walk?")
-    var goalTime: Int
+    /// A Swift `Duration` (App Intents, iOS 26+): a time span with a native
+    /// duration picker, and Siri understands "half an hour".
+    /// SetDailyWalkGoalIntent still uses Measurement<UnitDuration>, to compare.
+    @Parameter(
+        title: "Goal",
+        defaultUnit: .minutes,
+        requestValueDialog: "How long would you like to walk?"
+    )
+    var goal: Duration
 
     func perform() async -> some IntentResult {
-        await StopwatchViewModel.shared.start(with: goalTime)
+        let minutes = Int((Double(goal.components.seconds) / 60).rounded())
+        await StopwatchViewModel.shared.start(with: minutes)
+
+        return .result()
+    }
+}
+
+/// Widget version of Start: a widget button can't ask for the goal, so this
+/// one uses the daily goal. It runs in the app (LiveActivityIntent), where
+/// the daily goal is stored.
+struct StartDogWalkWithDailyGoalIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Start a dog walk with the daily goal"
+    static var description = IntentDescription("Start a walk using your daily walk goal")
+    static let isDiscoverable = false
+
+    func perform() async -> some IntentResult {
+        await StopwatchViewModel.shared.start(with: StopwatchViewModel.defaultGoalInMinutes)
 
         return .result()
     }
@@ -45,6 +68,27 @@ struct StopDogWalkIntent: LiveActivityIntent {
             }
 
         }
+    }
+}
+
+/// Stops the walk, then chains into rating it. The plain Stop intent
+/// doesn't chain: only this one returns `OpensIntent`, so the follow-up
+/// happens only when people ask for it.
+struct StopAndRateWalkIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "Stop and rate the current dog walk"
+    static var description = IntentDescription("Stop the current walk, save it, then rate how it went")
+
+    func perform() async throws -> some ProvidesDialog & OpensIntent {
+        guard let walk = try await StopwatchViewModel.shared.saveEntryAndStopActivity() else {
+            throw IntentError.message("The walk was too short to be saved")
+        }
+
+        // The system runs the returned intent next: it asks for the quality
+        // of the walk that was just saved.
+        return .result(
+            opensIntent: UpdateWalkQualityIntent(walk: walk.entity),
+            dialog: "Your walk was registered"
+        )
     }
 }
 #endif

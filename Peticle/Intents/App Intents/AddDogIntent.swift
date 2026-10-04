@@ -9,39 +9,64 @@ import AppIntents
 import CoreSpotlight
 
 struct AddDogIntent: AppIntent {
-    static var title: LocalizedStringResource = "Add a New Dog"
-    static var description = IntentDescription("Add a new dog to your pet collection.")
-    static var suggestedInvocationPhrase: String? = "Add a dog to my pets"
+    static var title: LocalizedStringResource = "Add a Pet"
+    static var description = IntentDescription("Add a new animal to your pets, with an existing species or a new one and its symbol.")
+    static var suggestedInvocationPhrase: String? = "Add a pet"
 
-    @Parameter(title: "Dog Name", description: "The name of your dog")
+    @Parameter(title: "Name", description: "The name of your animal")
     var name: String
-    
-    @Parameter(title: "Age", description: "The age of your dog in years")
+
+    @Parameter(title: "Age", description: "The age of your animal in years")
     var age: Int
 
-    static var isDiscoverable: Bool = false
+    /// An existing species, created by the user: an AppEntity, so it can be
+    /// said in a phrase ("Add a cat in Peticle").
+    @Parameter(title: "Species", description: "An existing species, like Dog")
+    var species: SpeciesEntity?
+
+    /// To create a species on the fly, with its symbol.
+    @Parameter(title: "New Species", description: "The name of a new species, like Cat")
+    var newSpeciesName: String?
+
+    /// A fixed list: an AppEnum, shown with icons in Shortcuts.
+    @Parameter(title: "Symbol", description: "The symbol of the new species")
+    var newSpeciesSymbol: SpeciesSymbol?
 
     init() {}
 
     @MainActor
     func perform() async throws -> some ReturnsValue<DogEntity> & ProvidesDialog {
-        do {
-            let dog = try DataModelHelper.addDog(name: name, imageData: nil, age: age)
-            
-            // Index the new dog for Spotlight search
-            try? await CSSearchableIndex.default().indexAppEntities([dog.entity])
-            
-            let dialog = IntentDialog("Successfully added \(name) to your pet collection!")
-            
-            return .result(value: dog.entity, dialog: dialog)
-            
-        } catch {
-            
-            throw IntentError.message("Failed to add dog: \(error.localizedDescription)")
+        let chosenSpecies = try await resolveSpecies()
+        let dog = try DataModelHelper.addDog(name: name, imageData: nil, age: age, speciesID: chosenSpecies.id)
+
+        // Index the new animal for Spotlight search
+        try? await CSSearchableIndex.default().indexAppEntities([dog.entity])
+
+        return .result(
+            value: dog.entity,
+            dialog: "\(name) the \(chosenSpecies.name.lowercased()) joined your pets!"
+        )
+    }
+
+    /// Existing species first; else create the new one (asking for its
+    /// symbol if missing); else ask which species.
+    @MainActor
+    private func resolveSpecies() async throws -> SpeciesEntity {
+        if let species {
+            return species
         }
+        if let newSpeciesName, !newSpeciesName.trimmingCharacters(in: .whitespaces).isEmpty {
+            let symbol: SpeciesSymbol
+            if let newSpeciesSymbol {
+                symbol = newSpeciesSymbol
+            } else {
+                symbol = try await $newSpeciesSymbol.requestValue("Which symbol for \(newSpeciesName)?")
+            }
+            return try DataModelHelper.createSpecies(name: newSpeciesName, symbol: symbol)
+        }
+        return try await $species.requestValue("Which species is \(name)?")
     }
 }
-
 
 struct RemoveDogIntent: DeleteIntent {
     static var title: LocalizedStringResource = "Remove dog"

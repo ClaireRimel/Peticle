@@ -54,6 +54,7 @@ struct DogEntity: IndexedEntity, Identifiable {
 
     @Property var name: String
     @Property var age: Int
+    @Property(title: "Species") var species: SpeciesEntity?
     var imageData: Data?
 
     init(_ dog: Dog) {
@@ -62,6 +63,7 @@ struct DogEntity: IndexedEntity, Identifiable {
         imageData = dog.imageData
         name = dog.name
         age = dog.age
+        species = dog.species.map(SpeciesEntity.init)
     }
 }
 

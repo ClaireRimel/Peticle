@@ -1,22 +1,51 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     " " : {
 
     },
     "%@" : {
 
     },
-    "%lld min" : {
+    "%@ is now a %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ is now a %2$@."
+          }
+        }
+      }
+    },
+    "%@ the %@ joined your pets!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ the %2$@ joined your pets!"
+          }
+        }
+      }
+    },
+    "%@s" : {
 
     },
-    "%lld min remaining" : {
+    "%lld min" : {
 
     },
     "%lld walks today, well done!" : {
 
     },
+    "%lld years old" : {
+
+    },
     "+%lld" : {
+
+    },
+    "+%lld min" : {
 
     },
     "Add" : {
@@ -39,17 +68,18 @@
     "Add 1 minute" : {
 
     },
-    "Add a dog" : {
+    "Add a new animal to your pets, with an existing species or a new one and its symbol." : {
 
     },
-    "Add a New Dog" : {
-
-    },
-    "Add a new dog to your pet collection." : {
-
-    },
-    "Add a walk" : {
-
+    "Add a Pet" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un animal"
+          }
+        }
+      }
     },
     "Add Activity" : {
       "localizations" : {
@@ -101,8 +131,24 @@
     "Alfie's Chronicle" : {
 
     },
+    "An existing species, like Dog" : {
+
+    },
+    "Animal" : {
+
+    },
     "Bad" : {
 
+    },
+    "Bird" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oiseau"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -123,6 +169,16 @@
     "Capture a photo of your dog from the Camera quick action." : {
 
     },
+    "Cat" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat"
+          }
+        }
+      }
+    },
     "Check Daily Walk Goal" : {
 
     },
@@ -132,13 +188,13 @@
     "Choose the dogs to remove" : {
 
     },
-    "Choose which date to update the walk quality for" : {
+    "Clears the search" : {
 
     },
     "Configure the app's behavior during your dog walking Focus." : {
 
     },
-    "Date" : {
+    "Create a new dog walk that wasn't tracked, with its duration. Not for rating or changing an existing walk: use Update Walk Quality for that." : {
 
     },
     "Date of the walk" : {
@@ -147,19 +203,25 @@
     "Date Selection" : {
 
     },
+    "Day" : {
+
+    },
     "Delete" : {
 
     },
     "Delete walk" : {
 
     },
-    "Display information about a specific dog or show all your dogs." : {
+    "Delete walk note" : {
 
     },
-    "display the last activity" : {
+    "Display one of your animals, optionally of one species. Without an animal, asks which one." : {
 
     },
-    "Display your most recent dog walk entry, and choose to delete it or open it in the app to make changes." : {
+    "Display the last walk, or the last walk of a given day" : {
+
+    },
+    "Display your latest dog walk, then rate, adjust or delete it right from the card." : {
 
     },
     "dog" : {
@@ -172,6 +234,9 @@
 
     },
     "Dog Name" : {
+
+    },
+    "Dog or walk" : {
 
     },
     "Dog walk" : {
@@ -224,7 +289,7 @@
     "Edit a Dog Walk Entry" : {
 
     },
-    "Edit activity" : {
+    "Edit date" : {
 
     },
     "Edit dog walk Entry" : {
@@ -250,20 +315,24 @@
     "Edit the duration then the quality of an existing dog walk entry." : {
 
     },
-    "Edit the walk quality of an existing dog walk entry." : {
-
-    },
     "Edit Walk Duration" : {
 
     },
     "Edit walk duration then the quality" : {
 
     },
-    "Edit Walk Quality" : {
-
-    },
     "First walk of the day done ✓" : {
 
+    },
+    "Fish" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poisson"
+          }
+        }
+      }
     },
     "Focus filter active — showing today only" : {
 
@@ -274,16 +343,16 @@
     "Get the last activity" : {
 
     },
+    "Give the same quality to several walks at once, e.g. the ones found by Find Dog Walks." : {
+
+    },
     "Go Back" : {
 
     },
+    "Goal" : {
+
+    },
     "Goal %lld min" : {
-
-    },
-    "Goal in minutes" : {
-
-    },
-    "Goal in Minutes" : {
 
     },
     "Goal reached 🎉" : {
@@ -302,9 +371,6 @@
     "Goal reached! You've walked exactly %lld minutes today." : {
 
     },
-    "Goal: %lld'" : {
-
-    },
     "Good" : {
 
     },
@@ -314,19 +380,22 @@
     "Good morning %@" : {
 
     },
-    "Here are all your dogs" : {
-
-    },
     "Here is %@" : {
 
     },
-    "Here is your latest walk. How did it go?" : {
+    "Here is %@." : {
+
+    },
+    "Here is your walk." : {
+
+    },
+    "Here is your walk. How did it go?" : {
 
     },
     "Hi %@" : {
 
     },
-    "How many minutes would you like to walk?" : {
+    "How long would you like to walk?" : {
 
     },
     "How many walks have you done today?" : {
@@ -373,6 +442,16 @@
     "Latest Walk Snippet" : {
 
     },
+    "Lizard" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lézard"
+          }
+        }
+      }
+    },
     "Log a %lld-minute walk" : {
 
     },
@@ -391,7 +470,17 @@
     "Minutes to add" : {
 
     },
-    "More" : {
+    "Name" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom"
+          }
+        }
+      }
+    },
+    "Name, like Cat" : {
 
     },
     "New Dog Walk Entry" : {
@@ -407,6 +496,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nouvelle entrée de promenade"
+          }
+        }
+      }
+    },
+    "New Species" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle espèce"
+          }
+        }
+      }
+    },
+    "New species…" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle espèce…"
           }
         }
       }
@@ -434,10 +543,16 @@
     "No results" : {
 
     },
-    "No walk today yet!" : {
+    "No walk on %@" : {
+
+    },
+    "No walk yet!" : {
 
     },
     "No walk yet. Just say it to Siri!" : {
+
+    },
+    "None" : {
 
     },
     "Not too late for one last walk." : {
@@ -459,6 +574,9 @@
     "OK" : {
 
     },
+    "Only show animals of this species" : {
+
+    },
     "Open Secret View" : {
 
     },
@@ -466,6 +584,19 @@
 
     },
     "Open the app to edit the selected dog walk entry." : {
+
+    },
+    "Other" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autre"
+          }
+        }
+      }
+    },
+    "Photo %lld" : {
 
     },
     "Pinned" : {
@@ -477,7 +608,20 @@
     "Quality: %@" : {
 
     },
-    "Quickly register a new dog walk with a given duration." : {
+    "Rabbit" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lapin"
+          }
+        }
+      }
+    },
+    "Rate ${walks} as ${walkQuality}" : {
+
+    },
+    "Rate Several Walks" : {
 
     },
     "Rate the interaction" : {
@@ -503,6 +647,19 @@
     "Rate Walk" : {
 
     },
+    "Rate, update or change how an existing walk went (its quality), for today's or yesterday's walk. Doesn't create a walk." : {
+
+    },
+    "Rated %lld walk%@ as %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Rated %1$lld walk%2$@ as %3$@."
+          }
+        }
+      }
+    },
     "Register manually a new dog walk with interaction" : {
 
     },
@@ -521,6 +678,12 @@
     "Remove dog" : {
 
     },
+    "Remove notes attached to your walks." : {
+
+    },
+    "Results for “%@”" : {
+
+    },
     "Return the last activity" : {
 
     },
@@ -530,31 +693,47 @@
     "Save" : {
 
     },
-    "Search Dog Walks" : {
+    "Search for dog walks matching specific criteria." : {
 
     },
-    "Search for dog walks matching specific criteria." : {
+    "Search Peticle" : {
 
     },
     "Search term" : {
 
     },
-    "Search your dog walk history and show matching results in the app." : {
+    "Search your dogs and your walk history, and show matching results in the app." : {
 
     },
     "Select Photo" : {
 
     },
+    "Set ${dog} as ${sex}" : {
+
+    },
+    "Set ${dog} as ${species}" : {
+
+    },
     "Set Daily Walk Goal" : {
 
     },
-    "Set daily walk goal to ${value} minutes" : {
+    "Set daily walk goal to ${value}" : {
 
     },
-    "Set Walk Goal" : {
+    "Set Species" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Définir l'espèce"
+          }
+        }
+      }
+    },
+    "Set the species of one of your animals." : {
 
     },
-    "Set your daily walk goal in minutes. This becomes the default goal when you start a new walk." : {
+    "Set your daily walk goal. This becomes the default goal when you start a new walk." : {
 
     },
     "Set your goal, and a notification will pop up when it's time to go back" : {
@@ -563,10 +742,19 @@
     "Should I walk my dog today based on our history?" : {
 
     },
+    "Show ${item.type}: ${item.value}" : {
+
+    },
+    "Show a Dog or a Walk" : {
+
+    },
     "Show Dog Information" : {
 
     },
     "Show Dogs" : {
+
+    },
+    "Show one of your dogs, or one of your walks, from a single parameter." : {
 
     },
     "Show only today's walks" : {
@@ -575,16 +763,32 @@
     "Show the last activity" : {
 
     },
+    "Show the last walk of ${day}" : {
+
+    },
     "Something bad happened: %@" : {
 
     },
     "Something bad happened: Entity No Found" : {
 
     },
+    "Species" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espèce"
+          }
+        }
+      }
+    },
     "Start a dog walk activity" : {
 
     },
-    "Start a walk" : {
+    "Start a dog walk with the daily goal" : {
+
+    },
+    "Start a walk using your daily walk goal" : {
 
     },
     "Start an activity" : {
@@ -606,10 +810,19 @@
     "Start walking" : {
 
     },
+    "Stop and rate" : {
+
+    },
+    "Stop and rate the current dog walk" : {
+
+    },
     "Stop the current dog walk activity" : {
 
     },
     "Stop the current walk and save the progress" : {
+
+    },
+    "Stop the current walk, save it, then rate how it went" : {
 
     },
     "Stop the walk" : {
@@ -637,10 +850,26 @@
     "Successfully removed %@ from your pet collection." : {
 
     },
+    "Symbol" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbole"
+          }
+        }
+      }
+    },
     "Take Dog Photo" : {
 
     },
-    "The age of your dog in years" : {
+    "The age of your animal in years" : {
+
+    },
+    "The day of the walk to rate" : {
+
+    },
+    "The day of the walk to show. Leave empty for the latest walk." : {
 
     },
     "The dog to show information for" : {
@@ -652,7 +881,10 @@
     "The duration has been updated to %lld minutes" : {
 
     },
-    "The name of your dog" : {
+    "The name of a new species, like Cat" : {
+
+    },
+    "The name of your animal" : {
 
     },
     "The number of minutes you want to log" : {
@@ -667,16 +899,19 @@
     "The specific walk to update" : {
 
     },
+    "The symbol of the new species" : {
+
+    },
     "The updated duration of the walk" : {
 
     },
     "The walk entries to delete" : {
 
     },
-    "The walk quality has been updated to %@." : {
+    "The walk notes to delete" : {
 
     },
-    "There's no walk %@ 😱😱😱" : {
+    "There's no walk on %@ 😱😱😱" : {
 
     },
     "Time Ago" : {
@@ -698,16 +933,20 @@
         }
       }
     },
-    "Total time" : {
-
-    },
     "Try another date." : {
 
     },
-    "Unable to analyze your walking history. Please try again later." : {
-
+    "Turtle" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tortue"
+          }
+        }
+      }
     },
-    "Update the quality rating for your most recent walk from today or yesterday." : {
+    "Unable to analyze your walking history. Please try again later." : {
 
     },
     "Update the walk quality of the last activity" : {
@@ -739,6 +978,12 @@
 
     },
     "Walk" : {
+
+    },
+    "Walk · %lld min" : {
+
+    },
+    "Walk date" : {
 
     },
     "Walk duration and quality updated successfully" : {
@@ -817,12 +1062,12 @@
     "Walk quality updated to %@" : {
 
     },
-    "Walk quality updated to %@ for your %@ walk." : {
+    "Walk quality updated to %@ for your walk of %@." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Walk quality updated to %1$@ for your %2$@ walk."
+            "value" : "Walk quality updated to %1$@ for your walk of %2$@."
           }
         }
       }
@@ -830,10 +1075,8 @@
     "Walks" : {
 
     },
-    "Walks today" : {
-
-    },
     "WHAT?! No Walk Today!!!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -849,6 +1092,18 @@
         }
       }
     },
+    "WHAT?! No Walk Yet!!!" : {
+
+    },
+    "Which dog would you like to see?" : {
+
+    },
+    "Which species is %@?" : {
+
+    },
+    "Which symbol for %@?" : {
+
+    },
     "Which value would you like to apply?" : {
 
     },
@@ -856,6 +1111,9 @@
 
     },
     "Wonderful" : {
+
+    },
+    "You don't have any %@ yet." : {
 
     },
     "You don't have any dogs registered yet. Are you a cat lover?" : {
@@ -870,6 +1128,9 @@
     "Your activity was registered" : {
 
     },
+    "Your daily walk goal" : {
+
+    },
     "Your daily walk goal has been set to %lld minute%@." : {
       "localizations" : {
         "en" : {
@@ -880,7 +1141,7 @@
         }
       }
     },
-    "Your daily walk goal in minutes" : {
+    "Your walk was registered" : {
 
     }
   },

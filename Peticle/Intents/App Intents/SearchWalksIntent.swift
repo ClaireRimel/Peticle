@@ -12,9 +12,11 @@ import AppIntents
 /// `.system.searchInApp` (iOS 27) replaces the deprecated `.system.search`, same shape.
 @AppIntent(schema: .system.searchInApp)
 struct SearchWalksIntent: ShowInAppSearchResultsIntent {
-    static var title: LocalizedStringResource = "Search Dog Walks"
+    // The type name stays (saved shortcuts depend on it); only the wording
+    // changes, now that the search covers dogs too.
+    static var title: LocalizedStringResource = "Search Peticle"
     static var description = IntentDescription(
-        "Search your dog walk history and show matching results in the app."
+        "Search your dogs and your walk history, and show matching results in the app."
     )
 
     static var searchScopes: [StringSearchScope] = [.general]

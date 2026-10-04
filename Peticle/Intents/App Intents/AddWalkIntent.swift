@@ -13,7 +13,11 @@ import CoreSpotlight
 /// After each walk is donated, the system learns when the user typically walks and suggests it at the right time.
 struct AddWalkIntent: AppIntent, PredictableIntent {
     static var title: LocalizedStringResource = "Log a Quick Dog Walk"
-    static var description = IntentDescription("Quickly register a new dog walk with a given duration.")
+    // Siri reads titles and descriptions to pick an intent: say clearly that
+    // this one creates a NEW walk, so "update walk quality" goes elsewhere.
+    static var description = IntentDescription(
+        "Create a new dog walk that wasn't tracked, with its duration. Not for rating or changing an existing walk: use Update Walk Quality for that."
+    )
     
     @Parameter(
         title: "Duration",
@@ -52,8 +56,6 @@ struct AddWalkIntent: AppIntent, PredictableIntent {
     func perform() async throws -> some ProvidesDialog {
         let entry = try DataModelHelper.newEntry(durationInMinutes: duration,
                                          walkQuality: walkQuality)
-
-        try? await CSSearchableIndex.default().indexAppEntities([entry.entity])
 
         return .result(dialog: "Added a new walk of \(duration) minute\(duration == 1 ? "" : "s").")
     }

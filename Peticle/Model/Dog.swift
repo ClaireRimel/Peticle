@@ -15,6 +15,9 @@ final class Dog: Identifiable {
     var imageData: Data?
     var age: Int
     var addedDate: Date
+    /// Optional so existing dogs migrate automatically; seeded to "Dog" at
+    /// launch, chosen when adding an animal, or set with SetDogSpeciesIntent.
+    var species: Species?
 
     init(
         dogID: UUID = UUID(),
@@ -36,6 +39,3 @@ extension Dog {
         DogEntity(self)
     }
 }
-
-
-

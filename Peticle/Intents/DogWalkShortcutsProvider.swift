@@ -8,7 +8,6 @@
 import AppIntents
 
 struct DogWalkShortcutsProvider: AppShortcutsProvider {
-    /// The color the system uses to display the App Shortcuts in the Shortcuts app. This is currently unused.
 
     /**
      This sample app contains several examples of different intents, but only the intents this array describes make sense as App Shortcuts.
@@ -47,6 +46,18 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             shortTitle: "Stop walk",
             systemImageName: "stop.circle.fill"
         )
+
+        AppShortcut(
+            intent: StopAndRateWalkIntent(),
+            phrases: [
+                "Stop and rate my walk in \(.applicationName)",
+                "Stop and update my walk in \(.applicationName)",
+                "End and rate my walk in \(.applicationName)",
+                "Finish my walk and rate it in \(.applicationName)"
+            ],
+            shortTitle: "Stop and rate",
+            systemImageName: "star.circle.fill"
+        )
         #endif
 
         AppShortcut(
@@ -54,11 +65,7 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
             phrases: [
                 "Add an activity in \(.applicationName)",
                 "Log a walk in \(.applicationName)",
-                "Record a walk in \(.applicationName)",
-                "Add walk entry in \(.applicationName)",
-                "Log walk activity in \(.applicationName)",
-                "Record walk session in \(.applicationName)",
-                "Add walk record in \(.applicationName)"
+                "Record a walk in \(.applicationName)"
             ],
             shortTitle: "Add Activity",
             systemImageName: "figure.walk"
@@ -71,28 +78,10 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Rate my walk in \(.applicationName)",
                 "Update walk rating in \(.applicationName)",
                 "Change walk quality in \(.applicationName)",
-                "Rate walk quality in \(.applicationName)",
-                "Update walk quality for \(\.$dateSelection) in \(.applicationName)",
-                "Rate my \(\.$dateSelection) walk in \(.applicationName)",
-                "Update \(\.$dateSelection) walk quality in \(.applicationName)",
-                "Change \(\.$dateSelection) walk rating in \(.applicationName)"
+                "Rate walk quality in \(.applicationName)"
             ],
             shortTitle: "Update Walk Quality",
             systemImageName: "arrow.trianglehead.2.clockwise.rotate.90"
-        )
-
-        AppShortcut(
-            intent: SeeLatestActivityIntent(),
-            phrases: [
-                "Show me the last activity in \(.applicationName)",
-                "Show my last walk in \(.applicationName)",
-                "What was my last walk in \(.applicationName)",
-                "Show recent activity in \(.applicationName)",
-                "Display last walk in \(.applicationName)",
-                "Show me my latest walk in \(.applicationName)"
-            ],
-            shortTitle: "Show the last activity",
-            systemImageName: "eye"
         )
 
         AppShortcut(
@@ -104,21 +93,11 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "Manage walk records in \(.applicationName)",
                 "View walk management in \(.applicationName)",
                 "Manage walk data in \(.applicationName)",
-                "Manage walk history in \(.applicationName)"
+                "Manage walk history in \(.applicationName)",
+                "Show me my latest walk in \(.applicationName)"
             ],
             shortTitle: "Manage last walks",
             systemImageName: "magnifyingglass")
-
-        AppShortcut(
-            intent: OpenEditEntryIntent(),
-            phrases: [
-                "Open walk in \(.applicationName)",
-                "Change walk details in \(.applicationName)",
-                "Edit walk entry in \(.applicationName)",
-            ],
-            shortTitle: "Edit activity",
-            systemImageName: "pencil.circle"
-        )
 
         AppShortcut(
             intent: ShowDogIntent(),
@@ -131,36 +110,34 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "View my dogs in \(.applicationName)",
                 "Show \(\.$dog) in \(.applicationName)",
                 "Display \(\.$dog) in \(.applicationName)",
-                "Show information about \(\.$dog) in \(.applicationName)"
+                "Show information about \(\.$dog) in \(.applicationName)",
+                "Show a dog in \(.applicationName)",
+                "Show my \(\.$species) in \(.applicationName)",
+                "Show a \(\.$species) in \(.applicationName)"
             ],
             shortTitle: "Show Dogs",
             systemImageName: "dog.fill"
         )
 
+        // Species are user data (AppEntity): "Add a cat" works once the
+        // system knows the species, via updateAppShortcutParameters().
         AppShortcut(
-            intent: SetDailyWalkGoalIntent(),
+            intent: AddDogIntent(),
             phrases: [
-                "Set walk goal in \(.applicationName)",
-                "Set daily walk goal in \(.applicationName)",
-                "Change walk goal in \(.applicationName)"
+                "Add a pet in \(.applicationName)",
+                "Add a new pet in \(.applicationName)",
+                "Add a \(\.$species) in \(.applicationName)",
+                "Add a new \(\.$species) in \(.applicationName)"
             ],
-            shortTitle: "Set Walk Goal",
-            systemImageName: "target"
+            shortTitle: "Add a Pet",
+            systemImageName: "pawprint.fill"
         )
 
-        #if os(iOS)
-        AppShortcut(
-            intent: TakeDogPhotoIntent(),
-            phrases: [
-                "Take a dog photo in \(.applicationName)",
-                "Capture dog photo in \(.applicationName)",
-                "Take a photo of my dog in \(.applicationName)"
-            ],
-            shortTitle: "Take Dog Photo",
-            systemImageName: "camera.fill"
-        )
-        #endif
-
+        // No App Shortcut for SeeLatestActivityIntent (merged into Manage),
+        // TakeDogPhotoIntent,
+        // SetDailyWalkGoalIntent and OpenEditEntryIntent: they stay available
+        // in the Shortcuts app, and OpenEditEntryIntent is reached through
+        // its `.system.open` schema.
     }
 
     // MARK: - Negative Phrases
@@ -179,7 +156,10 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
         ]
     }
 
+    /// Fallback for surfaces that don't read the Info.plist colours
+    /// (`ShortcutTint` / `ShortcutAccent`). Closest match to the
+    /// chocolate / caramel palette in Apple's fixed enum.
     static var shortcutTileColor: ShortcutTileColor {
-        .grayGreen
+        .grayBrown
     }
 }

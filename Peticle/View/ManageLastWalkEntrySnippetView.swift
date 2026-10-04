@@ -115,7 +115,7 @@ struct ManageLastWalkEntrySnippetView: View {
                 .frame(maxHeight: 160)
                 .clipShape(RoundedRectangle(cornerRadius: PeticleTheme.Radius.large, style: .continuous))
                 .accessibilityHidden(true)
-            Text("WHAT?! No Walk Today!!!")
+            Text("WHAT?! No Walk Yet!!!")
                 .font(.title3.weight(.bold))
         }
         .frame(maxWidth: .infinity)

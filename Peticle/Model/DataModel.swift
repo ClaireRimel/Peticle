@@ -8,16 +8,49 @@
 import Foundation
 import SwiftData
 import WidgetKit
+import CoreSpotlight
 
 final class DataModel: Sendable {
     static let shared = DataModel()
+    static let appGroupID = "group.com.Yo.Peticle"
     let modelContainer: ModelContainer
 
     private init() {
+        // Explicit App Group store: the app and the widget extension (where
+        // the system may run intents for Siri) must read the same walks.
+        let configuration = ModelConfiguration(groupContainer: .identifier(Self.appGroupID))
+        Self.moveLegacyStoreIfNeeded(to: configuration.url)
         do {
-            modelContainer = try ModelContainer(for: DogWalkEntry.self, Dog.self, WalkNote.self)
+            modelContainer = try ModelContainer(
+                for: DogWalkEntry.self, Dog.self, WalkNote.self, Species.self,
+                configurations: configuration
+            )
         } catch {
             fatalError("Failed to create the model container: \(error)")
+        }
+    }
+
+    /// One-time copy of a store created with the default configuration, if it
+    /// lived somewhere else. Only the app does it: the extension's own default
+    /// store never had the walks. The old files are kept as a backup.
+    private static func moveLegacyStoreIfNeeded(to groupURL: URL) {
+        let migratedKey = "didMoveStoreToAppGroup"
+        guard Bundle.main.bundleURL.pathExtension == "app",
+              !UserDefaults.standard.bool(forKey: migratedKey) else { return }
+        defer { UserDefaults.standard.set(true, forKey: migratedKey) }
+
+        let legacyURL = ModelConfiguration().url
+        let fileManager = FileManager.default
+        guard legacyURL.standardizedFileURL != groupURL.standardizedFileURL,
+              fileManager.fileExists(atPath: legacyURL.path) else { return }
+
+        try? fileManager.createDirectory(at: groupURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        for suffix in ["", "-shm", "-wal"] {
+            let source = URL(fileURLWithPath: legacyURL.path + suffix)
+            let destination = URL(fileURLWithPath: groupURL.path + suffix)
+            guard fileManager.fileExists(atPath: source.path) else { continue }
+            try? fileManager.removeItem(at: destination)
+            try? fileManager.copyItem(at: source, to: destination)
         }
     }
 }
@@ -39,15 +72,12 @@ class DataModelHelper {
         try modelContext.save()
 
         DogWalkShortcutsProvider.updateAppShortcutParameters()
+        index([entry.entity])
 
-        // Donate the intent so the system learns usage patterns (PredictableIntent)
-        let donationIntent = AddWalkIntent()
-        donationIntent.duration = durationInMinutes
-        donationIntent.walkQuality = walkQuality
-        Task {
-            try? await donationIntent.donate()
-        }
-
+        // No donation here: Stop and the intents also save through this
+        // helper. Donating AddWalkIntent on every walk taught Siri that
+        // "adding a walk" was the main action, so "update walk quality for
+        // yesterday" ended up asking for a duration.
         return entry
     }
 
@@ -71,6 +101,7 @@ class DataModelHelper {
         try modelContext.save()
 
         DogWalkShortcutsProvider.updateAppShortcutParameters()
+        index([entry.entity])
 
         return entry
     }
@@ -87,6 +118,7 @@ class DataModelHelper {
             modelContext.delete(entry)
             try modelContext.save()
             DogWalkShortcutsProvider.updateAppShortcutParameters()
+            try? await CSSearchableIndex.default().deleteAppEntities(identifiedBy: [identifier], ofType: DogWalkEntryEntity.self)
             WidgetCenter.shared.reloadTimelines(ofKind: "com.Yo.Peticle.QuickActions")
 
         } else {
@@ -149,6 +181,32 @@ class DataModelHelper {
         return entries
     }
     
+    /// Every walk of a given day, latest first.
+    static func walks(on day: Date) async throws -> [DogWalkEntry] {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: day)
+        let startOfNextDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        let descriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.entryDate >= startOfDay && $0.entryDate < startOfNextDay },
+            sortBy: [SortDescriptor(\.entryDate, order: .reverse)]
+        )
+        return try ModelContext(DataModel.shared.modelContainer).fetch(descriptor)
+    }
+
+    static func lastWalk(on day: Date) async throws -> DogWalkEntry? {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: day)
+        let startOfNextDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        var descriptor = FetchDescriptor<DogWalkEntry>(
+            predicate: #Predicate { $0.entryDate >= startOfDay && $0.entryDate < startOfNextDay },
+            sortBy: [SortDescriptor(\.entryDate, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        return try modelContext.fetch(descriptor).first
+    }
+
     static func lastWalkOfToday() async throws -> DogWalkEntry? {
         let walks = try await walksOfToday()
         return walks.sorted(by: { $0.entryDate > $1.entryDate }).first
@@ -167,6 +225,20 @@ class DataModelHelper {
         let entries = try modelContext.fetch(descriptor)
 
         return entries
+    }
+
+    /// Pushes walks to Spotlight. Every create / update path goes through
+    /// here, so Siri and Spotlight always see the latest walks.
+    static func index(_ entities: [DogWalkEntryEntity]) {
+        Task {
+            try? await CSSearchableIndex.default().indexAppEntities(entities)
+        }
+    }
+
+    /// Catches up walks saved before indexing covered every path.
+    static func reindexAllWalks() async throws {
+        let entities = try await allDogWalkEntries().map(\.entity)
+        try await CSSearchableIndex.default().indexAppEntities(entities)
     }
 
     static func allDogWalkEntries() async throws -> [DogWalkEntry] {

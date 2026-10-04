@@ -63,7 +63,8 @@ extension DogWalkEntryEntity {
     /// A Spotlight compatible attribute set used for indexing this entry
     var attributeSet: CSSearchableItemAttributeSet {
         let attributeSet = defaultAttributeSet
-        attributeSet.title = String(describing: durationInMinutes)
+        // A bare "35" as title didn't match searches like "walk".
+        attributeSet.title = String(localized: "Walk · \(durationInMinutes) min")
         attributeSet.contentDescription = timeAgo
         return attributeSet
     }
@@ -102,6 +103,22 @@ struct DogWalkQuery: EntityQuery {
     func suggestedEntities() async throws -> [DogWalkEntryEntity] {
         let entries = try await DataModelHelper.dogWalkEntries(limit: 5)
         return entries.map(\.entity)
+    }
+}
+
+// MARK: - IndexedEntityQuery (iOS 27)
+
+/// Lets Spotlight ask the app to rebuild its walk index, e.g. after the
+/// index was reset.
+extension DogWalkQuery: IndexedEntityQuery {
+    @MainActor
+    func reindexEntities(for identifiers: [DogWalkEntryEntity.ID], indexDescription: CSSearchableIndexDescription) async throws {
+        try await CSSearchableIndex.default().indexAppEntities(entities(for: identifiers))
+    }
+
+    @MainActor
+    func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {
+        try await DataModelHelper.reindexAllWalks()
     }
 }
 

@@ -1,6 +1,33 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add a pet in ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Add a pet in ${applicationName}",
+              "Add a new pet in ${applicationName}",
+              "Add a ${species} in ${applicationName}",
+              "Add a new ${species} in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Ajouter un animal dans ${applicationName}",
+              "Ajouter un nouvel animal dans ${applicationName}",
+              "Ajouter un ${species} dans ${applicationName}",
+              "Ajouter un nouveau ${species} dans ${applicationName}"
+            ]
+          }
+        }
+      }
+    },
     "Add an activity in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -10,11 +37,7 @@
             "values" : [
               "Add an activity in ${applicationName}",
               "Log a walk in ${applicationName}",
-              "Record a walk in ${applicationName}",
-              "Add walk entry in ${applicationName}",
-              "Log walk activity in ${applicationName}",
-              "Record walk session in ${applicationName}",
-              "Add walk record in ${applicationName}"
+              "Record a walk in ${applicationName}"
             ]
           }
         },
@@ -24,10 +47,8 @@
             "values" : [
               "Ajouter une activité dans ${applicationName}",
               "Enregistrer une promenade dans ${applicationName}",
-              "Noter une promenade dans ${applicationName}",
               "Ajouter une entrée de promenade dans ${applicationName}",
               "Enregistrer l'activité de promenade dans ${applicationName}",
-              "Noter la session de promenade dans ${applicationName}",
               "Ajouter un enregistrement de promenade dans ${applicationName}"
             ]
           }
@@ -47,54 +68,7 @@
               "Manage walk records in ${applicationName}",
               "View walk management in ${applicationName}",
               "Manage walk data in ${applicationName}",
-              "Manage walk history in ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Open walk in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Open walk in ${applicationName}",
-              "Change walk details in ${applicationName}",
-              "Edit walk entry in ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Set walk goal in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Set walk goal in ${applicationName}",
-              "Set daily walk goal in ${applicationName}",
-              "Change walk goal in ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
-    "Show me the last activity in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Show me the last activity in ${applicationName}",
-              "Show my last walk in ${applicationName}",
-              "What was my last walk in ${applicationName}",
-              "Show recent activity in ${applicationName}",
-              "Display last walk in ${applicationName}",
+              "Manage walk history in ${applicationName}",
               "Show me my latest walk in ${applicationName}"
             ]
           }
@@ -103,11 +77,10 @@
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "Montre-moi la dernière activité dans ${applicationName}",
-              "Montre ma dernière promenade dans ${applicationName}",
-              "Quelle était ma dernière promenade dans ${applicationName}",
-              "Montre l'activité récente dans ${applicationName}",
-              "Affiche la dernière promenade dans ${applicationName}",
+              "Gérer les dernières promenades dans ${applicationName}",
+              "Gérer les promenades récentes dans ${applicationName}",
+              "Gérer les entrées de promenade dans ${applicationName}",
+              "Gérer l'historique des promenades dans ${applicationName}",
               "Montre-moi ma dernière promenade dans ${applicationName}"
             ]
           }
@@ -129,7 +102,10 @@
               "View my dogs in ${applicationName}",
               "Show ${dog} in ${applicationName}",
               "Display ${dog} in ${applicationName}",
-              "Show information about ${dog} in ${applicationName}"
+              "Show information about ${dog} in ${applicationName}",
+              "Show a dog in ${applicationName}",
+              "Show my ${species} in ${applicationName}",
+              "Show a ${species} in ${applicationName}"
             ]
           }
         },
@@ -145,7 +121,10 @@
               "Voir mes chiens dans ${applicationName}",
               "Montrer ${dog} dans ${applicationName}",
               "Afficher ${dog} dans ${applicationName}",
-              "Montrer des informations sur ${dog} dans ${applicationName}"
+              "Montrer des informations sur ${dog} dans ${applicationName}",
+              "Montre un chien dans ${applicationName}",
+              "Montre mes ${species} dans ${applicationName}",
+              "Montre un ${species} dans ${applicationName}"
             ]
           }
         }
@@ -215,16 +194,28 @@
         }
       }
     },
-    "Take a dog photo in ${applicationName}" : {
+    "Stop and rate my walk in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "Take a dog photo in ${applicationName}",
-              "Capture dog photo in ${applicationName}",
-              "Take a photo of my dog in ${applicationName}"
+              "Stop and rate my walk in ${applicationName}",
+              "Stop and update my walk in ${applicationName}",
+              "End and rate my walk in ${applicationName}",
+              "Finish my walk and rate it in ${applicationName}"
+            ]
+          }
+        },
+        "fr" : {
+          "stringSet" : {
+            "state" : "new",
+            "values" : [
+              "Arrêter et noter ma promenade dans ${applicationName}",
+              "Arrêter et mettre à jour ma promenade dans ${applicationName}",
+              "Terminer et noter ma promenade dans ${applicationName}",
+              "Finir ma promenade et la noter dans ${applicationName}"
             ]
           }
         }
@@ -241,20 +232,17 @@
               "Rate my walk in ${applicationName}",
               "Update walk rating in ${applicationName}",
               "Change walk quality in ${applicationName}",
-              "Rate walk quality in ${applicationName}",
-              "Update walk quality for ${dateSelection} in ${applicationName}",
-              "Rate my ${dateSelection} walk in ${applicationName}",
-              "Update ${dateSelection} walk quality in ${applicationName}",
-              "Change ${dateSelection} walk rating in ${applicationName}"
+              "Rate walk quality in ${applicationName}"
             ]
           }
         },
         "fr" : {
           "stringSet" : {
-            "state" : "translated",
+            "state" : "new",
             "values" : [
-              "Mets à jour la promenade  ${dateSelection} dans ${applicationName}",
-              "Change la qualité de la promenade  ${dateSelection}dans ${applicationName}"
+              "Mettre à jour la qualité de la promenade dans ${applicationName}",
+              "Noter ma promenade dans ${applicationName}",
+              "Changer la qualité de la promenade dans ${applicationName}"
             ]
           }
         }

@@ -10,11 +10,28 @@ import SwiftUI
 
 struct SeeLatestActivityIntent: AppIntent {
     static var title: LocalizedStringResource = "Show the last activity"
-    static var description = IntentDescription("display the last activity")
+    static var description = IntentDescription("Display the last walk, or the last walk of a given day")
+
+    /// Without it, Siri had nowhere to put "yesterday" and always showed the
+    /// latest walk. A Date lets Siri fill "yesterday", "last Monday"…
+    @Parameter(title: "Day", description: "The day of the walk to show. Leave empty for the latest walk.")
+    var day: Date?
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Show the last walk of \(\.$day)")
+    }
 
     @MainActor
     func perform() async throws -> some ReturnsValue<DogWalkEntryEntity> & ShowsSnippetView {
-        guard let lastEntry = try await DataModelHelper.lastDogEntry() else {
+        let entry = if let day {
+            try await DataModelHelper.lastWalk(on: day)
+        } else {
+            try await DataModelHelper.lastDogEntry()
+        }
+        guard let lastEntry = entry else {
+            if let day {
+                throw IntentError.message(String(localized: "No walk on \(day.formatted(date: .complete, time: .omitted))"))
+            }
             throw IntentError.noEntity
         }
 

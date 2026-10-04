@@ -15,27 +15,12 @@ import AppIntents
 struct DogWalkListView: View {
     @Environment(NavigationManager.self) private var navigation
     @State private var showingHiddenView = false
-    @State private var showingAddDog = false
 
     var body: some View {
         @Bindable var navigation = navigation
         NavigationStack(path: $navigation.dogWalkNavigationPath) {
             FilteredDogWalkListView(searchTerm: navigation.searchText)
             .navigationTitle("Alfie\'s Chronicle")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        Button("Add a walk", systemImage: "figure.walk") {
-                            navigation.composeNewDogWalkEntry()
-                        }
-                        Button("Add a dog", systemImage: "pawprint.fill") {
-                            showingAddDog = true
-                        }
-                    } label: {
-                        Label("More", systemImage: "ellipsis")
-                    }
-                }
-            }
             .onShake {
                 showingHiddenView = true
             }
@@ -61,10 +46,6 @@ struct DogWalkListView: View {
                 AddDogView()
             }
 
-            .sheet(isPresented: $showingAddDog) {
-                AddDogView()
-            }
-
             .sheet(isPresented: $showingHiddenView) {
                 HiddenView()
             }
@@ -85,7 +66,8 @@ struct FilteredDogWalkListView: View {
     @Query(sort: \DogWalkEntry.entryDate, order: .reverse)
     private var dogWalkEntries: [DogWalkEntry]
     @Query(sort: \Dog.addedDate) private var dogs: [Dog]
-    private var isInSearchMode = false
+    private let searchTerm: String
+    private var isInSearchMode: Bool { !searchTerm.isEmpty }
 
     /// Same model the Start / Stop intents drive, so a walk started from
     /// Siri appears here without any glue code.
@@ -99,12 +81,63 @@ struct FilteredDogWalkListView: View {
     @AppStorage("focusFilter_showOnlyTodaysWalks") private var showOnlyTodaysWalks: Bool = false
 
     @Environment(\.dismissSearch) private var dismissSearch
+    @State private var entryToRedate: DogWalkEntry?
 
-    /// The entries to display, filtered by Focus mode if active.
+    /// The entries to display, filtered by Focus mode and by the search term.
     private var displayedEntries: [DogWalkEntry] {
-        guard showOnlyTodaysWalks else { return dogWalkEntries }
         let calendar = Calendar.current
-        return dogWalkEntries.filter { calendar.isDateInToday($0.entryDate) }
+        return dogWalkEntries.filter { entry in
+            (!showOnlyTodaysWalks || calendar.isDateInToday(entry.entryDate))
+                && (!isInSearchMode || matchesSearch(entry))
+        }
+    }
+
+    /// Words that describe every walk: Siri often sends whole requests
+    /// like "walks registered", which should list everything.
+    private static let genericSearchWords: Set<String> = [
+        "walk", "walks", "dog", "dogs", "my", "all", "registered", "logged",
+        "promenade", "promenades", "balade", "balades", "mes", "toutes"
+    ]
+
+    /// Filtered in memory: SwiftData predicates can't read `Date.description`
+    /// (it crashes at runtime), and people search with readable dates anyway.
+    /// Every meaningful word must match something about the walk.
+    private func matchesSearch(_ entry: DogWalkEntry) -> Bool {
+        let calendar = Calendar.current
+        var candidates = [
+            entry.entryDate.formatted(date: .complete, time: .shortened),
+            entry.entryDate.formatted(date: .numeric, time: .omitted),
+            "\(entry.durationInMinutes) min",
+            entry.walkQuality.rawValue
+        ]
+        if calendar.isDateInToday(entry.entryDate) { candidates += ["today", "aujourd'hui"] }
+        if calendar.isDateInYesterday(entry.entryDate) { candidates += ["yesterday", "hier"] }
+
+        return searchWords.allSatisfy { word in
+            candidates.contains { $0.localizedStandardContains(word) }
+        }
+    }
+
+    /// The search term's meaningful words, without generic ones like "walks".
+    private var searchWords: [String] {
+        searchTerm
+            .lowercased()
+            .split(whereSeparator: { !$0.isLetter && !$0.isNumber && $0 != "/" && $0 != "'" })
+            .map(String.init)
+            .filter { !Self.genericSearchWords.contains($0) }
+    }
+
+    /// Animals named in the search ("Search for Alfie") or of a species
+    /// ("Search for cats"): the in-app search covers all of Peticle's
+    /// content, not only walks.
+    private var matchingDogs: [Dog] {
+        guard isInSearchMode, !searchWords.isEmpty else { return [] }
+        return dogs.filter { dog in
+            searchWords.contains { word in
+                dog.name.localizedStandardContains(word)
+                    || (dog.species.map { word.localizedStandardContains($0.name) } ?? false)
+            }
+        }
     }
 
     private var todaysEntries: [DogWalkEntry] {
@@ -112,12 +145,7 @@ struct FilteredDogWalkListView: View {
     }
 
     init(searchTerm: String) {
-        if !searchTerm.isEmpty {
-            isInSearchMode = true
-            _dogWalkEntries = Query(filter: #Predicate<DogWalkEntry> {
-                $0.entryDate.description.localizedStandardContains(searchTerm)
-            }, sort: \DogWalkEntry.entryDate, order: .reverse)
-        }
+        self.searchTerm = searchTerm
     }
 
     static let todayString = {
@@ -136,20 +164,41 @@ struct FilteredDogWalkListView: View {
                     GlassPill("Focus filter active — showing today only", systemImage: "moon.fill", tint: .indigo.opacity(0.3))
                 }
 
-                if !isInSearchMode {
-                    header
-                    todayMetrics
+                // No search bar: searches only come from Siri (.system.searchInApp).
+                // This pill shows the term and clears it, so the list never
+                // stays stuck on the results.
+                if isInSearchMode {
+                    Button {
+                        withAnimation { navigation.searchText = "" }
+                    } label: {
+                        GlassPill("Results for “\(searchTerm)”", systemImage: "xmark.circle.fill")
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Clears the search")
                 }
 
-                if displayedEntries.isEmpty {
-                    emptyState
-                } else {
+                if !isInSearchMode {
+                    header
+                }
+
+                if !matchingDogs.isEmpty {
+                    dogResults
+                }
+
+                if !displayedEntries.isEmpty {
                     walkHistory
+                } else if matchingDogs.isEmpty {
+                    emptyState
                 }
             }
             .padding(.horizontal, PeticleTheme.Spacing.lg)
             .padding(.top, PeticleTheme.Spacing.sm)
             .padding(.bottom, PeticleTheme.Spacing.xl)
+        }
+        // iOS 27: lets the rows' swipe actions work outside a List.
+        .swipeActionsContainer()
+        .sheet(item: $entryToRedate) { entry in
+            EditWalkDateSheet(entry: entry)
         }
         .onAppear() {
             modelContext.rollback()
@@ -158,31 +207,44 @@ struct FilteredDogWalkListView: View {
 
     // MARK: - Sub-views
 
-    @ViewBuilder
-    private var header: some View {
-        if stopwatch.isRunning {
-            ActiveWalkCard(stopwatch: stopwatch, onStop: stopWalk)
-        } else {
-            if !dogs.isEmpty {
-                GreetingHero(dogs: dogs, walksTodayCount: todaysEntries.count)
-            }
-            GlassPrimaryButton("Start a walk", systemImage: "play.fill") {
-                stopwatch.start(with: StopwatchViewModel.defaultGoalInMinutes)
+    private var dogResults: some View {
+        VStack(alignment: .leading, spacing: PeticleTheme.Spacing.sm) {
+            Text("Dogs")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+                .padding(.horizontal, PeticleTheme.Spacing.md)
+
+            ForEach(matchingDogs) { dog in
+                GlassCard(padding: PeticleTheme.Spacing.lg) {
+                    HStack(spacing: PeticleTheme.Spacing.md) {
+                        DogAvatarView(dog: dog, diameter: 48)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(dog.name)
+                                .font(.body.weight(.semibold))
+                            if let species = dog.species {
+                                Label(species.name, systemImage: species.symbolName)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Text("\(dog.age) years old")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .accessibilityElement(children: .combine)
             }
         }
     }
 
-    private var todayMetrics: some View {
-        let totalMinutes = todaysEntries.reduce(0) { $0 + $1.durationInMinutes }
-
-        return HStack(spacing: PeticleTheme.Spacing.md) {
-            GlassMetricTile(value: "\(todaysEntries.count)", label: "Walks today", systemImage: "figure.walk")
-            GlassMetricTile(
-                value: "\(totalMinutes)'",
-                label: "Total time",
-                caption: "Goal: \(StopwatchViewModel.defaultGoalInMinutes)'",
-                systemImage: "clock.fill"
-            )
+    @ViewBuilder
+    private var header: some View {
+        if stopwatch.isRunning {
+            ActiveWalkCard(stopwatch: stopwatch, onStop: stopWalk)
+        } else if !dogs.isEmpty {
+            // No Start button: walks start from Siri, Shortcuts or the widget.
+            GreetingHero(dogs: dogs, walksTodayCount: todaysEntries.count)
         }
     }
 
@@ -235,6 +297,14 @@ struct FilteredDogWalkListView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
+                        Button("Edit date", systemImage: "calendar") {
+                            entryToRedate = entry
+                        }
+                        Button("Delete", systemImage: "trash", role: .destructive) {
+                            deleteEntries(entries: [entry])
+                        }
+                    }
+                    .swipeActions {
                         Button("Delete", systemImage: "trash", role: .destructive) {
                             deleteEntries(entries: [entry])
                         }

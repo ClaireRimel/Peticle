@@ -8,13 +8,19 @@
 import AppIntents
 import SwiftUI
 import SwiftData
+import CoreSpotlight
 
 struct ShowDogIntent: AppIntent {
     static var title: LocalizedStringResource = "Show Dog Information"
-    static var description = IntentDescription("Display information about a specific dog or show all your dogs.")
+    static var description = IntentDescription("Display one of your animals, optionally of one species. Without an animal, asks which one.")
 
     @Parameter(title: "Dog", description: "The dog to show information for")
     var dog: DogEntity?
+
+    /// Species are created by the user: an AppEntity, which can still be
+    /// said in a phrase ("Show my cats") once the system knows them.
+    @Parameter(title: "Species", description: "Only show animals of this species")
+    var species: SpeciesEntity?
 
     init() {}
 
@@ -24,41 +30,42 @@ struct ShowDogIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some ProvidesDialog & ShowsSnippetView {
-        if let selectedDog = dog {
-            let dialog = IntentDialog("Here is \(selectedDog.name)")
-            return .result(
-                dialog: dialog,
-                view: DogPortraitView(
-                    name: selectedDog.name,
-                    subtitle: "\(selectedDog.age) years old",
-                    imageData: selectedDog.imageData,
-                    diameter: 160
-                )
-                .frame(maxWidth: .infinity)
-                .padding()
-            )
-        } else {
-            // Fetch dogs and extract data in the same ModelContext scope
-            let modelContext = ModelContext(DataModel.shared.modelContainer)
-            let dogs = try modelContext.fetch(FetchDescriptor<Dog>())
-            let dogData = dogs.map { dog in
-                (name: dog.name, imageData: dog.imageData)
-            }
-
-            if dogData.isEmpty {
-                let dialog = IntentDialog("You don't have any dogs registered yet. Are you a cat lover?")
+        // "Show Alfie": the phrase fills the dog. "Show a dog" or "Show my
+        // cats" with several matches: Siri asks which one with
+        // requestDisambiguation, listing the animals with their photo.
+        if dog == nil {
+            let allDogs = try await DogEntity.defaultQuery.allEntities()
+            let dogs = allDogs.filter { species == nil || $0.species?.id == species?.id }
+            switch dogs.count {
+            case 0 where allDogs.isEmpty:
                 return .result(
-                    dialog: dialog,
+                    dialog: "You don't have any dogs registered yet. Are you a cat lover?",
                     view: ShowCatView()
                 )
-            } else {
-                let dialog = IntentDialog("Here are all your dogs")
-                return .result(
-                    dialog: dialog,
-                    view: ShowDogsView(dogs: dogData)
+            case 0:
+                throw IntentError.message(String(localized: "You don't have any \(species?.name ?? "") yet."))
+            case 1:
+                dog = dogs.first
+            default:
+                dog = try await $dog.requestDisambiguation(
+                    among: dogs,
+                    dialog: "Which dog would you like to see?"
                 )
             }
         }
+
+        guard let selectedDog = dog else { throw IntentError.noEntity }
+        return .result(
+            dialog: "Here is \(selectedDog.name)",
+            view: DogPortraitView(
+                name: selectedDog.name,
+                subtitle: "\(selectedDog.age) years old",
+                imageData: selectedDog.imageData,
+                diameter: 160
+            )
+            .frame(maxWidth: .infinity)
+            .padding()
+        )
     }
 }
 
@@ -70,20 +77,6 @@ private struct ShowCatView: View {
             .aspectRatio(contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: PeticleTheme.Radius.large, style: .continuous))
             .padding()
-    }
-}
-
-private struct ShowDogsView: View {
-    let dogs: [(name: String, imageData: Data?)]
-
-    var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: PeticleTheme.Spacing.md)],
-                  spacing: PeticleTheme.Spacing.lg) {
-            ForEach(dogs, id: \.name) { dog in
-                DogPortraitView(name: dog.name, subtitle: nil, imageData: dog.imageData, diameter: 88)
-            }
-        }
-        .padding()
     }
 }
 
@@ -128,5 +121,39 @@ private struct DogPortraitView: View {
             }
         }
         .accessibilityElement(children: .combine)
+    }
+}
+
+/// Changes an animal's species, e.g. to fix one seeded as "Dog".
+struct SetDogSpeciesIntent: AppIntent {
+    static var title: LocalizedStringResource = "Set Species"
+    static var description = IntentDescription("Set the species of one of your animals.")
+
+    @Parameter(title: "Animal")
+    var dog: DogEntity
+
+    @Parameter(title: "Species")
+    var species: SpeciesEntity
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Set \(\.$dog) as \(\.$species)")
+    }
+
+    @MainActor
+    func perform() async throws -> some ProvidesDialog {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let dogID = dog.id
+        let speciesID = species.id
+        var dogDescriptor = FetchDescriptor<Dog>(predicate: #Predicate { $0.dogID == dogID })
+        dogDescriptor.fetchLimit = 1
+        var speciesDescriptor = FetchDescriptor<Species>(predicate: #Predicate { $0.speciesID == speciesID })
+        speciesDescriptor.fetchLimit = 1
+        guard let model = try modelContext.fetch(dogDescriptor).first,
+              let newSpecies = try modelContext.fetch(speciesDescriptor).first else { throw IntentError.noEntity }
+        model.species = newSpecies
+        try modelContext.save()
+        DogWalkShortcutsProvider.updateAppShortcutParameters()
+        try? await CSSearchableIndex.default().indexAppEntities([model.entity])
+        return .result(dialog: "\(dog.name) is now a \(species.name).")
     }
 }
