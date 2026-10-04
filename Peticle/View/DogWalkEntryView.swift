@@ -79,8 +79,6 @@ struct DogWalkEntryView: View {
                         .padding(PeticleTheme.Spacing.lg)
                     }
 
-                    WalkNotesSection(walkID: dogWalkEntry.dogWalkID)
-
                     #if os(iOS)
                     // SiriTipView: Shows the Siri phrase for updating walk quality
                     SiriTipView(intent: UpdateWalkQualityIntent(), isVisible: $displayQualitySiriTip)
@@ -132,7 +130,7 @@ struct DogWalkEntryView: View {
             // interactions are donated.
             let donation = UpdateWalkQualityIntent(walk: dogWalkEntry.entity)
             donation.walkQuality = dogWalkEntry.walkQuality
-            try? await donation.donate()
+            _ = try? await donation.donate()
         }
         try? await CSSearchableIndex.default().indexAppEntities([dogWalkEntry.entity])
 

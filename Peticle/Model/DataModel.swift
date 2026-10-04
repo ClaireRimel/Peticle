@@ -22,7 +22,7 @@ final class DataModel: Sendable {
         Self.moveLegacyStoreIfNeeded(to: configuration.url)
         do {
             modelContainer = try ModelContainer(
-                for: DogWalkEntry.self, Dog.self, WalkNote.self,
+                for: DogWalkEntry.self, Dog.self,
                 configurations: configuration
             )
         } catch {

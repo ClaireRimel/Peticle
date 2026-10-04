@@ -22,7 +22,7 @@ struct PeticleApp: App {
         // Walks saved by Stop weren't indexed before: catch them up.
         Task {
             try? await DataModelHelper.reindexAllWalks()
-            try? await DataModelHelper.reindexAllNotes()
+            try? await DataModelHelper.reindexAllDogNotes()
             await Self.forgetMisleadingDonations()
         }
 
