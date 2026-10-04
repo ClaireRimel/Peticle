@@ -12,35 +12,31 @@ struct DogWalkEntryCellView: View {
 
     var body: some View {
         GlassCard(cornerRadius: PeticleTheme.Radius.large,
-                  padding: PeticleTheme.Spacing.md,
+                  padding: PeticleTheme.Spacing.lg,
                   interactive: true) {
             HStack(spacing: PeticleTheme.Spacing.md) {
+                // The dog's face is the walk quality, so no quality text.
                 Image(dogWalkEntry.walkQuality.imageAssetName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 44, height: 44)
+                    .frame(width: 48, height: 48)
                     .clipShape(Circle())
                     .background(Circle().fill(.ultraThinMaterial))
-                    .accessibilityHidden(true)
+                    .accessibilityLabel(Text(dogWalkEntry.walkQuality.label))
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(dogWalkEntry.entryDate, style: .time)
+                    Text(dogWalkEntry.entryDate, format: .dateTime.day().month(.wide).year())
                         .font(.body.weight(.semibold))
-                    Label("\(dogWalkEntry.durationInMinutes) min", systemImage: "clock")
+                    Text(dogWalkEntry.entryDate, style: .time)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
 
                 Spacer(minLength: 0)
 
-                Text(dogWalkEntry.walkQuality.label)
+                Label("\(dogWalkEntry.durationInMinutes) min", systemImage: "clock")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.secondary)
-
-                Image(systemName: "chevron.right")
-                    .imageScale(.small)
-                    .foregroundStyle(.tertiary)
-                    .accessibilityHidden(true)
             }
         }
         .accessibilityElement(children: .combine)
