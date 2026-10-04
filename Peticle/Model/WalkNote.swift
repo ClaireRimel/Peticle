@@ -20,6 +20,10 @@ final class WalkNote: Identifiable {
     var walkID: UUID?
     /// The dog this note is filed under — exposed as a `.notes.folder`.
     var dogID: UUID?
+    /// Photos added through the schema's `attachments` ("add this photo to
+    /// yesterday's note"), stored as downscaled JPEG. The default keeps the
+    /// SwiftData migration automatic.
+    var photos: [Data] = []
 
     init(
         noteID: UUID = UUID(),

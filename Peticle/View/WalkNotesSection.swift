@@ -9,6 +9,7 @@ import SwiftData
 /// Notes attached to a walk — created by Siri through the `.notes` schema.
 struct WalkNotesSection: View {
     @Query private var notes: [WalkNote]
+    @Environment(\.modelContext) private var modelContext
 
     init(walkID: UUID) {
         _notes = Query(
@@ -37,9 +38,18 @@ struct WalkNotesSection: View {
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }
+                            if !note.photos.isEmpty {
+                                NotePhotosRow(photos: note.photos)
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(PeticleTheme.Spacing.lg)
+                        .contentShape(.rect)
+                        .contextMenu {
+                            Button("Delete", systemImage: "trash", role: .destructive) {
+                                delete(note)
+                            }
+                        }
 
                         if note.id != notes.last?.id {
                             Divider()
@@ -49,5 +59,41 @@ struct WalkNotesSection: View {
                 }
             }
         }
+    }
+
+    private func delete(_ note: WalkNote) {
+        DataModelHelper.deindexNotes(ids: [note.noteID])
+        withAnimation {
+            modelContext.delete(note)
+            do {
+                try modelContext.save()
+            } catch {
+                print("Failed to delete the note: \(error)")
+            }
+        }
+    }
+}
+
+/// Photos Siri attached to a note, as a scrolling row of thumbnails.
+private struct NotePhotosRow: View {
+    let photos: [Data]
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: PeticleTheme.Spacing.sm) {
+                ForEach(photos.indices, id: \.self) { index in
+                    if let image = UIImage(data: photos[index]) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 72, height: 72)
+                            .clipShape(.rect(cornerRadius: PeticleTheme.Radius.small))
+                            .accessibilityLabel("Photo \(index + 1)")
+                    }
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+        .padding(.top, PeticleTheme.Spacing.xs)
     }
 }
