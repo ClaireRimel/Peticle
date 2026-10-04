@@ -51,16 +51,20 @@ struct QuickActionsWidgetView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                Image(systemName: "dog.fill")
-                    .font(.title3)
-                    .foregroundStyle(.indigo)
+                // Same face as the Live Activity: Habanera in light mode, Alfie in dark.
+                Image("QualityGood")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 32, height: 32)
+                    .clipShape(Circle())
+                    .accessibilityHidden(true)
                 Spacer()
             }
 
             HStack(alignment: .firstTextBaseline) {
                 Text("\(entry.walkCount)")
                     .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                    .foregroundStyle(.indigo)
+                    .foregroundStyle(Color.peticleBrand)
                 Text(entry.walkCount == 1 ? "walk" : "walks")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -71,21 +75,39 @@ struct QuickActionsWidgetView: View {
 
             if entry.isWalking {
                 Button(intent: StopDogWalkIntent()) {
-                    Label("Stop Walk", systemImage: "stop.fill")
-                        .font(.caption.weight(.semibold))
-                        .frame(maxWidth: .infinity)
+                    ActionLabel(title: "Stop Walk", systemImage: "stop.fill")
                 }
-                .tint(.red)
+                .quickActionButtonStyle()
             } else {
-                Button(intent: StartDogWalkIntent()) {
-                    Label("Start Walk", systemImage: "play.fill")
-                        .font(.caption.weight(.semibold))
-                        .frame(maxWidth: .infinity)
+                Button(intent: StartDogWalkWithDailyGoalIntent()) {
+                    ActionLabel(title: "Start Walk", systemImage: "play.fill")
                 }
-                .tint(.indigo)
+                .quickActionButtonStyle()
             }
         }
-        .containerBackground(.fill.tertiary, for: .widget)
+        // Same backdrop as the app's screens: white in light mode, black in dark.
+        .containerBackground(.background, for: .widget)
+    }
+}
+
+private struct ActionLabel: View {
+    let title: LocalizedStringKey
+    let systemImage: String
+
+    var body: some View {
+        Label(title, systemImage: systemImage)
+            .font(.caption.weight(.semibold))
+            .frame(maxWidth: .infinity)
+            .foregroundStyle(Color.peticleOnBrand)
+    }
+}
+
+private extension View {
+    /// Filled brand capsule, like the app's primary button.
+    func quickActionButtonStyle() -> some View {
+        buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(Color.peticleBrand)
     }
 }
 

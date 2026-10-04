@@ -14,5 +14,6 @@ struct peticleWidgetBundle: WidgetBundle {
         OpenSecretViewControl()
         PeticleWidgetLiveActivity()
         PeticleQuickActionsWidget()
+        PeticleFavoriteWidget()
     }
 }
