@@ -1,33 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Add a pet in ${applicationName}" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Add a pet in ${applicationName}",
-              "Add a new pet in ${applicationName}",
-              "Add a ${species} in ${applicationName}",
-              "Add a new ${species} in ${applicationName}"
-            ]
-          }
-        },
-        "fr" : {
-          "stringSet" : {
-            "state" : "new",
-            "values" : [
-              "Ajouter un animal dans ${applicationName}",
-              "Ajouter un nouvel animal dans ${applicationName}",
-              "Ajouter un ${species} dans ${applicationName}",
-              "Ajouter un nouveau ${species} dans ${applicationName}"
-            ]
-          }
-        }
-      }
-    },
     "Add an activity in ${applicationName}" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
@@ -100,12 +73,10 @@
               "List my dogs in ${applicationName}",
               "Show dog details in ${applicationName}",
               "View my dogs in ${applicationName}",
-              "Show ${dog} in ${applicationName}",
-              "Display ${dog} in ${applicationName}",
-              "Show information about ${dog} in ${applicationName}",
               "Show a dog in ${applicationName}",
-              "Show my ${species} in ${applicationName}",
-              "Show a ${species} in ${applicationName}"
+              "Show my ${breed} in ${applicationName}",
+              "Show a ${breed} in ${applicationName}",
+              "Show ${dog} in ${applicationName}"
             ]
           }
         },
@@ -123,8 +94,8 @@
               "Afficher ${dog} dans ${applicationName}",
               "Montrer des informations sur ${dog} dans ${applicationName}",
               "Montre un chien dans ${applicationName}",
-              "Montre mes ${species} dans ${applicationName}",
-              "Montre un ${species} dans ${applicationName}"
+              "Montre mes ${breed} dans ${applicationName}",
+              "Montre un ${breed} dans ${applicationName}"
             ]
           }
         }

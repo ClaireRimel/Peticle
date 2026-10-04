@@ -53,9 +53,11 @@ private struct DogCard: View {
             VStack(alignment: .leading, spacing: PeticleTheme.Spacing.xs) {
                 Text(dog.name)
                     .font(.headline)
-                Text("\(dog.age) years old")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                if let breed = dog.breed {
+                    Text(breed.localizedStringResource)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer(minLength: 0)
         }

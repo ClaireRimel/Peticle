@@ -27,7 +27,7 @@ struct FavoriteConfigurationIntent: WidgetConfigurationIntent {
 
 struct FavoriteEntry: TimelineEntry {
     enum Content {
-        case dog(name: String, age: Int, imageData: Data?)
+        case dog(name: String, imageData: Data?)
         case walk(date: Date, durationInMinutes: Int, quality: WalkQuality)
         case none
     }
@@ -38,7 +38,7 @@ struct FavoriteEntry: TimelineEntry {
 
 struct FavoriteProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> FavoriteEntry {
-        FavoriteEntry(date: .now, content: .dog(name: "Alfie", age: 2, imageData: nil))
+        FavoriteEntry(date: .now, content: .dog(name: "Alfie", imageData: nil))
     }
 
     func snapshot(for configuration: FavoriteConfigurationIntent, in context: Context) async -> FavoriteEntry {
@@ -62,7 +62,7 @@ struct FavoriteProvider: AppIntentTimelineProvider {
             var descriptor = FetchDescriptor<Dog>(predicate: #Predicate { $0.dogID == dogID })
             descriptor.fetchLimit = 1
             if let model = try? modelContext.fetch(descriptor).first {
-                content = .dog(name: model.name, age: model.age, imageData: model.imageData)
+                content = .dog(name: model.name, imageData: model.imageData)
             } else {
                 content = .none
             }
@@ -87,7 +87,7 @@ struct FavoriteWidgetView: View {
     var body: some View {
         Group {
             switch entry.content {
-            case .dog(let name, let age, let imageData):
+            case .dog(let name, let imageData):
                 VStack(spacing: PeticleTheme.Spacing.xs) {
                     dogPhoto(imageData, name: name)
                         .frame(width: 72, height: 72)
@@ -96,9 +96,6 @@ struct FavoriteWidgetView: View {
                     Text(name)
                         .font(.headline)
                         .lineLimit(1)
-                    Text("\(age) years old")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
             case .walk(let date, let duration, let quality):
                 VStack(spacing: PeticleTheme.Spacing.xs) {

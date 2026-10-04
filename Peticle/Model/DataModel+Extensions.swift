@@ -9,15 +9,12 @@ import Foundation
 import SwiftData
 
 extension DataModelHelper {
-    static func addDog(name: String, imageData: Data? = nil, age: Int, speciesID: UUID? = nil) throws -> Dog {
+    static func addDog(name: String, imageData: Data? = nil, breed: Breed? = nil, dogDescription: String? = nil) throws -> Dog {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
-        let dog = Dog(name: name, imageData: imageData, age: age)
+        let dog = Dog(name: name, imageData: imageData)
+        dog.breed = breed
+        dog.dogDescription = dogDescription
         modelContext.insert(dog)
-        if let speciesID {
-            var descriptor = FetchDescriptor<Species>(predicate: #Predicate { $0.speciesID == speciesID })
-            descriptor.fetchLimit = 1
-            dog.species = try modelContext.fetch(descriptor).first
-        }
         try modelContext.save()
 
         DogWalkShortcutsProvider.updateAppShortcutParameters()

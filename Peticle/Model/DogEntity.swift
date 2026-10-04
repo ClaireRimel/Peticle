@@ -53,8 +53,8 @@ struct DogEntity: IndexedEntity, Identifiable {
     var addedDate: Date
 
     @Property var name: String
-    @Property var age: Int
-    @Property(title: "Species") var species: SpeciesEntity?
+    @Property(title: "Breed") var breed: Breed?
+    @Property(title: "Description") var dogDescription: String?
     var imageData: Data?
 
     init(_ dog: Dog) {
@@ -62,8 +62,8 @@ struct DogEntity: IndexedEntity, Identifiable {
         addedDate = dog.addedDate
         imageData = dog.imageData
         name = dog.name
-        age = dog.age
-        species = dog.species.map(SpeciesEntity.init)
+        breed = dog.breed
+        dogDescription = dog.dogDescription
     }
 }
 
@@ -72,8 +72,8 @@ extension DogEntity {
     var attributeSet: CSSearchableItemAttributeSet {
         let attributeSet = defaultAttributeSet
         attributeSet.title = name
-        attributeSet.contentDescription = "\(age) years old"
-        attributeSet.keywords = [name, "dog", "pet", "\(age) years old"]
+        attributeSet.contentDescription = dogDescription ?? breed?.localizedName
+        attributeSet.keywords = [name, "dog", "pet"] + [breed?.localizedName].compactMap { $0 }
 
         return attributeSet
     }

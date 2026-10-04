@@ -108,36 +108,14 @@ struct DogWalkShortcutsProvider: AppShortcutsProvider {
                 "List my dogs in \(.applicationName)",
                 "Show dog details in \(.applicationName)",
                 "View my dogs in \(.applicationName)",
-                "Show \(\.$dog) in \(.applicationName)",
-                "Display \(\.$dog) in \(.applicationName)",
-                "Show information about \(\.$dog) in \(.applicationName)",
                 "Show a dog in \(.applicationName)",
-                "Show my \(\.$species) in \(.applicationName)",
-                "Show a \(\.$species) in \(.applicationName)"
+                "Show my \(\.$breed) in \(.applicationName)",
+                "Show a \(\.$breed) in \(.applicationName)",
+                "Show \(\.$dog) in \(.applicationName)"
             ],
             shortTitle: "Show Dogs",
             systemImageName: "dog.fill"
         )
-
-        // Species are user data (AppEntity): "Add a cat" works once the
-        // system knows the species, via updateAppShortcutParameters().
-        AppShortcut(
-            intent: AddDogIntent(),
-            phrases: [
-                "Add a pet in \(.applicationName)",
-                "Add a new pet in \(.applicationName)",
-                "Add a \(\.$species) in \(.applicationName)",
-                "Add a new \(\.$species) in \(.applicationName)"
-            ],
-            shortTitle: "Add a Pet",
-            systemImageName: "pawprint.fill"
-        )
-
-        // No App Shortcut for SeeLatestActivityIntent (merged into Manage),
-        // TakeDogPhotoIntent,
-        // SetDailyWalkGoalIntent and OpenEditEntryIntent: they stay available
-        // in the Shortcuts app, and OpenEditEntryIntent is reached through
-        // its `.system.open` schema.
     }
 
     // MARK: - Negative Phrases

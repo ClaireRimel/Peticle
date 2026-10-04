@@ -21,7 +21,6 @@ struct PeticleApp: App {
         DogWalkShortcutsProvider.updateAppShortcutParameters()
         // Walks saved by Stop weren't indexed before: catch them up.
         Task {
-            try? DataModelHelper.seedDefaultSpeciesIfNeeded()
             try? await DataModelHelper.reindexAllWalks()
             try? await DataModelHelper.reindexAllNotes()
             await Self.forgetMisleadingDonations()

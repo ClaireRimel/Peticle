@@ -13,23 +13,24 @@ final class Dog: Identifiable {
     @Attribute(.unique) var dogID: UUID
     var name: String
     var imageData: Data?
-    var age: Int
     var addedDate: Date
-    /// Optional so existing dogs migrate automatically; seeded to "Dog" at
-    /// launch, chosen when adding an animal, or set with SetDogSpeciesIntent.
-    var species: Species?
+    /// Optional so existing dogs migrate automatically; chosen when adding
+    /// a dog, or set with SetDogBreedIntent.
+    var breed: Breed?
+    /// Free text about the dog, typed in the form or dictated to Siri
+    /// ("Add a description to Alfie: …"). Not `description`, which reads
+    /// like CustomStringConvertible.
+    var dogDescription: String?
 
     init(
         dogID: UUID = UUID(),
         name: String,
         imageData: Data? = nil,
-        age: Int,
         addedDate: Date = .now
     ) {
         self.dogID = dogID
         self.name = name
         self.imageData = imageData
-        self.age = max(0, min(age, 30)) // Max 30 years
         self.addedDate = addedDate
     }
 }

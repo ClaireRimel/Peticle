@@ -96,6 +96,7 @@ struct FilteredDogWalkListView: View {
     /// like "walks registered", which should list everything.
     private static let genericSearchWords: Set<String> = [
         "walk", "walks", "dog", "dogs", "my", "all", "registered", "logged",
+        "show", "display", "find", "the", "that", "are", "is", "in", "peticle",
         "promenade", "promenades", "balade", "balades", "mes", "toutes"
     ]
 
@@ -127,15 +128,19 @@ struct FilteredDogWalkListView: View {
             .filter { !Self.genericSearchWords.contains($0) }
     }
 
-    /// Animals named in the search ("Search for Alfie") or of a species
-    /// ("Search for cats"): the in-app search covers all of Peticle's
-    /// content, not only walks.
+    /// Dogs matching the search by name or breed. Siri AI routes "Show my
+    /// labradors" here (.system.searchInApp); every meaningful word must
+    /// match.
     private var matchingDogs: [Dog] {
         guard isInSearchMode, !searchWords.isEmpty else { return [] }
         return dogs.filter { dog in
-            searchWords.contains { word in
-                dog.name.localizedStandardContains(word)
-                    || (dog.species.map { word.localizedStandardContains($0.name) } ?? false)
+            let candidates = [
+                dog.name,
+                dog.breed?.localizedName
+            ].compactMap { $0 }
+            // Both ways, so "labradors" matches "Labrador" and "lab" too.
+            return searchWords.allSatisfy { word in
+                candidates.contains { word.localizedStandardContains($0) || $0.localizedStandardContains(word) }
             }
         }
     }
@@ -187,7 +192,8 @@ struct FilteredDogWalkListView: View {
 
                 if !displayedEntries.isEmpty {
                     walkHistory
-                } else if matchingDogs.isEmpty {
+                } else if matchingDogs.isEmpty, isInSearchMode || !stopwatch.isRunning {
+                    // The active walk card already says a walk is on.
                     emptyState
                 }
             }
@@ -222,14 +228,11 @@ struct FilteredDogWalkListView: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(dog.name)
                                 .font(.body.weight(.semibold))
-                            if let species = dog.species {
-                                Label(species.name, systemImage: species.symbolName)
+                            if let breed = dog.breed {
+                                Text(breed.localizedStringResource)
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
-                            Text("\(dog.age) years old")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -321,7 +324,7 @@ struct FilteredDogWalkListView: View {
     private func stopWalk() {
         Task {
             let previousLastID = try? await DataModelHelper.lastDogEntry()?.dogWalkID
-            try? stopwatch.saveEntryAndStopActivity()
+            _ = try? stopwatch.saveEntryAndStopActivity()
             if let lastEntry = try? await DataModelHelper.lastDogEntry(),
                lastEntry.dogWalkID != previousLastID {
                 navigation.modifyEntry = lastEntry

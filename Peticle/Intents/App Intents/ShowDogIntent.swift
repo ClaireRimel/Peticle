@@ -12,15 +12,14 @@ import CoreSpotlight
 
 struct ShowDogIntent: AppIntent {
     static var title: LocalizedStringResource = "Show Dog Information"
-    static var description = IntentDescription("Display one of your animals, optionally of one species. Without an animal, asks which one.")
+    static var description = IntentDescription("Display one of your dogs, optionally of one breed. Without a dog, asks which one.")
 
     @Parameter(title: "Dog", description: "The dog to show information for")
     var dog: DogEntity?
 
-    /// Species are created by the user: an AppEntity, which can still be
-    /// said in a phrase ("Show my cats") once the system knows them.
-    @Parameter(title: "Species", description: "Only show animals of this species")
-    var species: SpeciesEntity?
+    /// An AppEnum, so it can be said in a phrase ("Show my labradors").
+    @Parameter(title: "Breed", description: "Only show dogs of this breed")
+    var breed: Breed?
 
     init() {}
 
@@ -31,11 +30,11 @@ struct ShowDogIntent: AppIntent {
     @MainActor
     func perform() async throws -> some ProvidesDialog & ShowsSnippetView {
         // "Show Alfie": the phrase fills the dog. "Show a dog" or "Show my
-        // cats" with several matches: Siri asks which one with
-        // requestDisambiguation, listing the animals with their photo.
+        // labradors" with several matches: Siri asks which one with
+        // requestDisambiguation, listing the dogs with their photo.
         if dog == nil {
             let allDogs = try await DogEntity.defaultQuery.allEntities()
-            let dogs = allDogs.filter { species == nil || $0.species?.id == species?.id }
+            let dogs = allDogs.filter { breed == nil || $0.breed == breed }
             switch dogs.count {
             case 0 where allDogs.isEmpty:
                 return .result(
@@ -43,7 +42,7 @@ struct ShowDogIntent: AppIntent {
                     view: ShowCatView()
                 )
             case 0:
-                throw IntentError.message(String(localized: "You don't have any \(species?.name ?? "") yet."))
+                throw IntentError.message(String(localized: "You don't have any \(breed?.localizedName ?? "") yet."))
             case 1:
                 dog = dogs.first
             default:
@@ -55,16 +54,17 @@ struct ShowDogIntent: AppIntent {
         }
 
         guard let selectedDog = dog else { throw IntentError.noEntity }
+        // Siri says the name and the description; the view is just the photo.
+        let dialog: IntentDialog = if let text = selectedDog.dogDescription {
+            "Here is \(selectedDog.name). \(text)"
+        } else {
+            "Here is \(selectedDog.name)"
+        }
+
         return .result(
-            dialog: "Here is \(selectedDog.name)",
-            view: DogPortraitView(
-                name: selectedDog.name,
-                subtitle: "\(selectedDog.age) years old",
-                imageData: selectedDog.imageData,
-                diameter: 160
-            )
-            .frame(maxWidth: .infinity)
-            .padding()
+            dialog: dialog,
+            view: DogPhotoView(name: selectedDog.name, imageData: selectedDog.imageData)
+                .padding()
         )
     }
 }
@@ -80,80 +80,96 @@ private struct ShowCatView: View {
     }
 }
 
-/// Round portrait with the dog's name, like the avatars in the app.
-private struct DogPortraitView: View {
+/// The dog's photo in a rounded rectangle, or its initial on the brand
+/// gradient when there's no photo.
+private struct DogPhotoView: View {
     let name: String
-    let subtitle: String?
     let imageData: Data?
-    let diameter: CGFloat
 
     var body: some View {
-        VStack(spacing: PeticleTheme.Spacing.sm) {
-            ZStack {
-                if let imageData, let image = Image(imageData: imageData) {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    LinearGradient(
-                        colors: [.peticleChocolate, .peticleCaramel],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                    Text(String(name.prefix(1)).uppercased())
-                        .font(.system(size: diameter * 0.4, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-            }
-            .frame(width: diameter, height: diameter)
-            .clipShape(Circle())
-            .overlay {
-                Circle().strokeBorder(Color.peticleBrand.opacity(0.4), lineWidth: 2)
-            }
-            .accessibilityHidden(true)
-
-            Text(name)
-                .font(.headline)
-            if let subtitle {
-                Text(subtitle)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+        ZStack {
+            if let imageData, let image = Image(imageData: imageData) {
+                image
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                LinearGradient(
+                    colors: [.peticleChocolate, .peticleCaramel],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                Text(String(name.prefix(1)).uppercased())
+                    .font(.system(size: 96, weight: .bold))
+                    .foregroundStyle(.white)
             }
         }
-        .accessibilityElement(children: .combine)
+        .frame(maxWidth: .infinity)
+        .frame(height: 280)
+        .clipShape(.rect(cornerRadius: PeticleTheme.Radius.xlarge))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(name))
     }
 }
 
-/// Changes an animal's species, e.g. to fix one seeded as "Dog".
-struct SetDogSpeciesIntent: AppIntent {
-    static var title: LocalizedStringResource = "Set Species"
-    static var description = IntentDescription("Set the species of one of your animals.")
+/// "Add a description to Alfie: what an amazing dog". The description is
+/// free text: Siri asks for it, since a phrase can't carry a String.
+struct SetDogDescriptionIntent: AppIntent {
+    static var title: LocalizedStringResource = "Set Dog Description"
+    static var description = IntentDescription("Add or replace the description of one of your dogs.")
 
-    @Parameter(title: "Animal")
+    @Parameter(title: "Dog")
     var dog: DogEntity
 
-    @Parameter(title: "Species")
-    var species: SpeciesEntity
+    @Parameter(title: "Description", requestValueDialog: "What would you like to say about this dog?")
+    var text: String
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Set \(\.$dog) as \(\.$species)")
+        Summary("Set the description of \(\.$dog) to \(\.$text)")
+    }
+
+    init() {}
+
+    @MainActor
+    func perform() async throws -> some ProvidesDialog {
+        let modelContext = ModelContext(DataModel.shared.modelContainer)
+        let dogID = dog.id
+        var descriptor = FetchDescriptor<Dog>(predicate: #Predicate { $0.dogID == dogID })
+        descriptor.fetchLimit = 1
+        guard let model = try modelContext.fetch(descriptor).first else { throw IntentError.noEntity }
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        model.dogDescription = trimmed.isEmpty ? nil : trimmed
+        try modelContext.save()
+        try? await CSSearchableIndex.default().indexAppEntities([model.entity])
+        return .result(dialog: "Description added to \(dog.name).")
+    }
+}
+
+/// Changes a dog's breed, e.g. for a dog added before breeds existed.
+struct SetDogBreedIntent: AppIntent {
+    static var title: LocalizedStringResource = "Set Breed"
+    static var description = IntentDescription("Set the breed of one of your dogs.")
+
+    @Parameter(title: "Dog")
+    var dog: DogEntity
+
+    @Parameter(title: "Breed")
+    var breed: Breed
+
+    static var parameterSummary: some ParameterSummary {
+        Summary("Set \(\.$dog) as \(\.$breed)")
     }
 
     @MainActor
     func perform() async throws -> some ProvidesDialog {
         let modelContext = ModelContext(DataModel.shared.modelContainer)
         let dogID = dog.id
-        let speciesID = species.id
         var dogDescriptor = FetchDescriptor<Dog>(predicate: #Predicate { $0.dogID == dogID })
         dogDescriptor.fetchLimit = 1
-        var speciesDescriptor = FetchDescriptor<Species>(predicate: #Predicate { $0.speciesID == speciesID })
-        speciesDescriptor.fetchLimit = 1
-        guard let model = try modelContext.fetch(dogDescriptor).first,
-              let newSpecies = try modelContext.fetch(speciesDescriptor).first else { throw IntentError.noEntity }
-        model.species = newSpecies
+        guard let model = try modelContext.fetch(dogDescriptor).first else { throw IntentError.noEntity }
+        model.breed = breed
         try modelContext.save()
         DogWalkShortcutsProvider.updateAppShortcutParameters()
         try? await CSSearchableIndex.default().indexAppEntities([model.entity])
-        return .result(dialog: "\(dog.name) is now a \(species.name).")
+        return .result(dialog: "\(dog.name) is now a \(breed.localizedName).")
     }
 }

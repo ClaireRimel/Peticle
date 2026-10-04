@@ -20,26 +20,20 @@
         }
       }
     },
-    "%@ the %@ joined your pets!" : {
+    "%@ the %@ joined your dogs!" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ the %2$@ joined your pets!"
+            "value" : "%1$@ the %2$@ joined your dogs!"
           }
         }
       }
-    },
-    "%@s" : {
-
     },
     "%lld min" : {
 
     },
     "%lld walks today, well done!" : {
-
-    },
-    "%lld years old" : {
 
     },
     "+%lld" : {
@@ -68,18 +62,11 @@
     "Add 1 minute" : {
 
     },
-    "Add a new animal to your pets, with an existing species or a new one and its symbol." : {
+    "Add a Dog" : {
 
     },
-    "Add a Pet" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajouter un animal"
-          }
-        }
-      }
+    "Add a new dog, with its breed." : {
+
     },
     "Add Activity" : {
       "localizations" : {
@@ -103,6 +90,9 @@
     "Add New Dog" : {
 
     },
+    "Add or replace the description of one of your dogs." : {
+
+    },
     "Added a new walk of %lld minute%@." : {
       "localizations" : {
         "en" : {
@@ -122,33 +112,14 @@
     "Adjust Walk Duration" : {
 
     },
-    "Age" : {
-
-    },
-    "Age: %lld years" : {
-
-    },
     "Alfie's Chronicle" : {
-
-    },
-    "An existing species, like Dog" : {
-
-    },
-    "Animal" : {
 
     },
     "Bad" : {
 
     },
-    "Bird" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oiseau"
-          }
-        }
-      }
+    "Breed" : {
+
     },
     "Cancel" : {
       "localizations" : {
@@ -169,16 +140,6 @@
     "Capture a photo of your dog from the Camera quick action." : {
 
     },
-    "Cat" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chat"
-          }
-        }
-      }
-    },
     "Check Daily Walk Goal" : {
 
     },
@@ -186,6 +147,9 @@
 
     },
     "Choose the dogs to remove" : {
+
+    },
+    "Clear the note (the description) of one of your dogs. The dog stays." : {
 
     },
     "Clears the search" : {
@@ -209,13 +173,22 @@
     "Delete" : {
 
     },
+    "Delete Dog Note" : {
+
+    },
     "Delete walk" : {
 
     },
-    "Delete walk note" : {
+    "Deleted the note of %@." : {
 
     },
-    "Display one of your animals, optionally of one species. Without an animal, asks which one." : {
+    "Description" : {
+
+    },
+    "Description added to %@." : {
+
+    },
+    "Display one of your dogs, optionally of one breed. Without a dog, asks which one." : {
 
     },
     "Display the last walk, or the last walk of a given day" : {
@@ -324,17 +297,16 @@
     "First walk of the day done ✓" : {
 
     },
-    "Fish" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poisson"
-          }
-        }
-      }
-    },
     "Focus filter active — showing today only" : {
+
+    },
+    "French Bulldog" : {
+
+    },
+    "French Bulldogs" : {
+
+    },
+    "Frenchie" : {
 
     },
     "Get a personalized walking recommendation based on multi-day analysis of your walking history, patterns, and quality trends." : {
@@ -371,6 +343,15 @@
     "Goal reached! You've walked exactly %lld minutes today." : {
 
     },
+    "Golden" : {
+
+    },
+    "Golden Retriever" : {
+
+    },
+    "Goldens" : {
+
+    },
     "Good" : {
 
     },
@@ -385,6 +366,16 @@
     },
     "Here is %@." : {
 
+    },
+    "Here is %@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Here is %1$@. %2$@"
+          }
+        }
+      }
     },
     "Here is your walk." : {
 
@@ -420,6 +411,15 @@
     "I'm not a bug, I'm a feature ✨" : {
 
     },
+    "Jack Russell" : {
+
+    },
+    "Jack Russell Terrier" : {
+
+    },
+    "Jack Russells" : {
+
+    },
     "Keep track of your walks with your dog \nAdd a new entry to get started" : {
       "localizations" : {
         "en" : {
@@ -436,21 +436,20 @@
         }
       }
     },
+    "Lab" : {
+
+    },
+    "Labrador" : {
+
+    },
+    "Labradors" : {
+
+    },
     "Last Walk Entry" : {
 
     },
     "Latest Walk Snippet" : {
 
-    },
-    "Lizard" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lézard"
-          }
-        }
-      }
     },
     "Log a %lld-minute walk" : {
 
@@ -480,9 +479,6 @@
         }
       }
     },
-    "Name, like Cat" : {
-
-    },
     "New Dog Walk Entry" : {
       "comment" : "Navigation title when creating a new dog walk entry",
       "localizations" : {
@@ -496,26 +492,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nouvelle entrée de promenade"
-          }
-        }
-      }
-    },
-    "New Species" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nouvelle espèce"
-          }
-        }
-      }
-    },
-    "New species…" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nouvelle espèce…"
           }
         }
       }
@@ -536,6 +512,9 @@
           }
         }
       }
+    },
+    "No dog named %@" : {
+
     },
     "No last entry found" : {
 
@@ -574,7 +553,7 @@
     "OK" : {
 
     },
-    "Only show animals of this species" : {
+    "Only show dogs of this breed" : {
 
     },
     "Open Secret View" : {
@@ -586,37 +565,11 @@
     "Open the app to edit the selected dog walk entry." : {
 
     },
-    "Other" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autre"
-          }
-        }
-      }
-    },
-    "Photo %lld" : {
-
-    },
-    "Pinned" : {
-
-    },
     "quality" : {
 
     },
     "Quality: %@" : {
 
-    },
-    "Rabbit" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lapin"
-          }
-        }
-      }
     },
     "Rate ${walks} as ${walkQuality}" : {
 
@@ -678,9 +631,6 @@
     "Remove dog" : {
 
     },
-    "Remove notes attached to your walks." : {
-
-    },
     "Results for “%@”" : {
 
     },
@@ -708,10 +658,13 @@
     "Select Photo" : {
 
     },
+    "Set ${dog} as ${breed}" : {
+
+    },
     "Set ${dog} as ${sex}" : {
 
     },
-    "Set ${dog} as ${species}" : {
+    "Set Breed" : {
 
     },
     "Set Daily Walk Goal" : {
@@ -720,17 +673,13 @@
     "Set daily walk goal to ${value}" : {
 
     },
-    "Set Species" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Définir l'espèce"
-          }
-        }
-      }
+    "Set Dog Description" : {
+
     },
-    "Set the species of one of your animals." : {
+    "Set the breed of one of your dogs." : {
+
+    },
+    "Set the description of ${dog} to ${text}" : {
 
     },
     "Set your daily walk goal. This becomes the default goal when you start a new walk." : {
@@ -771,16 +720,6 @@
     },
     "Something bad happened: Entity No Found" : {
 
-    },
-    "Species" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Espèce"
-          }
-        }
-      }
     },
     "Start a dog walk activity" : {
 
@@ -850,26 +789,19 @@
     "Successfully removed %@ from your pet collection." : {
 
     },
-    "Symbol" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Symbole"
-          }
-        }
-      }
-    },
     "Take Dog Photo" : {
 
     },
-    "The age of your animal in years" : {
+    "The breed of your dog" : {
 
     },
     "The day of the walk to rate" : {
 
     },
     "The day of the walk to show. Leave empty for the latest walk." : {
+
+    },
+    "The dog notes to clear" : {
 
     },
     "The dog to show information for" : {
@@ -881,10 +813,7 @@
     "The duration has been updated to %lld minutes" : {
 
     },
-    "The name of a new species, like Cat" : {
-
-    },
-    "The name of your animal" : {
+    "The name of your dog" : {
 
     },
     "The number of minutes you want to log" : {
@@ -899,16 +828,10 @@
     "The specific walk to update" : {
 
     },
-    "The symbol of the new species" : {
-
-    },
     "The updated duration of the walk" : {
 
     },
     "The walk entries to delete" : {
-
-    },
-    "The walk notes to delete" : {
 
     },
     "There's no walk on %@ 😱😱😱" : {
@@ -935,16 +858,6 @@
     },
     "Try another date." : {
 
-    },
-    "Turtle" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tortue"
-          }
-        }
-      }
     },
     "Unable to analyze your walking history. Please try again later." : {
 
@@ -989,23 +902,6 @@
     "Walk duration and quality updated successfully" : {
 
     },
-    "Walk Entry" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Walk Entry"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrée de promenade"
-          }
-        }
-      }
-    },
     "Walk in progress" : {
 
     },
@@ -1022,23 +918,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Qualité de la promenade"
-          }
-        }
-      }
-    },
-    "Walk Quality Rating" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Walk Quality Rating"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Évaluation de la qualité de la promenade"
           }
         }
       }
@@ -1075,33 +954,19 @@
     "Walks" : {
 
     },
-    "WHAT?! No Walk Today!!!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "WHAT?! No Walk Today!!!"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QUOI ?! Aucune promenade aujourd'hui !!!"
-          }
-        }
-      }
+    "What would you like to say about this dog?" : {
+
     },
     "WHAT?! No Walk Yet!!!" : {
+
+    },
+    "Which breed is %@?" : {
 
     },
     "Which dog would you like to see?" : {
 
     },
-    "Which species is %@?" : {
-
-    },
-    "Which symbol for %@?" : {
+    "Which dog's note should I delete?" : {
 
     },
     "Which value would you like to apply?" : {
