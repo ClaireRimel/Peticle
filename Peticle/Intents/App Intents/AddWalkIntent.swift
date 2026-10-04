@@ -54,7 +54,7 @@ struct AddWalkIntent: AppIntent, PredictableIntent {
 
     @MainActor
     func perform() async throws -> some ProvidesDialog {
-        let entry = try DataModelHelper.newEntry(durationInMinutes: duration,
+        _ = try DataModelHelper.newEntry(durationInMinutes: duration,
                                          walkQuality: walkQuality)
 
         return .result(dialog: "Added a new walk of \(duration) minute\(duration == 1 ? "" : "s").")
