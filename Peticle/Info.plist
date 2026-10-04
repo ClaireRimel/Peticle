@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Brand colours for the App Shortcut tiles in the Shortcuts app, like Habanera.
+         iOS only reads them under CFBundleIcons > CFBundlePrimaryIcon.
+         Tint = symbol colour; complementing colours = chip background (1 = solid, 2 = gradient). -->
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>NSAppIconActionTintColorName</key>
+            <string>ShortcutTint</string>
+            <key>NSAppIconComplementingColorNames</key>
+            <array>
+                <string>ShortcutAccent</string>
+            </array>
+        </dict>
+    </dict>
     <key>NSSupportsLiveActivities</key>
     <true/>
 </dict>
